@@ -1,0 +1,31 @@
+## Deploy Provisioner.
+##
+enabled: true
+
+## Provide a name for `app:` labels.
+##
+nameOverride: ""
+
+## Provide a name to substitute for the full names of resources.
+##
+fullnameOverride: ""
+
+## Persistent Volume Claim.
+## ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+##
+persistentVolumeClaim:
+  create: true
+  storageClass: wave-aws-efs
+  accessModes:
+  - ReadWriteMany
+  size: 1Mi
+
+## Labels to add to all resources.
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+##
+labels: {}
+
+## Annotations to add to all resources.
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+##
+annotations: {}

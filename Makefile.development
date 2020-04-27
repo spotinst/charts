@@ -1,0 +1,75 @@
+##@ Development
+
+define HELP_INIT
+# Init Helm by adding the stable repository.
+#
+# Example:
+#   make init
+endef
+.PHONY: init
+ifeq ($(HELP),y)
+init:
+	$(Q) echo "$$HELP_INIT"
+else
+init: ## Init Helm
+	$(Q) sh -c "'$(SCRIPTS_DIR)/helm-init.sh'"
+endif
+
+define HELP_RELEASE
+# Release charts by executing all tasks.
+#
+# Example:
+#   make release
+endef
+.PHONY: release
+ifeq ($(HELP),y)
+release:
+	$(Q) echo "$$HELP_RELEASE"
+else
+release: dep package index ## Release charts
+endif
+
+define HELP_INDEX
+# Generate an index file for all charts.
+#
+# Example:
+#   make index
+endef
+.PHONY: index
+ifeq ($(HELP),y)
+index:
+	$(Q) echo "$$HELP_INDEX"
+else
+index: ## Generate an index file
+	$(Q) sh -c "'$(SCRIPTS_DIR)/helm-index.sh'"
+endif
+
+define HELP_PACKAGE
+# Package all charts into a versioned chart archive files.
+#
+# Example:
+#   make package
+endef
+.PHONY: package
+ifeq ($(HELP),y)
+package:
+	$(Q) echo "$$HELP_PACKAGE"
+else
+package: ## Package all charts
+	$(Q) sh -c "'$(SCRIPTS_DIR)/helm-package.sh'"
+endif
+
+define HELP_DEP
+# Rebuild charts dependencies.
+#
+# Example:
+#   make dep
+endef
+.PHONY: dep
+ifeq ($(HELP),y)
+dep:
+	$(Q) echo "$$HELP_DEP"
+else
+dep: init ## Rebuild charts dependencies
+	$(Q) sh -c "'$(SCRIPTS_DIR)/helm-dep.sh'"
+endif

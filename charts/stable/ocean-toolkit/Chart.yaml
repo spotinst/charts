@@ -1,0 +1,12 @@
+apiVersion: v1
+name: ocean-toolkit
+description: Ocean Toolkit for Kubernetes
+version: 0.1.0
+appVersion: 0.1.0
+home: https://github.com/spotinst/charts
+sources:
+- https://github.com/spotinst/charts
+keywords:
+- spot
+- toolkit
+- ocean

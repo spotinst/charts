@@ -1,0 +1,41 @@
+## Global values.
+##
+global:
+  ## Spot values.
+  ##
+  spot:
+    ## Credentials.
+    ## ref: https://help.spot.io/spotinst-api/administration/create-an-api-token/
+    ##
+    token: ""
+    account: ""
+
+  ## RBAC.
+  ##
+  rbac:
+    create: true
+    pspEnabled: true
+
+  ## Reference to one or more secrets to be used when pulling images.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ##
+  imagePullSecrets: []
+  # - name: "image-pull-secret"
+
+## Operator configuration.
+## ref: charts/operator/values.yaml
+##
+operator:
+  enabled: true
+
+## Controller configuration.
+## ref: charts/controller/values.yaml
+##
+controller:
+  enabled: true
+
+## Metrics Server configuration.
+## ref: https://github.com/helm/charts/tree/master/stable/metrics-server
+##
+metrics-server:
+  enabled: true

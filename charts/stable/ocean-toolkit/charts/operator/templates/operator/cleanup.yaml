@@ -1,0 +1,38 @@
+{{- if and .Values.enabled .Values.customResourceDefinitions.cleanup }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "operator.fullname" . }}-cleanup
+  namespace: {{ $.Release.Namespace }}
+  annotations:
+    helm.sh/hook: pre-delete
+    helm.sh/hook-weight: "3"
+    helm.sh/hook-delete-policy: hook-succeeded
+  labels:
+    app: {{ template "operator.name" . }}
+{{- include "operator.labels" . | indent 4 }}
+spec:
+  template:
+    metadata:
+      name: {{ template "operator.fullname" . }}-cleanup
+      labels:
+        app: {{ template "operator.name" . }}
+    spec:
+    {{- if .Values.global.rbac.create }}
+      serviceAccountName: {{ template "operator.serviceAccountName" . }}
+    {{- end }}
+      containers:
+        - name: kubectl
+          image: "{{ .Values.hyperkubeImage.repository }}:{{ .Values.hyperkubeImage.tag }}"
+          imagePullPolicy: "{{ .Values.hyperkubeImage.pullPolicy }}"
+          command:
+          - /bin/sh
+          - -c
+          - >
+              kubectl delete clusters.ocean.spot.io --all;
+              kubectl delete launchspecs.ocean.spot.io --all;
+              sleep 10;
+              kubectl delete crd clusters.ocean.spot.io;
+              kubectl delete crd launchspecs.ocean.spot.io;
+      restartPolicy: OnFailure
+{{- end }}
