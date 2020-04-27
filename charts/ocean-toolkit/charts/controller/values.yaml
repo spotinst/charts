@@ -1,0 +1,149 @@
+## Deploy Controller.
+##
+enabled: true
+
+## Provide a name for `app:` labels.
+##
+nameOverride: spotinst-kubernetes-cluster-controller
+
+## Provide a name to substitute for the full names of resources.
+##
+fullnameOverride: spotinst-kubernetes-cluster-controller
+
+## Config Map.
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/
+##
+configMap:
+  create: true
+  name: spotinst-kubernetes-cluster-controller-config
+
+## Service Account.
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+##
+serviceAccount:
+  create: true
+  name: ""
+
+## Secret.
+## ref: https://kubernetes.io/docs/concepts/configuration/secret/
+##
+secret:
+  create: true
+  name: ""
+
+## Labels to add to all resources.
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+##
+labels: {}
+
+## Annotations to add to the pod.
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+##
+annotations: {}
+
+## Security context.
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+##
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1001
+
+## Assign a PriorityClassName to pods if set.
+## ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#pod-priority
+##
+# priorityClassName: ""
+
+## Define log format ('json' or 'console') and level (0-5).
+##
+log:
+  format: json
+  level: 3
+  devel: false
+
+## Resource limits & requests.
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/
+##
+resources: {}
+# limits:
+#   cpu: 200m
+#   memory: 200Mi
+# requests:
+#   cpu: 100m
+#   memory: 100Mi
+
+## Define which Nodes the Pods are scheduled on.
+## ref: https://kubernetes.io/docs/user-guide/node-selection/
+##
+nodeSelector: {}
+
+## Tolerations for use with node taints.
+## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+##
+tolerations:
+- key: node.kubernetes.io/not-ready
+  effect: NoExecute
+  operator: Exists
+  tolerationSeconds: 150
+- key: node.kubernetes.io/unreachable
+  effect: NoExecute
+  operator: Exists
+  tolerationSeconds: 150
+- key: node-role.kubernetes.io/master
+  operator: Exists
+
+## Assign custom affinity rules to the Ocean Operator.
+## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+##
+affinity:
+  nodeAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 100
+      preference:
+        matchExpressions:
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 50
+      podAffinityTerm:
+        labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - controller
+        topologyKey: kubernetes.io/hostname
+
+## DNS.
+## ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+##
+dns:
+  policy: ClusterFirst
+  config:
+    # options:
+    # - name: ndots
+    #   value: "1"
+
+## Image.
+## ref: https://kubernetes.io/docs/concepts/containers/images/
+##
+image:
+  repository: spotinst/kubernetes-cluster-controller
+  pullPolicy: IfNotPresent
+
+## Generic configuration.
+##
+clusterIdentifier: ""
+
+## HTTP client configuration.
+##
+http:
+  baseUrl: ""
+  proxyUrl: ""
+
+## Feature flags configuration.
+##
+features:
+  disableAutoUpdate: false
+  enableCsrApproval: false

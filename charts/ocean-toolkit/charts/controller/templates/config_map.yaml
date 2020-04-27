@@ -1,0 +1,27 @@
+{{- if and .Values.enabled .Values.configMap.create }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "controller.configMapName" . }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    app: {{ template "controller.name" . }}
+{{- include "controller.labels" . | indent 4 }}
+data:
+  # ---------------------------------------------------------------------------
+  # Application.
+  # ---------------------------------------------------------------------------
+  clusterIdentifier: {{ required "controller.clusterIdentifier is missing" .Values.clusterIdentifier }}
+
+  # ---------------------------------------------------------------------------
+  # HTTP Client.
+  # ---------------------------------------------------------------------------
+  baseUrl: {{ default "" .Values.http.baseUrl | quote }}
+  proxyUrl: {{ default "" .Values.http.proxyUrl | quote }}
+
+  # ---------------------------------------------------------------------------
+  # Feature Flags.
+  # ---------------------------------------------------------------------------
+  disableAutoUpdate: {{ default "false" .Values.features.disableAutoUpdate | quote }}
+  enableCsrApproval: {{ default "false" .Values.features.enableCsrApproval | quote }}
+{{- end }}
