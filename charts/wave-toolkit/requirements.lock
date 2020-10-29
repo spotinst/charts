@@ -1,0 +1,18 @@
+dependencies:
+- name: provisioner
+  repository: ""
+  version: 0.1.*
+- name: ocean-toolkit
+  repository: https://charts.spot.io/releases/stable
+  version: 0.1.0
+- name: efs-provisioner
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 0.13.0
+- name: spark-history-server
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 1.3.0
+- name: sparkoperator
+  repository: https://kubernetes-charts-incubator.storage.googleapis.com
+  version: 0.8.4
+digest: sha256:f83e05e53e323e37702258de7982c0a48c01a990e9f62a2b3b7fa0eefeaf973c
+generated: "2020-10-25T12:19:47.974059+02:00"

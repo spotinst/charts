@@ -1,0 +1,10 @@
+global:
+  spot:
+    token: secret
+    account: secret
+
+ocean-toolkit:
+  enabled: true
+  controller:
+    enabled: true
+    clusterIdentifier: github-actions-kind

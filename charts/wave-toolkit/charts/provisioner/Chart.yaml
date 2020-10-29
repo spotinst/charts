@@ -1,0 +1,12 @@
+apiVersion: v1
+name: provisioner
+description: Wave Provisioner for Kubernetes
+version: 0.1.0
+appVersion: 0.1.0
+home: https://github.com/spotinst/wave-provisioner
+sources:
+  - https://github.com/spotinst/wave-provisioner
+keywords:
+- spot
+- wave
+- provisioner
