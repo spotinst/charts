@@ -1,0 +1,34 @@
+apiVersion: v1
+entries:
+  ocean-toolkit:
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: "2020-10-29T20:07:00.002683446Z"
+    dependencies:
+    - condition: operator.enabled
+      name: operator
+      repository: ""
+      version: 0.1.*
+    - condition: controller.enabled
+      name: controller
+      repository: ""
+      version: 1.1.*
+    - condition: metrics-server.enabled
+      name: metrics-server
+      repository: https://charts.helm.sh/stable
+      version: 2.11.*
+    description: Ocean Toolkit for Kubernetes
+    digest: 061d9f4f7f220087fa9f70dafca9db23b205ac3c5637760b12b10432ee8566c8
+    home: https://github.com/spotinst/charts
+    icon: https://docs.spot.io/_media/images/spot_mark.png
+    keywords:
+    - spot
+    - toolkit
+    - ocean
+    name: ocean-toolkit
+    sources:
+    - https://github.com/spotinst/charts
+    urls:
+    - https://github.com/spotinst/charts/releases/download/ocean-toolkit-0.1.0/ocean-toolkit-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-10-29T20:06:59.881410329Z"
