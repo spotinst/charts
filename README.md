@@ -2,7 +2,7 @@
 
 The official repository for all Spot Helm Charts for Kubernetes.
 
-## Contents
+## Table of Contents
 
 - [Installation](#installation)
 - [Documentation](#documentation)

@@ -1,5 +1,5 @@
 # artifacts
-dist/
+releases/
 
 # macOS
 .DS_Store

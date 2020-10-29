@@ -1,9 +1,7 @@
 ---
 name: Bug report
 about: Report a bug encountered while operating `charts`
-title: ""
-labels: ""
-assignees: ""
+labels: kind/bug
 ---
 
 <!--

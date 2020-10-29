@@ -1,0 +1,5 @@
+# configuration file for https://github.com/helm/chart-testing-action
+target-branch: main
+chart-repos:
+  - stable=https://charts.helm.sh/stable
+  - incubator=https://charts.helm.sh/incubator

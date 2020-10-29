@@ -1,0 +1,14 @@
+global:
+  spot:
+    token: secret
+    account: secret
+
+operator:
+  enabled: true
+
+controller:
+  enabled: true
+  clusterIdentifier: github-actions-kind
+
+metrics-server:
+  enabled: true

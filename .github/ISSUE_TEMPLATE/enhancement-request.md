@@ -1,9 +1,7 @@
 ---
 name: Enhancement request
 about: Suggest an enhancement to the `charts`
-title: ""
-labels: ""
-assignees: ""
+labels: kind/feature
 ---
 
 <!--
