@@ -8,3 +8,6 @@ sources:
   - https://github.com/jupyter/enterprise_gateway
 kubeVersion: '>=1.11.0-0'
 tillerVersion: '>=2.11.0-0'
+maintainers:
+  - name: Nathan Franzen
+    email: nate.franzen@netapp.com
