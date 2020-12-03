@@ -1,0 +1,47 @@
+{{- if and .Values.kernel.kernelNamespace (not .Values.kernel.shareGatewayNamespace )}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.kernel.kernelNamespace }}
+  labels:
+    app: enterprise-gateway
+    component: kernel
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kernel-sa
+  namespace: {{ .Values.kernel.kernelNamespace }}
+  labels:
+    app: enterprise-gateway
+    component: kernel
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}    
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Values.kernel.kernelNamespace }}
+  namespace: {{ .Values.kernel.kernelNamespace }}
+  labels:
+    app: enterprise-gateway
+    component: kernel
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: {{ .Values.kernel.kernelNamespace }}
+  - kind: ServiceAccount
+    name: kernel-sa
+    namespace: {{ .Values.kernel.kernelNamespace }}
+roleRef:
+  kind: ClusterRole
+  name: {{ .Values.kernel.clusterRole }}
+  apiGroup: rbac.authorization.k8s.io
+{{- end }}
