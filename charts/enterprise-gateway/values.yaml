@@ -78,9 +78,9 @@ kip:
   image: elyra/kernel-image-puller:2.3.0
   # Kernel Image Puller image pull policy.
   imagePullPolicy: IfNotPresent
-  # Determines whether the Kernel Image Puller will pull kernel images it has previously pulled
+  # Determines whether the Kernel Image Puller will pull kernel images it has
+  # previously pulled
   pullPolicy: IfNotPresent
-  # The interval (in seconds) at which the Kernel Image Puller fetches kernelspecs to pull kernel images.
+  # The interval (in seconds) at which the Kernel Image Puller fetches
+  # kernelspecs to pull kernel images.
   interval: 300
-
-
