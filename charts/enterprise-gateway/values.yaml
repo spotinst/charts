@@ -19,7 +19,7 @@ kernel:
   # Will start kernels in the same namespace as EG if True.
   shareGatewayNamespace: false
   # ignored if shareGatewayNamespace
-  kernelNamespace: spark-notebooks
+  kernelNamespace: jupyter-notebooks
   # Timeout for kernel launching in seconds.
   launchTimeout: 60
   # Timeout for an idle kernel before its culled in seconds. Default is 1 hour.
@@ -28,8 +28,6 @@ kernel:
   whitelist:
     - r_kubernetes
     - python_kubernetes
-    - python_tf_kubernetes
-    - python_tf_gpu_kubernetes
     - scala_kubernetes
     - spark_r_kubernetes
     - spark_python_kubernetes

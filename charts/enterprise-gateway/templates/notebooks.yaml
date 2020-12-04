@@ -35,9 +35,6 @@ metadata:
     heritage: {{ .Release.Service }}
 subjects:
   - kind: ServiceAccount
-    name: default
-    namespace: {{ .Values.kernel.kernelNamespace }}
-  - kind: ServiceAccount
     name: kernel-sa
     namespace: {{ .Values.kernel.kernelNamespace }}
 roleRef:

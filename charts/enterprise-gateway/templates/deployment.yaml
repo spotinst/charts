@@ -53,6 +53,8 @@ spec:
 {{- end }}
         - name: EG_MIRROR_WORKING_DIRS
           value: {{ if .Values.mirrorWorkingDirs }}"True"{{ else }}"False"{{ end }}
+        - name: KERNEL_SERVICE_ACCOUNT_NAME
+          value: kernel_sa
         - name: EG_CULL_IDLE_TIMEOUT
           value: !!str {{ .Values.kernel.cullIdleTimeout }}
         - name: EG_LOG_LEVEL

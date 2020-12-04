@@ -9,5 +9,5 @@ sources:
 kubeVersion: '>=1.11.0-0'
 tillerVersion: '>=2.11.0-0'
 maintainers:
-  - name: Nathan Franzen
+  - name: ntfrnzn
     email: nate.franzen@netapp.com
