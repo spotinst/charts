@@ -35,7 +35,7 @@ metadata:
     heritage: {{ .Release.Service }}
 subjects:
   - kind: ServiceAccount
-    name: kernel-sa
+    name: {{ .Values.kernel.serviceAccount}}
     namespace: {{ .Values.kernel.kernelNamespace }}
 roleRef:
   kind: ClusterRole
