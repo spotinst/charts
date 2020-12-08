@@ -34,6 +34,8 @@ kernel:
     - spark_scala_kubernetes
   # Default kernel name should be something from the whitelist
   defaultKernelName: python_kubernetes
+  # kernel service account name
+  serviceAccount: kernel-sa
 
 kernelspecs:
   # Optional custom data image containing kernelspecs to use.
