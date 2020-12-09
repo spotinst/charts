@@ -15,3 +15,7 @@ keywords:
 maintainers:
 - name: ntfrnzn
   email: nate.franzen@netapp.com
+dependencies:
+- name: cert-manager
+  version: 1.0.4
+  repository: https://charts.jetstack.io
