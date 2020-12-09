@@ -23,14 +23,10 @@ spec:
         description: WaveComponent is the Schema for the wavecomponents API
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
             type: string
           metadata:
             type: object
@@ -41,8 +37,7 @@ spec:
                 description: Name is the name of a helm chart
                 type: string
               state:
-                description: State determines whether the component should be installed
-                  or removed
+                description: State determines whether the component should be installed or removed
                 type: string
               type:
                 description: Type is one of ["helm",]
@@ -51,8 +46,7 @@ spec:
                 description: URL is the location of the helm repository
                 type: string
               valuesConfiguration:
-                description: ValuesConfiguration is a set of helm values, in yaml
-                  form
+                description: ValuesConfiguration is a set of helm values, in yaml form
                 type: string
               version:
                 description: Version is the version of the helm chart
@@ -69,12 +63,10 @@ spec:
             properties:
               conditions:
                 items:
-                  description: WaveComponentCondition describes the state of a deployment
-                    at a certain point.
+                  description: WaveComponentCondition describes the state of a deployment at a certain point.
                   properties:
                     lastTransitionTime:
-                      description: Last time the condition transitioned from one status
-                        to another.
+                      description: Last time the condition transitioned from one status to another.
                       format: date-time
                       type: string
                     lastUpdateTime:
@@ -82,8 +74,7 @@ spec:
                       format: date-time
                       type: string
                     message:
-                      description: A human readable message indicating details about
-                        the transition.
+                      description: A human readable message indicating details about the transition.
                       type: string
                     reason:
                       description: The reason for the condition's last transition.

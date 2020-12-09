@@ -23,14 +23,10 @@ spec:
         description: SparkApplication is the Schema for the SparkApplications API
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
             type: string
           metadata:
             type: object
@@ -38,59 +34,50 @@ spec:
             description: SparkApplicationSpec defines the desired state of SparkApplication
             properties:
               applicationId:
-                description: uniquely identifies the spark application, and is shared
-                  as a label on all driver and executor pods
+                description: uniquely identifies the spark application, and is shared as a label on all driver and executor pods
                 type: string
-              clusterIdentifier:
-                description: identity of the Ocean cluster in which the application
-                  is running
+              applicationName:
+                description: the name of the spark application
                 type: string
               heritage:
-                description: specifies whether the application originates from spark-operator,
-                  from a jupyter notebook, or from spark-submit directly
+                description: specifies whether the application originates from spark-operator, from a jupyter notebook, or from spark-submit directly
                 type: string
             required:
             - applicationId
-            - clusterIdentifier
+            - applicationName
             - heritage
             type: object
           status:
             description: SparkApplicationStatus defines the observed state of SparkApplication
             properties:
               data:
-                description: summarizes the history of the spark application
+                description: summarizes information about the spark application
                 properties:
                   driver:
                     description: a reference to the driver pod
                     properties:
                       containerStatuses:
-                        description: the set of container statues
+                        description: the set of container statuses
                         items:
-                          description: ContainerStatus contains details for the current
-                            status of this container.
+                          description: ContainerStatus contains details for the current status of this container.
                           properties:
                             containerID:
                               description: Container's ID in the format 'docker://<container_id>'.
                               type: string
                             image:
-                              description: 'The image the container is running. More
-                                info: https://kubernetes.io/docs/concepts/containers/images
-                                TODO(dchen1107): Which image the container is running
-                                with?'
+                              description: 'The image the container is running. More info: https://kubernetes.io/docs/concepts/containers/images TODO(dchen1107): Which image the container is running with?'
                               type: string
                             imageID:
                               description: ImageID of the container's image.
                               type: string
                             lastState:
-                              description: Details about the container's last termination
-                                condition.
+                              description: Details about the container's last termination condition.
                               properties:
                                 running:
                                   description: Details about a running container
                                   properties:
                                     startedAt:
-                                      description: Time at which the container was
-                                        last (re-)started
+                                      description: Time at which the container was last (re-)started
                                       format: date-time
                                       type: string
                                   type: object
@@ -101,31 +88,25 @@ spec:
                                       description: Container's ID in the format 'docker://<container_id>'
                                       type: string
                                     exitCode:
-                                      description: Exit status from the last termination
-                                        of the container
+                                      description: Exit status from the last termination of the container
                                       format: int32
                                       type: integer
                                     finishedAt:
-                                      description: Time at which the container last
-                                        terminated
+                                      description: Time at which the container last terminated
                                       format: date-time
                                       type: string
                                     message:
-                                      description: Message regarding the last termination
-                                        of the container
+                                      description: Message regarding the last termination of the container
                                       type: string
                                     reason:
-                                      description: (brief) reason from the last termination
-                                        of the container
+                                      description: (brief) reason from the last termination of the container
                                       type: string
                                     signal:
-                                      description: Signal from the last termination
-                                        of the container
+                                      description: Signal from the last termination of the container
                                       format: int32
                                       type: integer
                                     startedAt:
-                                      description: Time at which previous execution
-                                        of the container started
+                                      description: Time at which previous execution of the container started
                                       format: date-time
                                       type: string
                                   required:
@@ -135,39 +116,25 @@ spec:
                                   description: Details about a waiting container
                                   properties:
                                     message:
-                                      description: Message regarding why the container
-                                        is not yet running.
+                                      description: Message regarding why the container is not yet running.
                                       type: string
                                     reason:
-                                      description: (brief) reason the container is
-                                        not yet running.
+                                      description: (brief) reason the container is not yet running.
                                       type: string
                                   type: object
                               type: object
                             name:
-                              description: This must be a DNS_LABEL. Each container
-                                in a pod must have a unique name. Cannot be updated.
+                              description: This must be a DNS_LABEL. Each container in a pod must have a unique name. Cannot be updated.
                               type: string
                             ready:
-                              description: Specifies whether the container has passed
-                                its readiness probe.
+                              description: Specifies whether the container has passed its readiness probe.
                               type: boolean
                             restartCount:
-                              description: The number of times the container has been
-                                restarted, currently based on the number of dead containers
-                                that have not yet been removed. Note that this is
-                                calculated from dead containers. But those containers
-                                are subject to garbage collection. This value will
-                                get capped at 5 by GC.
+                              description: The number of times the container has been restarted, currently based on the number of dead containers that have not yet been removed. Note that this is calculated from dead containers. But those containers are subject to garbage collection. This value will get capped at 5 by GC.
                               format: int32
                               type: integer
                             started:
-                              description: Specifies whether the container has passed
-                                its startup probe. Initialized as false, becomes true
-                                after startupProbe is considered successful. Resets
-                                to false when the container is restarted, or if kubelet
-                                loses state temporarily. Is always true when no startupProbe
-                                is defined.
+                              description: Specifies whether the container has passed its startup probe. Initialized as false, becomes true after startupProbe is considered successful. Resets to false when the container is restarted, or if kubelet loses state temporarily. Is always true when no startupProbe is defined.
                               type: boolean
                             state:
                               description: Details about the container's current condition.
@@ -176,8 +143,7 @@ spec:
                                   description: Details about a running container
                                   properties:
                                     startedAt:
-                                      description: Time at which the container was
-                                        last (re-)started
+                                      description: Time at which the container was last (re-)started
                                       format: date-time
                                       type: string
                                   type: object
@@ -188,31 +154,25 @@ spec:
                                       description: Container's ID in the format 'docker://<container_id>'
                                       type: string
                                     exitCode:
-                                      description: Exit status from the last termination
-                                        of the container
+                                      description: Exit status from the last termination of the container
                                       format: int32
                                       type: integer
                                     finishedAt:
-                                      description: Time at which the container last
-                                        terminated
+                                      description: Time at which the container last terminated
                                       format: date-time
                                       type: string
                                     message:
-                                      description: Message regarding the last termination
-                                        of the container
+                                      description: Message regarding the last termination of the container
                                       type: string
                                     reason:
-                                      description: (brief) reason from the last termination
-                                        of the container
+                                      description: (brief) reason from the last termination of the container
                                       type: string
                                     signal:
-                                      description: Signal from the last termination
-                                        of the container
+                                      description: Signal from the last termination of the container
                                       format: int32
                                       type: integer
                                     startedAt:
-                                      description: Time at which previous execution
-                                        of the container started
+                                      description: Time at which previous execution of the container started
                                       format: date-time
                                       type: string
                                   required:
@@ -222,12 +182,10 @@ spec:
                                   description: Details about a waiting container
                                   properties:
                                     message:
-                                      description: Message regarding why the container
-                                        is not yet running.
+                                      description: Message regarding why the container is not yet running.
                                       type: string
                                     reason:
-                                      description: (brief) reason the container is
-                                        not yet running.
+                                      description: (brief) reason the container is not yet running.
                                       type: string
                                   type: object
                               type: object
@@ -239,6 +197,9 @@ spec:
                           - restartCount
                           type: object
                         type: array
+                      deleted:
+                        description: has the pod been marked as deleted
+                        type: boolean
                       phase:
                         description: the phase of the pod
                         type: string
@@ -253,6 +214,7 @@ spec:
                         type: string
                     required:
                     - containerStatuses
+                    - deleted
                     - phase
                     - podName
                     - podNamespace
@@ -263,33 +225,27 @@ spec:
                     items:
                       properties:
                         containerStatuses:
-                          description: the set of container statues
+                          description: the set of container statuses
                           items:
-                            description: ContainerStatus contains details for the
-                              current status of this container.
+                            description: ContainerStatus contains details for the current status of this container.
                             properties:
                               containerID:
                                 description: Container's ID in the format 'docker://<container_id>'.
                                 type: string
                               image:
-                                description: 'The image the container is running.
-                                  More info: https://kubernetes.io/docs/concepts/containers/images
-                                  TODO(dchen1107): Which image the container is running
-                                  with?'
+                                description: 'The image the container is running. More info: https://kubernetes.io/docs/concepts/containers/images TODO(dchen1107): Which image the container is running with?'
                                 type: string
                               imageID:
                                 description: ImageID of the container's image.
                                 type: string
                               lastState:
-                                description: Details about the container's last termination
-                                  condition.
+                                description: Details about the container's last termination condition.
                                 properties:
                                   running:
                                     description: Details about a running container
                                     properties:
                                       startedAt:
-                                        description: Time at which the container was
-                                          last (re-)started
+                                        description: Time at which the container was last (re-)started
                                         format: date-time
                                         type: string
                                     type: object
@@ -297,35 +253,28 @@ spec:
                                     description: Details about a terminated container
                                     properties:
                                       containerID:
-                                        description: Container's ID in the format
-                                          'docker://<container_id>'
+                                        description: Container's ID in the format 'docker://<container_id>'
                                         type: string
                                       exitCode:
-                                        description: Exit status from the last termination
-                                          of the container
+                                        description: Exit status from the last termination of the container
                                         format: int32
                                         type: integer
                                       finishedAt:
-                                        description: Time at which the container last
-                                          terminated
+                                        description: Time at which the container last terminated
                                         format: date-time
                                         type: string
                                       message:
-                                        description: Message regarding the last termination
-                                          of the container
+                                        description: Message regarding the last termination of the container
                                         type: string
                                       reason:
-                                        description: (brief) reason from the last
-                                          termination of the container
+                                        description: (brief) reason from the last termination of the container
                                         type: string
                                       signal:
-                                        description: Signal from the last termination
-                                          of the container
+                                        description: Signal from the last termination of the container
                                         format: int32
                                         type: integer
                                       startedAt:
-                                        description: Time at which previous execution
-                                          of the container started
+                                        description: Time at which previous execution of the container started
                                         format: date-time
                                         type: string
                                     required:
@@ -335,50 +284,34 @@ spec:
                                     description: Details about a waiting container
                                     properties:
                                       message:
-                                        description: Message regarding why the container
-                                          is not yet running.
+                                        description: Message regarding why the container is not yet running.
                                         type: string
                                       reason:
-                                        description: (brief) reason the container
-                                          is not yet running.
+                                        description: (brief) reason the container is not yet running.
                                         type: string
                                     type: object
                                 type: object
                               name:
-                                description: This must be a DNS_LABEL. Each container
-                                  in a pod must have a unique name. Cannot be updated.
+                                description: This must be a DNS_LABEL. Each container in a pod must have a unique name. Cannot be updated.
                                 type: string
                               ready:
-                                description: Specifies whether the container has passed
-                                  its readiness probe.
+                                description: Specifies whether the container has passed its readiness probe.
                                 type: boolean
                               restartCount:
-                                description: The number of times the container has
-                                  been restarted, currently based on the number of
-                                  dead containers that have not yet been removed.
-                                  Note that this is calculated from dead containers.
-                                  But those containers are subject to garbage collection.
-                                  This value will get capped at 5 by GC.
+                                description: The number of times the container has been restarted, currently based on the number of dead containers that have not yet been removed. Note that this is calculated from dead containers. But those containers are subject to garbage collection. This value will get capped at 5 by GC.
                                 format: int32
                                 type: integer
                               started:
-                                description: Specifies whether the container has passed
-                                  its startup probe. Initialized as false, becomes
-                                  true after startupProbe is considered successful.
-                                  Resets to false when the container is restarted,
-                                  or if kubelet loses state temporarily. Is always
-                                  true when no startupProbe is defined.
+                                description: Specifies whether the container has passed its startup probe. Initialized as false, becomes true after startupProbe is considered successful. Resets to false when the container is restarted, or if kubelet loses state temporarily. Is always true when no startupProbe is defined.
                                 type: boolean
                               state:
-                                description: Details about the container's current
-                                  condition.
+                                description: Details about the container's current condition.
                                 properties:
                                   running:
                                     description: Details about a running container
                                     properties:
                                       startedAt:
-                                        description: Time at which the container was
-                                          last (re-)started
+                                        description: Time at which the container was last (re-)started
                                         format: date-time
                                         type: string
                                     type: object
@@ -386,35 +319,28 @@ spec:
                                     description: Details about a terminated container
                                     properties:
                                       containerID:
-                                        description: Container's ID in the format
-                                          'docker://<container_id>'
+                                        description: Container's ID in the format 'docker://<container_id>'
                                         type: string
                                       exitCode:
-                                        description: Exit status from the last termination
-                                          of the container
+                                        description: Exit status from the last termination of the container
                                         format: int32
                                         type: integer
                                       finishedAt:
-                                        description: Time at which the container last
-                                          terminated
+                                        description: Time at which the container last terminated
                                         format: date-time
                                         type: string
                                       message:
-                                        description: Message regarding the last termination
-                                          of the container
+                                        description: Message regarding the last termination of the container
                                         type: string
                                       reason:
-                                        description: (brief) reason from the last
-                                          termination of the container
+                                        description: (brief) reason from the last termination of the container
                                         type: string
                                       signal:
-                                        description: Signal from the last termination
-                                          of the container
+                                        description: Signal from the last termination of the container
                                         format: int32
                                         type: integer
                                       startedAt:
-                                        description: Time at which previous execution
-                                          of the container started
+                                        description: Time at which previous execution of the container started
                                         format: date-time
                                         type: string
                                     required:
@@ -424,12 +350,10 @@ spec:
                                     description: Details about a waiting container
                                     properties:
                                       message:
-                                        description: Message regarding why the container
-                                          is not yet running.
+                                        description: Message regarding why the container is not yet running.
                                         type: string
                                       reason:
-                                        description: (brief) reason the container
-                                          is not yet running.
+                                        description: (brief) reason the container is not yet running.
                                         type: string
                                     type: object
                                 type: object
@@ -441,6 +365,9 @@ spec:
                             - restartCount
                             type: object
                           type: array
+                        deleted:
+                          description: has the pod been marked as deleted
+                          type: boolean
                         phase:
                           description: the phase of the pod
                           type: string
@@ -455,6 +382,7 @@ spec:
                           type: string
                       required:
                       - containerStatuses
+                      - deleted
                       - phase
                       - podName
                       - podNamespace
@@ -462,7 +390,7 @@ spec:
                       type: object
                     type: array
                   runStatistics:
-                    description: Rcollects statistics of the application runtoime
+                    description: collects statistics of the application run
                     properties:
                       attempts:
                         description: the list of attempts to run the application
@@ -513,31 +441,9 @@ spec:
                     - totalOutputBytes
                     type: object
                   sparkProperties:
-                    description: the runtime configuration of the driver and executors
-                    properties:
-                      spark.driver.cores:
-                        description: the number of cores in the driver pod
-                        type: integer
-                      spark.driver.memory:
-                        description: the driver memory in MB
-                        format: int64
-                        type: integer
-                      spark.executor.cores:
-                        description: the number of cores in the executor pods
-                        type: integer
-                      spark.executor.instances:
-                        description: the count of executors
-                        type: integer
-                      spark.executor.memory:
-                        description: the executor memory in MB
-                        format: int64
-                        type: integer
-                    required:
-                    - spark.driver.cores
-                    - spark.driver.memory
-                    - spark.executor.cores
-                    - spark.executor.instances
-                    - spark.executor.memory
+                    additionalProperties:
+                      type: string
+                    description: the runtime configuration of the spark application
                     type: object
                 required:
                 - driver
@@ -545,12 +451,8 @@ spec:
                 - runStatistics
                 - sparkProperties
                 type: object
-              state:
-                description: the current state of the spark application
-                type: string
             required:
             - data
-            - state
             type: object
         type: object
     served: true
