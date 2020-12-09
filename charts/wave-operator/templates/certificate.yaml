@@ -15,8 +15,8 @@ metadata:
   {{- include "wave-operator.labels" . | nindent 4 }}
 spec:
   dnsNames:
-  - wave-admission-control.spot-system.svc
-  - wave-admission-control.spot-system.svc.cluster.local
+  - wave-admission-control.{{ .Release.Namespace }}.svc
+  - wave-admission-control.{{ .Release.Namespace }}.svc.cluster.local
   issuerRef:
     kind: Issuer
     name: wave-issuer

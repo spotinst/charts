@@ -5,13 +5,13 @@ metadata:
   labels:
     {{- include "wave-operator.labels" . | nindent 4 }}
   annotations:
-    cert-manager.io/inject-ca-from: spot-system/wave-admission-control
+    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/wave-admission-control
 webhooks:
 - name: pod.spark.wave.spot.io
   clientConfig:
     service:
       name: wave-admission-control
-      namespace: spot-system
+      namespace: {{ .Release.Namespace }}
       path: "/mutate/pod"
   failurePolicy: Ignore
   objectSelector:
@@ -33,7 +33,7 @@ webhooks:
   clientConfig:
     service:
       name: wave-admission-control
-      namespace: spot-system
+      namespace: {{ .Release.Namespace }}
       path: "/mutate/configmap"
   failurePolicy: Ignore
   # spark config-maps don't have labels, we'll just have to look at all of them :(

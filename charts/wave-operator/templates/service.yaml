@@ -5,7 +5,6 @@ metadata:
   name: {{ include "wave-operator.fullname" . }}-metrics
   labels:
     {{- include "wave-operator.labels" . | nindent 4 }}
-  namespace: spot-system
 spec:
   ports:
   - name: metrics
@@ -23,7 +22,6 @@ metadata:
   name: wave-admission-control
   labels:
   {{- include "wave-operator.labels" . | nindent 4 }}
-  namespace: spot-system
 spec:
   ports:
   - name: webhook
