@@ -131,7 +131,7 @@ spec:
       {{- if .Values.pvc.enablePVC }}
       volumes:
       - name: data
-      {{- if .Values.pvc.helmChartTesting }}
+      {{- if .Values.helmChartTesting }}
         emptyDir: {}
       {{- else }}
         persistentVolumeClaim:
