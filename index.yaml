@@ -67,6 +67,26 @@ entries:
   spark-history-server:
   - apiVersion: v1
     appVersion: 2.4.0
+    created: "2020-12-18T20:48:08.702089825Z"
+    description: A Helm chart for Spark History Server
+    digest: 04ee76409777b5c9adcc4de25300713cdbf78c5d6b5fb2b03b38a3fc2ef1b2fe
+    home: https://spark.apache.org
+    icon: https://github.com/apache/spark/blob/master/docs/img/spark-logo-hd.png
+    keywords:
+    - spark
+    - history-server
+    maintainers:
+    - email: nate.franzen@netapp.com
+      name: ntfrnzn
+    name: spark-history-server
+    sources:
+    - https://github.com/apache/spark
+    - https://github.com/lightbend/spark-history-server-docker
+    urls:
+    - https://github.com/spotinst/charts/releases/download/spark-history-server-1.4.6/spark-history-server-1.4.6.tgz
+    version: 1.4.6
+  - apiVersion: v1
+    appVersion: 2.4.0
     created: "2020-12-18T00:50:30.385082124Z"
     description: A Helm chart for Spark History Server
     digest: 2416a1bccbd76f47c1f3254ed3074992cbbb6e785663bb5519f705ef38c29cdd
