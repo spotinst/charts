@@ -1,3 +1,6 @@
+# if true mounts an emptyDir for PVC; USE ONLY FOR CI TESTS
+helmChartTesting: true
+
 replicaCount: 1
 nameOverride: ""
 fullnameOverride: ""

@@ -131,8 +131,11 @@ spec:
       {{- if .Values.pvc.enablePVC }}
       volumes:
       - name: data
+      {{- if .Values.helmChartTesting }}
+        emptyDir: {}
+      {{- else }}
         persistentVolumeClaim:
-          claimName: {{ .Values.pvc.existingClaimName }}
+          claimName: {{ .Values.pvc.existingClaimName }}{{ end }}
       {{- else if .Values.gcs.enableGCS }}
       {{- if (not .Values.gcs.enableIAM) }}
       volumes:
