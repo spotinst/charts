@@ -65,17 +65,12 @@ pvc:
   # to use a file system path for Spark events dir, set 'enablePVC' to true and mention the
   # name of an already created persistent volume claim in existingClaimName.
   # The volume will be mounted on /data in the pod
-  enablePVC: false
+  enablePVC: true
   existingClaimName: nfs-pvc
   eventsDir: "/"
+  # if true mounts an emptyDir, USE ONLY FOR CI TESTS
+  helmChartTesting: true
 
-# Settings for the sub-chart
-# When pvc.enablePVC is true, make sure:
-# pvc.existingClaimName == nfs.pvcName
-nfs:
-  enableExampleNFS: false
-  pvName: nfs-pv
-  pvcName: nfs-pvc
 
 gcs:
   enableGCS: false
@@ -91,7 +86,7 @@ hdfs:
   HADOOP_CONF_DIR: /etc/hadoop
 
 s3:
-  enableS3: true
+  enableS3: false
   enableIAM: true
   # Omit for IAM role-based or provider-based authentication.
   secret: aws-secrets

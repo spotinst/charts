@@ -1,15 +1,6 @@
-# ⚠️ Repo Archive Notice
-
-As of Nov 13, 2020, charts in this repo will no longer be updated.
-For more information, see the Helm Charts [Deprecation and Archive Notice](https://github.com/helm/charts#%EF%B8%8F-deprecation-and-archive-notice), and [Update](https://helm.sh/blog/charts-repo-deprecation/).
-
 # Helm Chart for Spark History Server
 
 [Spark History Server](https://spark.apache.org/docs/latest/monitoring.html#viewing-after-the-fact) provides a web UI for completed and running Spark applications. The supported storage backends are HDFS, Google Cloud Storage (GCS), Azure Blob Storage (WASBS) and PersistentVolumeClaim (PVC). This chart is adapted from the [chart](https://github.com/SnappyDataInc/spark-on-k8s/tree/master/charts/spark-hs) from SnappyData Inc.
-
-## DEPRECATION NOTICE
-
-This chart is deprecated and no longer supported.
 
 #### Prerequisites
 
@@ -133,7 +124,6 @@ Note that the default image `lightbend/spark-history-server` is built using this
 | pvc.enablePVC |Whether to use PVC storage|true|
 | pvc.existingClaimName |The pre-created PVC name|nfs-pvc|
 | pvc.eventsDir |The log directory when PVC is used|/|
-| nfs.enableExampleNFS |Whether to install demo NFS volume and server|true|
 | gcs.enableGCS |Whether to use GCS storage|false|
 | gcs.secret |Pre-mounted secret name for GCS connection|history-secrets|
 | gcs.key |The JSON key file name|sparkonk8s.json|
@@ -164,8 +154,6 @@ Note that only when `pvc.enablePVC` is set to `true`, the following settings tak
 
 * pvc.existingClaimName
 * pvc.eventsDir
-
-By default an NFS server and PVC are set up. Optionally they can be disabled by setting `nfs.enableExampleNFS` to false.
 
 Similary, only when `gcs.enableGCS` is `true`, the following settings take effect:
 
