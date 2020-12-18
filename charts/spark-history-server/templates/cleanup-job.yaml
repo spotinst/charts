@@ -1,5 +1,5 @@
-# Delete the parent chart before the sub-chart
 {{- if .Values.nfs.enableExampleNFS }}
+# Delete the parent chart before the sub-chart
 apiVersion: batch/v1
 kind: Job
 metadata:
