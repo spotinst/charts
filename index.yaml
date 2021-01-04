@@ -104,6 +104,22 @@ entries:
     urls:
     - https://github.com/spotinst/charts/releases/download/spark-history-server-1.4.5/spark-history-server-1.4.5.tgz
     version: 1.4.5
+  spark-operator:
+  - apiVersion: v2
+    appVersion: v1beta2-1.2.0-3.0.0
+    created: "2021-01-04T20:20:48.731550344Z"
+    description: A Helm chart for Spark on Kubernetes operator
+    digest: 167a93074298d006e00849710bbf93312a96d578444a0b1af55deb0b05deebac
+    home: https://github.com/GoogleCloudPlatform/spark-on-k8s-operator
+    keywords:
+    - spark
+    maintainers:
+    - email: thorsteinn.sigurdsson@netapp.com
+      name: thorsteinnth
+    name: spark-operator
+    urls:
+    - https://github.com/spotinst/charts/releases/download/spark-operator-1.0.5/spark-operator-1.0.5.tgz
+    version: 1.0.5
   wave-operator:
   - apiVersion: v2
     appVersion: 0.1.7
