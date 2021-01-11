@@ -8,7 +8,7 @@ image:
   repository: public.ecr.aws/l8m2k1n1/netapp/wave-operator
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "0.1.8-8320d5c4"
 
 imagePullSecrets: []
 nameOverride: ""
