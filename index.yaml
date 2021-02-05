@@ -142,6 +142,27 @@ entries:
     version: 1.0.5
   wave-operator:
   - apiVersion: v2
+    appVersion: 0.2.0
+    created: "2021-02-05T15:29:37.469609259Z"
+    description: A Helm chart for Kubernetes
+    digest: 154f258f01c20ba175c853901af8f5d81b22de39cd442655dd5e9dfe1c02be8e
+    home: https://github.com/spotinst/charts
+    icon: https://docs.spot.io/_media/images/spot_mark.png
+    keywords:
+    - spot
+    - toolkit
+    - ocean
+    maintainers:
+    - email: nate.franzen@netapp.com
+      name: ntfrnzn
+    name: wave-operator
+    sources:
+    - https://github.com/spotinst/wave-operator
+    type: application
+    urls:
+    - https://github.com/spotinst/charts/releases/download/wave-operator-0.2.0/wave-operator-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     appVersion: 0.1.8
     created: "2021-01-11T18:15:42.42468078Z"
     description: A Helm chart for Kubernetes
