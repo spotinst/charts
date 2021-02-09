@@ -12,6 +12,8 @@ logLevel: DEBUG
 mirrorWorkingDirs: false
 # Master public IP on which to expose EG.
 k8sMasterPublicIP:
+# create and require a secret token, supplied by client in an "Authorization: token" header
+authTokenEnabled: true
 
 kernel:
   # Kernel cluster role created by this chart.
@@ -64,12 +66,16 @@ ingress:
 
   nginx:
     enabled: false
+    tls:
+      enabled: false
+      hostname: gateway.wave.spot.io
     path: /gateway/?(.*)
     annotations:
       kubernetes.io/ingress.class: "nginx"
       nginx.ingress.kubernetes.io/rewrite-target: /$1
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
       nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+      cert-manager.io/cluster-issuer:
 
 # Kernel Image Puller (daemonset)
 kip:

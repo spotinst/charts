@@ -10,7 +10,7 @@ name: spark-history-server
 sources:
 - https://github.com/apache/spark
 - https://github.com/lightbend/spark-history-server-docker
-version: 1.4.7
+version: 1.5.0
 maintainers:
   - name: ntfrnzn
     email: nate.franzen@netapp.com
