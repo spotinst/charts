@@ -65,6 +65,13 @@ spec:
           value: {{ toJson .Values.kernel.whitelist | squote }}
         - name: EG_DEFAULT_KERNEL_NAME
           value: {{ .Values.kernel.defaultKernelName }}
+{{- if .Values.authTokenEnabled }}
+        - name: EG_AUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: enterprise-gateway-auth
+              key: token
+{{- end }}
         ports:
         - containerPort: {{ .Values.port }}
 {{- if .Values.nfs.enabled }}

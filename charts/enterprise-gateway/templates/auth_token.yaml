@@ -1,0 +1,15 @@
+{{ if .Values.authTokenEnabled }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: enterprise-gateway-auth
+  labels:
+    app: enterprise-gateway
+    component: enterprise-gateway
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  {{- $data := (lookup "v1" "Secret" .Release.Namespace "enterprise-gateway-auth").data | default dict }}
+  token: {{ default (randAlphaNum 32 | b64enc | quote)  $data.token  }}
+{{ end }}

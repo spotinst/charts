@@ -14,6 +14,12 @@ metadata:
 {{ toYaml . | indent 4 }}
 {{- end }}
 {{- end }}
+  labels:
+    app: enterprise-gateway
+    component: enterprise-gateway
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
   rules:
   {{- if .Values.ingress.hostName }}
@@ -31,5 +37,10 @@ spec:
         backend:
           serviceName: enterprise-gateway
           servicePort: {{ .Values.port }}
+{{- if and (.Values.ingress.nginx.enabled) (.Values.ingress.nginx.tls.enabled) }}
+  tls:
+  - hosts:
+    - {{ .Values.ingress.nginx.tls.hostname }}
+    secretName: enterprise-gateway-tls
 {{ end }}
-
+{{ end }}
