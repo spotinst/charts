@@ -15,9 +15,9 @@ webhooks:
       path: "/mutate/pod"
   failurePolicy: Ignore
   objectSelector:
-    matchLabels:
-      spark-role: driver
     matchExpressions:
+      - key: spark-role
+        operator: Exists
       - key: spark-app-selector
         operator: Exists
   rules:
