@@ -38,6 +38,8 @@ kernel:
   defaultKernelName: python_kubernetes
   # kernel service account name
   serviceAccount: kernel-sa
+  # node affinity
+  affinity: {}
 
 kernelspecs:
   # Optional custom data image containing kernelspecs to use.
