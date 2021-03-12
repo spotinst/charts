@@ -14,6 +14,8 @@ mirrorWorkingDirs: false
 k8sMasterPublicIP:
 # create and require a secret token, supplied by client in an "Authorization: token" header
 authTokenEnabled: true
+# node affinity
+affinity: {}
 
 kernel:
   # Kernel cluster role created by this chart.
@@ -38,8 +40,7 @@ kernel:
   defaultKernelName: python_kubernetes
   # kernel service account name
   serviceAccount: kernel-sa
-  # node affinity
-  affinity: {}
+
 
 kernelspecs:
   # Optional custom data image containing kernelspecs to use.
