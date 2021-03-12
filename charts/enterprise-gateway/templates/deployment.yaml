@@ -22,6 +22,8 @@ spec:
         app: enterprise-gateway
         component: enterprise-gateway
     spec:
+      affinity:
+        {{- .Values.affinity | toYaml | nindent 8 }}
       # Created by this chart.
       serviceAccountName: enterprise-gateway-sa
 {{- if .Values.kernelspecs.image }}
