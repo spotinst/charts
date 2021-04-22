@@ -1,2 +1,0 @@
-Ocean Controller has been installed. Check its status by running:
-  kubectl --namespace {{ $.Release.Namespace }} get pods -l "release={{ $.Release.Name }}"

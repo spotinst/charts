@@ -1,5 +1,0 @@
-Ocean Operator has been installed. Check its status by running:
-  kubectl --namespace {{ $.Release.Namespace }} get pods -l "release={{ $.Release.Name }}"
-
-Visit https://github.com/spotinst/ocean-operator for instructions on how
-to create Spot resources like Cluster and LaunchSpec using the Operator.
