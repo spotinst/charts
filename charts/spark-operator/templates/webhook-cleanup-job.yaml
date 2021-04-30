@@ -1,4 +1,4 @@
-{{ if .Values.webhook.enable }}
+{{ if .Values.webhook.generateCerts }}
 apiVersion: batch/v1
 kind: Job
 metadata:
