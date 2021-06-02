@@ -26,26 +26,15 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - args:
-          - --secure-listen-address=0.0.0.0:8443
-          - --upstream=http://127.0.0.1:8080/
-          - --logtostderr=true
-          - --v=10
-          image: gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
-          imagePullPolicy: IfNotPresent
-          name: kube-rbac-proxy
-          ports:
-          - name: metrics
-            containerPort: 8080
-            protocol: TCP
-          resources: {}
         - name: manager
           args:
-          - --metrics-addr=127.0.0.1:8080
           - --enable-leader-election
           ports:
           - name: webhook
             containerPort: 9443
+            protocol: TCP
+          - name: metrics
+            containerPort: 8080
             protocol: TCP
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}

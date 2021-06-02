@@ -1,26 +1,3 @@
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: metrics-reader
-rules:
-- nonResourceURLs: ["/metrics"]
-  verbs: ["get"]
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: proxy-role
-rules:
-- apiGroups: ["authentication.k8s.io"]
-  resources:
-  - tokenreviews
-  verbs: ["create"]
-- apiGroups: ["authorization.k8s.io"]
-  resources:
-  - subjectaccessreviews
-  verbs: ["create"]
----
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -86,14 +63,6 @@ rules:
   - list
   - patch
   - update
-  - watch
-- apiGroups:
-  - rbac.authorization.k8s.io
-  resources:
-  - '*'
-  verbs:
-  - get
-  - list
   - watch
 - apiGroups:
   - wave.spot.io
