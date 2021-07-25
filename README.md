@@ -13,25 +13,26 @@ The official repository for all Spot Helm Charts for Kubernetes.
 
 ## Installation
 
-1. Add the chart repository:
+1. Add the Spot Helm chart repository:
 
 ```sh
 helm repo add spot https://charts.spot.io
 ```
 
-2. Update information of available charts:
+2. Update your local Helm chart repository cache:
 
 ```sh
 helm repo update
 ```
 
-3. Install a chart. For example, install the Ocean Controller:
+3. Install a chart. For example, install the Ocean Operator:
 
 ```sh
-helm install ocean-controller spot/ocean-controller \
+helm install ocean-operator spot/ocean-operator \
   --set spotinst.token=REDACTED \
   --set spotinst.account=REDACTED \
-  --set spotinst.clusterIdentifier=REDACTED
+  --set spotinst.clusterIdentifier=REDACTED \
+  # [...]
 ```
 
 > NOTE: Please configure all required chart values using the `set` command line argument or a `values.yaml` file.
