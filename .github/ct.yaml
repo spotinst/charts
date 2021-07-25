@@ -5,5 +5,3 @@
 target-branch: main
 helm-extra-args: --debug
 debug: true
-excluded-charts:
-- wave-operator
