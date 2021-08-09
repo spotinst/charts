@@ -1,0 +1,17 @@
+apiVersion: v2
+name: ocean-operator
+description: A Helm chart for Ocean Operator
+type: application
+version: 0.2.0
+appVersion: 0.2.0
+home: https://github.com/spotinst/charts/tree/main/charts/ocean-operator
+icon: https://docs.spot.io/_media/images/spot_mark.png
+sources:
+- https://github.com/spotinst/ocean-operator
+keywords:
+- spot
+- ocean
+- operator
+maintainers:
+- name: spotinst
+  email: ng-spot-info@netapp.com

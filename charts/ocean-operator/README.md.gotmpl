@@ -1,0 +1,39 @@
+{{ template "chart.header" . }}
+
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+{{ template "chart.description" . }}. This chart is usually invoked by the [spotctl](https://github.com/spotinst/spotctl) tool, but may also be run manually.
+
+## Installation
+
+1. Add the chart repository:
+
+```sh
+helm repo add spot https://charts.spot.io
+```
+
+2. Update information of available charts:
+
+```sh
+helm repo update
+```
+
+3. Install the chart:
+
+```sh
+helm install my-release spot/{{ template "chart.name" . }} \
+  --set spotinst.token=REDACTED \
+  --set spotinst.account=REDACTED \
+  --set spotinst.clusterIdentifier=REDACTED \
+  [...]
+```
+
+> NOTE: Please configure all required chart values using the `set` command line argument or a `values.yaml` file.
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}
