@@ -25,10 +25,10 @@ helm repo add spot https://charts.spot.io
 helm repo update
 ```
 
-3. Install a chart. For example, install the Ocean Controller:
+3. Install a chart. For example, install the Ocean Operator:
 
 ```sh
-helm install ocean-controller spot/ocean-controller \
+helm install ocean-operator spot/ocean-operator \
   --set spotinst.token=REDACTED \
   --set spotinst.account=REDACTED \
   --set spotinst.clusterIdentifier=REDACTED
