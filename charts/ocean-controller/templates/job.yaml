@@ -1,0 +1,69 @@
+{{- if and .Values.aksConnector.enabled .Values.aksConnector.acdIdentifier }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "ocean-controller.aksConnectorJobName" . }}
+  namespace: {{ include "ocean-controller.namespace" . }}
+  labels:
+  {{- include "ocean-controller.commonLabels" . | nindent 4 }}
+  {{- include "ocean-controller.aksConnectorLabels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "5"
+    helm.sh/hook-delete-policy: hook-succeeded
+spec:
+  template:
+    metadata:
+      labels:
+      {{- include "ocean-controller.aksConnectorLabels" . | nindent 4 }}
+    spec:
+      nodeSelector:
+        kubernetes.azure.com/mode: system
+      {{- if .Values.aksConnector.image.pullSecrets }}
+      imagePullSecrets: {{ toYaml .Values.aksConnector.image.pullSecrets | nindent 6 }}
+      {{- else if .Values.image.pullSecrets }}
+      imagePullSecrets: {{ toYaml .Values.image.pullSecrets | nindent 6 }}
+      {{- end }}
+      containers:
+      - name: ocean-aks-connector
+        image: {{ .Values.aksConnector.image.repository }}
+        imagePullPolicy: {{ .Values.aksConnector.image.pullPolicy }}
+        args: ["connect-ocean"]
+        env:
+        - name: SPOT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "ocean-controller.secretName" . }}
+              key: token
+              optional: true
+        - name: SPOT_ACCOUNT
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "ocean-controller.secretName" . }}
+              key: account
+              optional: true
+        - name: SPOT_CLUSTER_IDENTIFIER
+          valueFrom:
+            configMapKeyRef:
+              name: {{ include "ocean-controller.configMapName" . }}
+              key: spotinst.cluster-identifier
+        - name: SPOT_ACD_IDENTIFIER
+          value: {{ .Values.aksConnector.acdIdentifier }}
+        resources: {{- toYaml .Values.aksConnector.resources | nindent 10 }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsUser: 0
+        volumeMounts:
+          - name: waagent
+            mountPath: /var/lib/waagent
+      volumes:
+      - name: waagent
+        hostPath:
+          path: /var/lib/waagent
+          type: Directory
+      dnsPolicy: {{ .Values.dnsPolicy }}
+      {{- if .Values.dnsConfig }}
+      dnsConfig: {{ toYaml .Values.dnsConfig | nindent 8 }}
+      {{- end }}
+      restartPolicy: Never
+{{- end }}
