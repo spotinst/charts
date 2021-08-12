@@ -1,0 +1,112 @@
+# Spotinst configuration.
+spotinst:
+  # -- (Required) Spot Token.
+  # Ref: https://docs.spot.io/administration/api/create-api-token
+  token: ""
+  # -- (Required) Spot Account.
+  # Ref: https://docs.spot.io/administration/organizations?id=account
+  account: ""
+  # -- (Required) Unique identifier used by the Ocean Controller to connect
+  # between the Ocean backend and the Kubernetes cluster.
+  # Ref: https://docs.spot.io/ocean/tutorials/spot-kubernetes-controller/
+  clusterIdentifier: ""
+  # -- (Optional) Unique identifier used by the Ocean AKS Connector when
+  # importing an AKS cluster.
+  # Ref: https://docs.spot.io/ocean/tutorials/connect-an-aks-private-cluster
+  acdIdentifier: ""
+
+# Environment bootstrapping.
+bootstrap:
+  # -- (Optional) Enable environment bootstrapping.
+  enabled: true
+  # -- (Optional) Namespace where components should be installed during environment bootstrapping.
+  namespace: ""
+  # -- (Optional) List of components to install during environment bootstrapping.
+  components:
+  - ocean-controller
+  - metrics-server
+
+# -- (Optional) Replicas.
+# Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas
+replicaCount: 1
+
+# Image.
+# Ref: https://kubernetes.io/docs/concepts/containers/images/
+image:
+  # -- (Optional) Image repository.
+  repository: gcr.io/spotinst-artifacts/ocean-operator
+  # -- (Optional) Image pull policy.
+  pullPolicy: IfNotPresent
+  # -- (Optional) Image pull secrets.
+  pullSecrets: []
+  # -- (Optional) Image tag. Defaults to `.Chart.AppVersion`.
+  tag: ""
+
+# -- (Optional) String to partially override `ocean-operator.fullname` template (will maintain the release name).
+nameOverride: ""
+# -- (Optional) String to fully override `ocean-operator.fullname` template.
+fullnameOverride: ""
+
+# Service account.
+# Ref:
+serviceAccount:
+  # -- (Optional) Controls whether a service account should be created.
+  create: true
+  # -- (Optional) Service account annotations.
+  annotations: {}
+  # -- (Optional) Service account name.
+  name: ocean-operator
+
+# -- (Optional) Pod annotations.
+# Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+podAnnotations: {}
+
+# -- (Optional) Pod security context.
+# Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+podSecurityContext: {}
+  # fsGroup: 2000
+
+# -- (Optional) Container security context.
+# Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# -- (Optional) Resource requests and limits.
+# Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+resources:
+  limits:
+    cpu: 500m
+    memory: 500Mi
+  requests:
+    cpu: 50m
+    memory: 50Mi
+
+# -- (Optional) Node selector.
+nodeSelector: {}
+
+# -- (Optional) Tolerations for nodes that have taints on them.
+# Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: []
+
+# Pod scheduling preferences.
+# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity:
+  # -- (Optional) Node affinity.
+  nodeAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 1
+      preference:
+        matchExpressions:
+        - key: spotinst.io/node-lifecycle
+          operator: In
+          values:
+          - od
+
+# -- (Optional) Additional arguments.
+# Ref: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container
+extraArgs: []
