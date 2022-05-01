@@ -65,6 +65,29 @@ entries:
     urls:
     - https://github.com/spotinst/charts/releases/download/enterprise-gateway-2.3.0/enterprise-gateway-2.3.0.tgz
     version: 2.3.0
+  ocean-metric-exporter:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-05-01T08:00:49.093994325Z"
+    description: A Helm chart for Ocean Metric Exporter
+    digest: e505524f83c1b9573974a9b1007b5e9c285fabc3aa7bc6c28940a6956df5447e
+    home: https://github.com/spotinst/charts/tree/main/charts/ocean-metric-exporter
+    icon: https://docs.spot.io/_media/images/spot_mark.png
+    keywords:
+    - spot
+    - ocean
+    - metric
+    - exporter
+    maintainers:
+    - email: ng-spot-info@netapp.com
+      name: spotinst
+    name: ocean-metric-exporter
+    sources:
+    - https://github.com/spotinst/spotinst-kubernetes-exporter
+    type: application
+    urls:
+    - https://github.com/spotinst/charts/releases/download/ocean-metric-exporter-1.0.0/ocean-metric-exporter-1.0.0.tgz
+    version: 1.0.0
   spark-history-server:
   - apiVersion: v1
     appVersion: 2.4.0
