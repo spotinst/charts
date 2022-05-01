@@ -1,0 +1,19 @@
+{{- if .Values.service.create }}
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ include "ocean-metric-exporter.namespace" . }}
+  name: {{ include "ocean-metric-exporter.serviceName" . }}
+  labels:
+    {{- include "ocean-metric-exporter.labels" . | nindent 4 }}
+spec:
+  ports:
+  - name: exporter
+    port: 5050
+    protocol: TCP
+    targetPort: exporter
+  selector:
+    {{- include "ocean-metric-exporter.selectorLabels" . | nindent 4 }}
+  sessionAffinity: None
+  type: ClusterIP
+{{- end }}

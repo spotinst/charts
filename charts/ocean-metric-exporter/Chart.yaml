@@ -1,0 +1,18 @@
+apiVersion: v2
+name: ocean-metric-exporter
+description: A Helm chart for Ocean Metric Exporter
+type: application
+version: 1.0.0
+appVersion: 1.0.0
+home: https://github.com/spotinst/charts/tree/main/charts/ocean-metric-exporter
+icon: https://docs.spot.io/_media/images/spot_mark.png
+sources:
+- https://github.com/spotinst/spotinst-kubernetes-exporter
+keywords:
+- spot
+- ocean
+- metric
+- exporter
+maintainers:
+- name: spotinst
+  email: ng-spot-info@netapp.com
