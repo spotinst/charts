@@ -1,0 +1,26 @@
+name: spotinst-network-client
+namespace: kube-system
+
+oceanController:
+  # -- (Optional) Secret name.
+  secretName: spotinst-kubernetes-cluster-controller
+  # -- (Optional) ConfigMap name.
+  configMapName: spotinst-kubernetes-cluster-controller-config
+
+image:
+  # -- (Optional) Image repository.
+  repository: public.ecr.aws/spotinst-dev/spot-network-client
+  # -- (Optional) Image pull policy.
+  pullPolicy: Always
+  # -- (Optional) Image tag. Defaults to `.Chart.AppVersion`.
+  tag: ""
+
+# -- (Optional) Resource requests and limits.
+# Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+resources:
+  requests:
+    cpu: 10m
+    memory: 150Mi
+  limits:
+    cpu: 500m
+    memory: 500Mi
