@@ -18,7 +18,7 @@ helm repo add spot https://charts.spot.io
 helm repo update
 ```
 
-3. Install `ocean-metric-exporter`:
+3. Install `ocean-network-client`:
 
 ```sh
 helm install my-release spot/ocean-network-client
