@@ -23,12 +23,19 @@ ConfigMap name.
 Secret name.
 */}}
 {{- define "ocean-network-client.secretName" -}}
-{{ default (include "ocean-network-client.name" .) .Values.oceanController.secretName }}
+{{ default (include "ocean-network-client.name" .) .Values.oceanController.secretName }} #todo avital -
 {{- end }}
 
 {{/*
 DaemonSet labels.
 */}}
-{{- define "ocean-network-client.ds.labels" -}}
-app: netflowd
+{{- define "ocean-network-client.daemon-set.labels" -}}
+app: ocean-network-client
+{{- end }}
+
+{{/*
+NodeSelector labels.
+*/}}
+{{- define "ocean-network-client.node-selector.labels" -}}
+kubernetes.io/os: linux
 {{- end }}

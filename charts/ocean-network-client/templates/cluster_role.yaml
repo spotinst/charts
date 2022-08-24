@@ -7,5 +7,5 @@ rules:
   # Required for functional operation (read-only).
   # ----------------------------------------------------------------------------
   - apiGroups: [""]
-    resources: ["pods", "nodes", "namespaces"]
+    resources: ["pods", "nodes"]
     verbs: ["get", "list", "watch"]
