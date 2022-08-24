@@ -23,7 +23,7 @@ ConfigMap name.
 Secret name.
 */}}
 {{- define "ocean-network-client.secretName" -}}
-{{ default (include "ocean-network-client.name" .) .Values.oceanController.secretName }} #todo avital -
+{{ default (include "ocean-network-client.name" .) .Values.oceanController.secretName }}
 {{- end }}
 
 {{/*
