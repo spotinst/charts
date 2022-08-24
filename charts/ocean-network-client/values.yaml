@@ -6,9 +6,6 @@ oceanController:
   secretName: spotinst-kubernetes-cluster-controller
   # -- (Optional) ConfigMap name.
   configMapName: spotinst-kubernetes-cluster-controller-config
-  # todo avital - check about cd bundle?
-  # -- (Optional) Secret name of CA bundle.
-  #  caBundleSecretName: spotinst-kubernetes-cluster-controller-ca-bundle
 
 image:
   # -- (Optional) Image repository.
