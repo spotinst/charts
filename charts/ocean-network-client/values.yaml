@@ -9,7 +9,7 @@ oceanController:
 
 image:
   # -- (Optional) Image repository.
-  repository: public.ecr.aws/spotinst-dev/spot-network-client
+  repository: public.ecr.aws/spotinst/spot-network-client
   # -- (Optional) Image pull policy.
   pullPolicy: Always
   # -- (Optional) Image tag. Defaults to `.Chart.AppVersion`.
