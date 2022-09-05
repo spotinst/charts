@@ -13,6 +13,8 @@ spec:
         {{- include "ocean-network-client.daemon-set.labels" . | nindent 8 }}
     spec:
       hostNetwork: true
+      tolerations:
+        {{- toYaml .Values.tolerations | nindent 8 }}
       nodeSelector:
         {{- include "ocean-network-client.node-selector.labels" . | nindent 8 }}
       volumes:
