@@ -16,7 +16,7 @@ A Helm chart for Ocean Network Client
 
 * <https://github.com/spotinst/spot-network-client>
 
-A Helm chart for Ocean Metric Exporter.
+A Helm chart for Ocean Network Client.
 
 ## Installation
 
@@ -32,10 +32,10 @@ helm repo add spot https://charts.spot.io
 helm repo update
 ```
 
-3. Install `ocean-metric-exporter`:
+3. Install `ocean-network-client`:
 
 ```sh
-helm install my-release spot/ocean-metric-exporter
+helm install my-release spot/ocean-network-client
 ```
 
 > NOTE: Please configure all required chart values using the `set` command line argument or a `values.yaml` file.
