@@ -12,6 +12,7 @@ spec:
       labels:
         {{- include "ocean-network-client.daemon-set.labels" . | nindent 8 }}
     spec:
+      priorityClassName: system-cluster-critical
       hostNetwork: true
       tolerations:
         {{- toYaml .Values.tolerations | nindent 8 }}
