@@ -1,0 +1,5 @@
+Thank you for installing Ocean Network Client
+
+Please make sure that each node in your cluster has the Network-Client DaemonSet running
+
+The collection of the data has already begun, you can see the data in our UI console in a few hours.
