@@ -51,7 +51,7 @@ helm install my-release spot/ocean-network-client
 | namespace | string | `"kube-system"` | (Optional) Namespace where components should be installed. |
 | oceanController.configMapName | Optional | `"spotinst-kubernetes-cluster-controller-config"` | (Optional) ConfigMap name. |
 | oceanController.secretName | Optional | `"spotinst-kubernetes-cluster-controller"` | (Optional) Secret name. |
-| resources | Optional | `{"limits":{"cpu":"300m","memory":"500Mi"},"requests":{"cpu":"10m","memory":"150Mi"}}` | (Optional) Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
+| resources | Optional | `{"limits":{"cpu":"300m","memory":"500Mi"},"requests":{"cpu":"10m","memory":"100Mi"}}` | (Optional) Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
 | tolerations | Optional | `[{"operator":"Exists"}]` | (Optional) Tolerations - Enable pods to run an all nodes in cluster Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/ |
 
 ----------------------------------------------
