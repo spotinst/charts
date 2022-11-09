@@ -1,4 +1,4 @@
-Thank you for installing Ocean Network Client
+Thank you for installing spotinst-ocean-network-client
 
 Please make sure that each node in your cluster has the Network-Client DaemonSet running:
 
