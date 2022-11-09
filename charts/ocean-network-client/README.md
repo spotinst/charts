@@ -47,7 +47,6 @@ helm install my-release spot/ocean-network-client
 | image.pullPolicy | Optional | `"Always"` | (Optional) Image pull policy. |
 | image.repository | Optional | `"public.ecr.aws/spotinst/spot-network-client"` | (Optional) Image repository. |
 | image.tag | Optional | `""` | (Optional) Image tag. Defaults to `.Chart.AppVersion`. |
-| name | string | `"spotinst-ocean-network-client"` |  |
 | namespace | string | `"kube-system"` | (Optional) Namespace where components should be installed. |
 | oceanController.configMapName | Optional | `"spotinst-kubernetes-cluster-controller-config"` | (Optional) ConfigMap name. |
 | oceanController.secretName | Optional | `"spotinst-kubernetes-cluster-controller"` | (Optional) Secret name. |
