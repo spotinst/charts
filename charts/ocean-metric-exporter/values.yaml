@@ -46,6 +46,8 @@ nodeSelector: {}
 tolerations:
   - key: node-role.kubernetes.io/master
     operator: Exists
+  - key: node-role.kubernetes.io/control-plane
+    operator: Exists
 
 # -- (Optional) Pod scheduling preferences.
 # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
@@ -55,3 +57,20 @@ affinity: {}
 service:
   # -- (Optional) Controls whether a service should be created.
   create: true
+
+# -- (Optional) Exporter Metrics Configurations
+metricsConfiguration:
+  # -- (Array[string]) List of Categories to enable - if empty will get everything.
+  categories:
+
+  # -- (Array[string]) List of Metrics to allow - if empty will get everything. Shouldn't be used with `denyMetrics`.
+  allowMetrics:
+
+  # -- (Array[string]) List of Metrics to deny - if empty will get everything. Shouldn't be used with `allowMetrics`.
+  denyMetrics:
+
+  # -- (Array[string]) List of Labels to allow - if empty will get everything. Shouldn't be used with `denyLabels`.
+  allowLabels:
+
+  # -- (Array[string]) List of Labels to deny - if empty will get everything. Shouldn't be used with `allowLabels`.
+  denyLabels:
