@@ -78,6 +78,13 @@ spec:
               optional: true
         image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command: {{ include "ocean-metric-exporter.command" . }}
+        args:
+        - --categories={{ join "," .Values.metricsConfiguration.categories }}
+        - --allow-metrics={{ join "," .Values.metricsConfiguration.allowMetrics }}
+        - --deny-metrics={{ join "," .Values.metricsConfiguration.denyMetrics }}
+        - --allow-labels={{ join "," .Values.metricsConfiguration.allowLabels }}
+        - --deny-labels={{ join "," .Values.metricsConfiguration.denyLabels }}
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
