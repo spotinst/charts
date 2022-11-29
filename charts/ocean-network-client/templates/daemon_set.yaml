@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: {{ include "ocean-network-client.name" . }}
+  name: "spotinst-ocean-network-client"
   namespace: {{ include "ocean-network-client.namespace" . }}
 spec:
   selector:
@@ -25,7 +25,7 @@ spec:
       serviceAccountName: {{ include "ocean-network-client.name" . }}
       terminationGracePeriodSeconds: 30
       containers:
-        - name: {{ include "ocean-network-client.name" . }}
+        - name: "spotinst-ocean-network-client"
           image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
           securityContext:
             privileged: true
