@@ -95,3 +95,11 @@ Service Name.
 {{- define "ocean-metric-exporter.serviceName" -}}
 {{- printf "spot-%s" (include "ocean-metric-exporter.name" .) -}}
 {{- end }}
+
+{{/*
+Container command.
+*/}}
+{{- define "ocean-metric-exporter.command" -}}
+{{- printf "[ \"java\", \"-Dspring.profiles.active=prod,default\", \"-jar\", \"/app/app.jar\" ]" -}}
+{{- end }}
+

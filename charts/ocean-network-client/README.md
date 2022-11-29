@@ -1,6 +1,6 @@
 # ocean-network-client
 
-![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 1.0.6](https://img.shields.io/badge/Version-1.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for Ocean Network Client
 
@@ -47,11 +47,10 @@ helm install my-release spot/ocean-network-client
 | image.pullPolicy | Optional | `"Always"` | (Optional) Image pull policy. |
 | image.repository | Optional | `"public.ecr.aws/spotinst/spot-network-client"` | (Optional) Image repository. |
 | image.tag | Optional | `""` | (Optional) Image tag. Defaults to `.Chart.AppVersion`. |
-| name | string | `"spotinst-ocean-network-client"` |  |
 | namespace | string | `"kube-system"` | (Optional) Namespace where components should be installed. |
 | oceanController.configMapName | Optional | `"spotinst-kubernetes-cluster-controller-config"` | (Optional) ConfigMap name. |
 | oceanController.secretName | Optional | `"spotinst-kubernetes-cluster-controller"` | (Optional) Secret name. |
-| resources | Optional | `{"limits":{"cpu":"300m","memory":"500Mi"},"requests":{"cpu":"10m","memory":"150Mi"}}` | (Optional) Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
+| resources | Optional | `{"limits":{"cpu":"300m","memory":"500Mi"},"requests":{"cpu":"10m","memory":"100Mi"}}` | (Optional) Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
 | tolerations | Optional | `[{"operator":"Exists"}]` | (Optional) Tolerations - Enable pods to run an all nodes in cluster Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/ |
 
 ----------------------------------------------

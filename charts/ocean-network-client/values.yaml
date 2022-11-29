@@ -1,4 +1,3 @@
-name: spotinst-ocean-network-client
 namespace: kube-system
 
 oceanController:
@@ -20,7 +19,7 @@ image:
 resources:
   requests:
     cpu: 10m
-    memory: 150Mi
+    memory: 100Mi
   limits:
     cpu: 300m
     memory: 500Mi
