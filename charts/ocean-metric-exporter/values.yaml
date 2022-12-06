@@ -60,17 +60,18 @@ service:
 
 # -- (Optional) Exporter Metrics Configurations
 metricsConfiguration:
-  # -- (Array[string]) List of Categories to enable - if empty will get everything.
+  # -- (Array[string]) List of Categories to enable - if empty will get no metrics. Additional possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=categories
   categories:
+    - scaling
 
-  # -- (Array[string]) List of Metrics to allow - if empty will get everything. Shouldn't be used with `denyMetrics`.
+  # -- (Array[string]) List of Metrics to allow - if empty will get everything. Shouldn't be used with `denyMetrics`. Possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=metrics
   allowMetrics:
 
-  # -- (Array[string]) List of Metrics to deny - if empty will get everything. Shouldn't be used with `allowMetrics`.
+  # -- (Array[string]) List of Metrics to deny - if empty will get everything. Shouldn't be used with `allowMetrics`. Possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=metrics
   denyMetrics:
 
-  # -- (Array[string]) List of Labels to allow - if empty will get everything. Shouldn't be used with `denyLabels`.
+  # -- (Array[string]) List of Labels to allow - if empty will get everything. Shouldn't be used with `denyLabels`. Possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=labels
   allowLabels:
 
-  # -- (Array[string]) List of Labels to deny - if empty will get everything. Shouldn't be used with `allowLabels`.
+  # -- (Array[string]) List of Labels to deny - if empty will get everything. Shouldn't be used with `allowLabels`. Possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=labels
   denyLabels:
