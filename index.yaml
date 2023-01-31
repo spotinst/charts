@@ -69,6 +69,27 @@ entries:
     version: 1.0.0
   ocean-network-client:
   - apiVersion: v2
+    appVersion: 1.0.2
+    created: "2023-01-31T09:05:47.301885919Z"
+    description: A Helm chart for Ocean Network Client
+    digest: 63338dbbdcbf5652f7fa9159b0c3d4849c923ef165700e6bc6247771ec79b584
+    home: https://github.com/spotinst/charts/tree/main/charts/ocean-network-client
+    icon: https://docs.spot.io/_media/images/spot_mark.png
+    keywords:
+    - spot
+    - ocean
+    - network
+    maintainers:
+    - email: ng-spot-info@netapp.com
+      name: spotinst
+    name: ocean-network-client
+    sources:
+    - https://github.com/spotinst/spot-network-client
+    type: application
+    urls:
+    - https://github.com/spotinst/charts/releases/download/ocean-network-client-1.0.9/ocean-network-client-1.0.9.tgz
+    version: 1.0.9
+  - apiVersion: v2
     appVersion: 1.0.1
     created: "2022-11-29T15:20:25.645798496Z"
     description: A Helm chart for Ocean Network Client
