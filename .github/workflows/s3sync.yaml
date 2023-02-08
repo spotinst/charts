@@ -1,0 +1,40 @@
+name: S3 Sync
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - charts/ocean-network-client/**
+
+jobs:
+  s3sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: 'v3.9.0'
+
+      - name: Helm Template
+        run: |
+          mkdir charts/helm-template-output
+          cd charts/ocean-network-client
+          helm template . > ../helm-template-output/network-client.yaml
+          echo "Helm template grnerated yamls: "
+          cat ../helm-template-output/network-client.yaml
+
+      - name: S3 Sync
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --delete
+        env:
+          AWS_S3_BUCKET: spotinst-public
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: 'us-east-1'
+          SOURCE_DIR: 'charts/helm-template-output/'
+          DEST_DIR: 'integrations/kubernetes/network-client/templates/'
