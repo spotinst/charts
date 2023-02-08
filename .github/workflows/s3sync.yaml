@@ -5,7 +5,7 @@ on:
     branches:
       - s3sync-github-workflow
     paths:
-      - charts/**
+      - charts/ocean-network-client/**
 
 jobs:
   deploy:
