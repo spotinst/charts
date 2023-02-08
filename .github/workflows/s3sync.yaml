@@ -8,7 +8,7 @@ on:
       - charts/ocean-network-client/**
 
 jobs:
-  deploy:
+  s3sync:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -16,12 +16,16 @@ jobs:
 
       - name: Install Helm
         uses: azure/setup-helm@v3
+        with:
+          version: 'v3.9.0'
 
       - name: Helm Template
         run: |
           mkdir charts/helm-template-output
           cd charts/ocean-network-client
           helm template . > ../helm-template-output/network-client.yaml
+          echo "Helm template grnerated yamls: "
+          cat ../helm-template-output/network-client.yaml
 
       - name: S3 Sync
         uses: jakejarvis/s3-sync-action@master
