@@ -3,7 +3,7 @@ name: S3 Sync
 on:
   push:
     branches:
-      - master
+      - s3sync-github-workflow
     paths:
       - charts/**
 
