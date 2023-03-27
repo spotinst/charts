@@ -1,6 +1,6 @@
 # ocean-metric-exporter
 
-![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.2](https://img.shields.io/badge/AppVersion-1.0.2-informational?style=flat-square)
+![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.3](https://img.shields.io/badge/AppVersion-1.0.3-informational?style=flat-square)
 
 A Helm chart for Ocean Metric Exporter.
 
@@ -30,27 +30,27 @@ helm install my-release spot/ocean-metric-exporter
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | Optional | `{}` | Pod scheduling preferences. Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity |
-| image.pullPolicy | Optional | `"IfNotPresent"` | Image pull policy. |
-| image.pullSecrets | Optional | `[]` | Image pull secrets. |
-| image.repository | Optional | `"gcr.io/spotinst-artifacts/spot-ocean-metric-exporter"` | Image repository. |
-| image.tag | Optional | `""` | Image tag. Defaults to `.Chart.AppVersion`. |
-| metricsConfiguration | Optional | `{"allowLabels":null,"allowMetrics":null,"categories":["scaling"],"denyLabels":null,"denyMetrics":null}` | Exporter Metrics Configurations |
+| affinity | object | `{}` | (Optional) Pod scheduling preferences. Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity |
+| image.pullPolicy | string | `"IfNotPresent"` | (Optional) Image pull policy. |
+| image.pullSecrets | list | `[]` | (Optional) Image pull secrets. |
+| image.repository | string | `"gcr.io/spotinst-artifacts/spot-ocean-metric-exporter"` | (Optional) Image repository. |
+| image.tag | string | `""` | (Optional) Image tag. Defaults to `.Chart.AppVersion`. |
+| metricsConfiguration | object | `{"allowLabels":null,"allowMetrics":null,"categories":["scaling"],"denyLabels":null,"denyMetrics":null}` | (Optional) Exporter Metrics Configurations |
 | metricsConfiguration.allowLabels | Array[string] | `nil` | List of Labels to allow - if empty will get everything. Shouldn't be used with `denyLabels`. Possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=labels |
 | metricsConfiguration.allowMetrics | Array[string] | `nil` | List of Metrics to allow - if empty will get everything. Shouldn't be used with `denyMetrics`. Possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=metrics |
-| metricsConfiguration.categories | Array[string] | `["scaling"]` | List of Categories to enable - if empty will get no metrics. Additional possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=categories |
+| metricsConfiguration.categories | list | `["scaling"]` | (Array[string]) List of Categories to enable - if empty will get no metrics. Additional possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=categories |
 | metricsConfiguration.denyLabels | Array[string] | `nil` | List of Labels to deny - if empty will get everything. Shouldn't be used with `allowLabels`. Possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=labels |
 | metricsConfiguration.denyMetrics | Array[string] | `nil` | List of Metrics to deny - if empty will get everything. Shouldn't be used with `allowMetrics`. Possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=metrics |
-| nodeSelector | Optional | `{}` | Node selector. |
-| oceanController.caBundleSecretName | Optional | `"spotinst-kubernetes-cluster-controller-ca-bundle"` | Secret name of CA bundle. |
-| oceanController.configMapName | Optional | `"spotinst-kubernetes-cluster-controller-config"` | ConfigMap name. |
-| oceanController.namespace | Optional | `"kube-system"` | Namespace where components should be installed. |
-| oceanController.secretName | Optional | `"spotinst-kubernetes-cluster-controller"` | Secret name. |
-| podAnnotations | Optional | `{}` | Pod annotations. Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
-| replicaCount | Optional | `1` | Replicas. Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas |
-| resources | Optional | `{"limits":{"cpu":"500m","memory":"500Mi"},"requests":{"cpu":"100m","memory":"50Mi"}}` | Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
-| service.create | Optional | `true` | Controls whether a service should be created. |
-| tolerations | Optional | `[{"key":"node-role.kubernetes.io/master","operator":"Exists"},{"key":"node-role.kubernetes.io/control-plane","operator":"Exists"}]` | Tolerations for nodes that have taints on them. Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
+| nodeSelector | object | `{}` | (Optional) Node selector. |
+| oceanController.caBundleSecretName | string | `"spotinst-kubernetes-cluster-controller-ca-bundle"` | (Optional) Secret name of CA bundle. |
+| oceanController.configMapName | string | `"spotinst-kubernetes-cluster-controller-config"` | (Optional) ConfigMap name. |
+| oceanController.namespace | string | `"kube-system"` | (Optional) Namespace where components should be installed. |
+| oceanController.secretName | string | `"spotinst-kubernetes-cluster-controller"` | (Optional) Secret name. |
+| podAnnotations | object | `{}` | (Optional) Pod annotations. Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
+| replicaCount | int | `1` | (Optional) Replicas. Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas |
+| resources | object | `{"limits":{"cpu":"500m","memory":"500Mi"},"requests":{"cpu":"100m","memory":"50Mi"}}` | (Optional) Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
+| service.create | bool | `true` | (Optional) Controls whether a service should be created. |
+| tolerations | list | `[{"key":"node-role.kubernetes.io/master","operator":"Exists"},{"key":"node-role.kubernetes.io/control-plane","operator":"Exists"}]` | (Optional) Tolerations for nodes that have taints on them. Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
 
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
+Autogenerated from chart metadata using [helm-docs v1.7.0](https://github.com/norwoodj/helm-docs/releases/v1.7.0)
