@@ -50,30 +50,35 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ include "ocean-network-client.secretName" . }}
+                  namespace: {{ include "ocean-network-client.oceanControllerNamespace" .}}
                   key: token
                   optional: true
             - name: SPOTINST_ACCOUNT
               valueFrom:
                 secretKeyRef:
                   name: {{ include "ocean-network-client.secretName" . }}
+                  namespace: {{ include "ocean-network-client.oceanControllerNamespace" .}}
                   key: account
                   optional: true
             - name: SPOTINST_TOKEN_LEGACY
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "ocean-network-client.configMapName" . }}
+                  namespace: {{ include "ocean-network-client.oceanControllerNamespace" .}}
                   key: spotinst.token
                   optional: true
             - name: SPOTINST_ACCOUNT_LEGACY
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "ocean-network-client.configMapName" . }}
+                  namespace: {{ include "ocean-network-client.oceanControllerNamespace" .}}
                   key: spotinst.account
                   optional: true
             - name: CLUSTER_IDENTIFIER
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "ocean-network-client.configMapName" . }}
+                  namespace: {{ include "ocean-network-client.oceanControllerNamespace" .}}
                   key: spotinst.cluster-identifier
                   optional: true
             - name: MY_POD_IP
