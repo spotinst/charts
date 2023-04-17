@@ -27,6 +27,13 @@ Secret name.
 {{- end }}
 
 {{/*
+Ocean Controller namespace.
+*/}}
+{{- define "ocean-network-client.oceanControllerNamespace" -}}
+{{ default "kube-system" .Values.oceanController.oceanControllerNamespace }}
+{{- end }}
+
+{{/*
 DaemonSet labels.
 */}}
 {{- define "ocean-network-client.daemon-set.labels" -}}
