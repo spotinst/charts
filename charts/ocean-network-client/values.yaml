@@ -1,10 +1,10 @@
-namespace: kube-system
-
 oceanController:
   # -- (Optional) Secret name.
   secretName: spotinst-kubernetes-cluster-controller
   # -- (Optional) ConfigMap name.
   configMapName: spotinst-kubernetes-cluster-controller-config
+  # -- (Optional) Namespace where components should be installed.
+  namespace: kube-system
 
 image:
   # -- (Optional) Image repository.
