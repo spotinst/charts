@@ -12,7 +12,7 @@ image:
   # -- (Optional) Image pull policy.
   pullPolicy: Always
   # -- (Optional) Image pull secrets.
-  pullSecrets: [ ]
+  pullSecrets: []
   # -- (Optional) Image tag. Defaults to `.Chart.AppVersion`.
   tag: ""
 
