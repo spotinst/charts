@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - SPOTDS-1-fix-s3-sync
     paths:
       - charts/ocean-network-client/**
 
