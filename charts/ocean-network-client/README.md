@@ -6,7 +6,7 @@ A Helm chart for Ocean Network Client
 
 **Homepage:** <https://github.com/spotinst/charts/tree/main/charts/ocean-network-client>
 
-## Maintainers-GIDI
+## Maintainers
 
 | Name     | Email                     | Url |
 | -------- | ------------------------- | --- |
