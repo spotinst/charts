@@ -3,7 +3,7 @@ name: S3 Sync
 on:
   push:
     branches:
-      - main
+      - main, SPOTDS-1-fix-s3-sync
     paths:
       - charts/ocean-network-client/**
 
