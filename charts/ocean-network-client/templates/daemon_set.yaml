@@ -84,3 +84,9 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+           - name: CILIUM_CNI_TUNNEL_MODE
+             valueFrom:
+               configMapKeyRef:
+                 key: tunnel
+                 name: cilium-config
+                 optional: true
