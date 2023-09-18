@@ -28,6 +28,11 @@ image:
 # Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 podAnnotations: {}
 
+# -- (Optional) Additional environment variables for the exporter container.
+podEnvVariables: []
+#  - name: envName
+#    value: envValue
+
 # -- (Optional) Resource requests and limits.
 # Ref: http://kubernetes.io/docs/user-guide/compute-resources/
 resources:

@@ -76,6 +76,9 @@ spec:
               name: {{ include "ocean-metric-exporter.caBundleSecretName" . }}
               key: userEnvCertificates.pem
               optional: true
+        {{- with .Values.podEnvVariables }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
         image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command: {{ include "ocean-metric-exporter.command" . }}
