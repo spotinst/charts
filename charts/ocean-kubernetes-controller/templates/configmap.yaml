@@ -9,6 +9,7 @@ data:
   spotinst.cluster-identifier: {{ required "`spotinst.clusterIdentifier` must be specified" .Values.spotinst.clusterIdentifier }}
   base-url: {{ default "" .Values.spotinst.baseUrl | quote }}
   proxy-url: {{ default "" .Values.spotinst.proxyUrl | quote }}
+  leader-election: {{ gt (int .Values.replicas) 1 | quote }}
   disable-auto-update: {{ default "false" .Values.spotinst.disableAutoUpdate | quote }}
   enable-csr-approval: {{ default "false" .Values.spotinst.enableCsrApproval | quote }}
 {{- end }}

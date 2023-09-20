@@ -7,7 +7,7 @@ metadata:
   labels:
     {{- include "ocean-kubernetes-controller.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicas }}
   {{- with .Values.updateStrategy }}
   strategy:
     {{- toYaml . | nindent 4 }}
@@ -18,8 +18,10 @@ spec:
   template:
     metadata:
       annotations:
-        # This will restart the deployment in case of configmap changes
+        # This will restart the deployment in case of configmap/secret changes
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+
         {{- with .Values.podAnnotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -69,6 +71,12 @@ spec:
               configMapKeyRef:
                 name: {{ include "ocean-kubernetes-controller.configMapName" . }}
                 key: spotinst.token
+                optional: true
+          - name: SPOTINST_LEADER_ELECTION_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "ocean-kubernetes-controller.configMapName" . }}
+                key: leader-election
                 optional: true
           - name: SPOTINST_ACCOUNT_LEGACY
             valueFrom:
