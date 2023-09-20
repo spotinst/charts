@@ -1,0 +1,120 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "ocean-kubernetes-controller.fullname" . }}
+  labels:
+  {{- include "ocean-kubernetes-controller.labels" . | nindent 4 }}
+rules:
+# ---------------------------------------------------------------------------
+# feature: ocean/readonly
+# ---------------------------------------------------------------------------
+- apiGroups: [ "" ]
+  resources: [ "pods", "nodes", "services", "namespaces", "replicationcontrollers", "limitranges", "events", "persistentvolumes", "persistentvolumeclaims" ]
+  verbs: [ "get", "list", "watch" ]
+- apiGroups: [ "apps" ]
+  resources: [ "deployments", "daemonsets", "statefulsets", "replicasets" ]
+  verbs: [ "get", "list", "watch" ]
+- apiGroups: [ "storage.k8s.io" ]
+  resources: [ "storageclasses" ]
+  verbs: [ "get", "list", "watch" ]
+- apiGroups: [ "batch" ]
+  resources: [ "jobs", "cronjobs" ]
+  verbs: [ "get", "list", "watch" ]
+- apiGroups: [ "policy" ]
+  resources: [ "poddisruptionbudgets" ]
+  verbs: [ "get", "list", "watch" ]
+- apiGroups: [ "metrics.k8s.io" ]
+  resources: [ "pods" ]
+  verbs: [ "get", "list", "watch" ]
+- apiGroups: [ "autoscaling" ]
+  resources: [ "horizontalpodautoscalers" ]
+  verbs: [ "get", "list", "watch" ]
+- apiGroups: [ "apiextensions.k8s.io" ]
+  resources: [ "customresourcedefinitions" ]
+  verbs: [ "get", "list", "watch" ]
+- apiGroups: [ "node.k8s.io" ]
+  resources: [ "runtimeclasses" ]
+  verbs: [ "get", "list", "watch" ]
+- nonResourceURLs: [ "/version/", "/version" ]
+  verbs: [ "get" ]
+# ---------------------------------------------------------------------------
+# feature: ocean/draining
+# ---------------------------------------------------------------------------
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["patch", "update"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["delete"]
+- apiGroups: [""]
+  resources: ["pods/eviction"]
+  verbs: ["create"]
+# ---------------------------------------------------------------------------
+# feature: ocean/cleanup
+# ---------------------------------------------------------------------------
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["delete"]
+# ---------------------------------------------------------------------------
+# feature: ocean/csr-approval
+# ---------------------------------------------------------------------------
+- apiGroups: ["certificates.k8s.io"]
+  resources: ["certificatesigningrequests"]
+  verbs: ["get", "list", "delete", "create"]
+- apiGroups: ["certificates.k8s.io"]
+  resources: ["certificatesigningrequests/approval"]
+  verbs: ["patch", "update"]
+- apiGroups: ["certificates.k8s.io"]
+  resources: ["signers"]
+  resourceNames: ["kubernetes.io/kubelet-serving", "kubernetes.io/kube-apiserver-client-kubelet"]
+  verbs: ["approve"]
+# ---------------------------------------------------------------------------
+# feature: ocean/auto-update
+# ---------------------------------------------------------------------------
+- apiGroups: ["rbac.authorization.k8s.io"]
+  resources: ["clusterroles"]
+  resourceNames: ["spotinst-kubernetes-cluster-controller"]
+  verbs: ["patch", "update", "escalate"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  resourceNames: ["spotinst-kubernetes-cluster-controller"]
+  verbs: ["patch", "update"]
+# ---------------------------------------------------------------------------
+# feature: ocean/apply
+# ---------------------------------------------------------------------------
+- apiGroups: ["apps"]
+  resources: ["deployments", "daemonsets"]
+  verbs: ["get", "list", "patch", "update", "create", "delete"]
+- apiGroups: ["extensions"]
+  resources: ["daemonsets"]
+  verbs: ["get", "list", "patch", "update", "create", "delete"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "patch", "update", "create", "delete"]
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["get", "list", "patch", "update", "create", "delete"]
+# ---------------------------------------------------------------------------
+# feature: wave
+# ---------------------------------------------------------------------------
+- apiGroups: ["sparkoperator.k8s.io"]
+  resources: ["sparkapplications", "scheduledsparkapplications"]
+  verbs: ["get", "list", "patch", "update", "create", "delete"]
+- apiGroups: ["wave.spot.io"]
+  resources: ["sparkapplications", "wavecomponents", "waveenvironments"]
+  verbs: ["get", "list"]
+- apiGroups: ["bigdata.spot.io"]
+  resources: ["bigdataenvironments"]
+  verbs: ["get", "list", "patch", "update", "create", "delete"]
+# ---------------------------------------------------------------------------
+# feature: controller/leader-election (high-availability)
+# ---------------------------------------------------------------------------
+- apiGroups: [ "coordination.k8s.io" ]
+  resources: [ "leases" ]
+  verbs: [ "get","list","patch","update","create","delete" ]
+# ---------------------------------------------------------------------------
+# feature: controller/report-events
+# ---------------------------------------------------------------------------
+- apiGroups: [ "" ]
+  resources: [ "events" ]
+  verbs: [ "create" ]

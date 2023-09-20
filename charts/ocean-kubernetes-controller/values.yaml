@@ -115,10 +115,6 @@ readinessProbe:
   initialDelaySeconds: 5
   periodSeconds: 10
 
-service:
-  type: ClusterIP
-  port: 80
-
 # Controller pod resources. (Optional)
 resources: {}
   # requests:
@@ -134,60 +130,40 @@ nodeSelector: {}
 # -- Tolerations for nodes that have taints on them. (Optional)
 # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 tolerations:
-- key: node.kubernetes.io/not-ready
-  effect: NoExecute
-  operator: Exists
-  tolerationSeconds: 150
-- key: node.kubernetes.io/unreachable
-  effect: NoExecute
-  operator: Exists
-  tolerationSeconds: 150
-- key: node-role.kubernetes.io/master
-  operator: Exists
-- key: node-role.kubernetes.io/control-plane
-  operator: Exists
+# - key: node.kubernetes.io/not-ready
+#   effect: NoExecute
+#   operator: Exists
+#   tolerationSeconds: 150
 
 # Pod scheduling preferences.
 # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 affinity:
-  # -- Node affinity. (Optional)
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/os
-          operator: NotIn
-          values:
-          - windows
-    preferredDuringSchedulingIgnoredDuringExecution:
-    - weight: 100
-      preference:
-        matchExpressions:
-        - key: node-role.kubernetes.io/master
-          operator: Exists
-  # -- Pod anti-affinity. (Optional)
-  podAntiAffinity:
-    preferredDuringSchedulingIgnoredDuringExecution:
-    - weight: 50
-      podAffinityTerm:
-        labelSelector:
-          matchExpressions:
-          - key: app.kubernetes.io/name
-            operator: In
-            values:
-            - spotinst-kubernetes-cluster-controller
-        topologyKey: kubernetes.io/hostname
+#   podAntiAffinity:
+#     preferredDuringSchedulingIgnoredDuringExecution:
+#     - weight: 50
+#       podAffinityTerm:
+#         labelSelector:
+#           matchExpressions:
+#           - key: app.kubernetes.io/name
+#             operator: In
+#             values:
+#             - spotinst-kubernetes-cluster-controller
+#         topologyKey: kubernetes.io/hostname
+
+topologySpreadConstraints:
+# - maxSkew: 1
+#   topologyKey: kubernetes.io/hostname
+#   labelSelector:
+#     app: test
 
 extraVolumeMounts: []
 
 extraVolumes: []
 
-topologySpreadConstraints: []
+schedulerName: ""
 
 # Annotations to add to the deployment
 deploymentAnnotations: {}
-
-schedulerName: ""
 
 # Metrics Server configuration.
 metrics-server:
