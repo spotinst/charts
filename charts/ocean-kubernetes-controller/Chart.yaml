@@ -3,7 +3,7 @@ name: ocean-kubernetes-controller
 description: A Helm chart for Ocean Controller
 type: application
 version: 0.1.0
-appVersion: "2.0.16"
+appVersion: 2.0.17
 maintainers:
 - name: spotinst
   email: ng-spot-info@netapp.com
