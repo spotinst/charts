@@ -16,4 +16,4 @@ dependencies:
 - name: metrics-server
   version: 3.11.0
   repository: https://kubernetes-sigs.github.io/metrics-server
-  condition: metrics-server.deployChart
+  condition: metrics-server.enabled

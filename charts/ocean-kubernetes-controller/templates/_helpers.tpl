@@ -61,59 +61,80 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 ConfigMap name.
 */}}
 {{- define "ocean-kubernetes-controller.configMapName" -}}
-{{ default (include "ocean-kubernetes-controller.name" .) .Values.configMap.name }}
+{{ default (include "ocean-kubernetes-controller.fullname" .) .Values.configMap.name }}
 {{- end }}
 
 {{/*
 Secret name.
 */}}
 {{- define "ocean-kubernetes-controller.secretName" -}}
-{{ default (include "ocean-kubernetes-controller.name" .) .Values.secret.name }}
+{{ default (include "ocean-kubernetes-controller.fullname" .) .Values.secret.name }}
 {{- end }}
 
 {{/*
 CA bundle secret name.
 */}}
 {{- define "ocean-kubernetes-controller.caBundleSecretName" -}}
-{{ default (include "ocean-kubernetes-controller.name" .) .Values.caBundleSecret.name }}
+{{ default (include "ocean-kubernetes-controller.fullname" .) .Values.caBundleSecret.name }}
 {{- end }}
 
 {{/*
 ClusterRole name.
 */}}
 {{- define "ocean-kubernetes-controller.clusterRoleName" -}}
-{{ include "ocean-kubernetes-controller.name" . }}
+{{ include "ocean-kubernetes-controller.fullname" . }}
 {{- end }}
 
 {{/*
 ClusterRoleBinding name.
 */}}
 {{- define "ocean-kubernetes-controller.clusterRoleBindingName" -}}
-{{ include "ocean-kubernetes-controller.name" . }}
+{{ include "ocean-kubernetes-controller.fullname" . }}
 {{- end }}
 
 {{/*
-Deployment name.
-*/}}
-{{- define "ocean-kubernetes-controller.deploymentName" -}}
-{{ include "ocean-kubernetes-controller.name" . }}
-{{- end }}
-
-{{/*
-Job name (ocean-aks-connector).
-*/}}
-{{- define "ocean-kubernetes-controller.aksConnectorJobName" -}}
-{{ default (include "ocean-kubernetes-controller.name" .) .Values.aksConnector.jobName }}
-{{- end }}
-
-
-{{/*
-Create the name of the service account to use
+Create the name of the service-account to use
 */}}
 {{- define "ocean-kubernetes-controller.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
 {{- default (include "ocean-kubernetes-controller.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
+
+{{/*
+Figure out if we should deploy metrics server. We are checking:
+- if 'metrics-server.deployChart' is true:
+  - try to fetch the 'v1beta1.metrics.k8s.io' APIService
+  - if it exists:
+    - check for it's helm annotations to see if it was installed as part of the
+      same release we are installing now (release name and namespace annotations).
+    - if it's not the same release -> fail
+*/}}
+{{- define "ocean-kubernetes-controller.deployMetricsServer" }}
+{{- if (index .Values "metrics-server" "deployChart") }}
+{{- $apiService := lookup "apiregistration.k8s.io/v1" "APIService" "" "v1beta1.metrics.k8s.io" }}
+{{- $releaseName := .Release.Name }}
+{{- $releaseNamespace := .Release.Namespace }}
+{{- if $apiService -}}
+{{- with $apiService }}
+{{- if (or 
+    (not .metadata.annotations)
+    (or
+        (ne 
+            $releaseName
+            (index .metadata.annotations "meta.helm.sh/release-name")
+        )
+        (ne 
+            $releaseNamespace
+            (index .metadata.annotations "meta.helm.sh/release-namespace")
+        )
+    ))
+}}
+{{- fail "\nThe value: 'metrics-server.deployChart' was set to 'true' but we found another installation of metrics-server in your cluster.\nYou must use:\n    --set metrics-server.deployChart=false" }}
+{{- end }}
+{{- end }}
+{{- end }}
 {{- end }}
 {{- end }}

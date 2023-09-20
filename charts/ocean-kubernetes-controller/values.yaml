@@ -1,5 +1,8 @@
 # Default values for ocean-kubernetes-controller.
 
+nameOverride: ""
+fullnameOverride: ""
+
 # Spot Configuration.
 spotinst:
   # -- Spot Token. (Required)
@@ -21,19 +24,8 @@ spotinst:
   # -- Enable CSR approval. (Optional)
   enableCsrApproval: false
 
-nameOverride: ""
-fullnameOverride: ""
-
 # -- Configure the amount of replicas for the controller (Optional)
 replicas: 3
-
-priorityClassName: system-cluster-critical
-
-updateStrategy: {}
-#   type: RollingUpdate
-#   rollingUpdate:
-#     maxSurge: 0
-#     maxUnavailable: 1
 
 image:
   repository: us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller
@@ -49,27 +41,26 @@ serviceAccount:
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use. (Optional)
-  name: "spotinst-kubernetes-cluster-controller"
+  name: ""
 
 secret:
   # -- Controls whether a Secret should be created. (Optional)
   create: true
   # -- Secret name. (Optional)
-  name: spotinst-kubernetes-cluster-controller
+  name: ""
 
 # CA bundle.
 # Ref: https://kubernetes.io/docs/concepts/configuration/secret/
 caBundleSecret:
-  create: false
   # -- Secret name. (Optional)
-  name: spotinst-kubernetes-cluster-controller-ca-bundle
+  name: ""
 
 # Config Map.
 # Ref: https://kubernetes.io/docs/concepts/configuration/configmap/
 configMap:
   create: true
   # -- ConfigMap name. (Optional)
-  name: spotinst-kubernetes-cluster-controller-config
+  name: ""
 
 podAnnotations: {}
 podLabels: {}
@@ -93,6 +84,8 @@ securityContext:
   capabilities:
     drop:
     - ALL
+
+priorityClassName: system-cluster-critical
 
 args: []
 #  - --test
@@ -124,7 +117,6 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-
 nodeSelector: {}
 
 # -- Tolerations for nodes that have taints on them. (Optional)
@@ -153,6 +145,7 @@ affinity:
 topologySpreadConstraints:
 # - maxSkew: 1
 #   topologyKey: kubernetes.io/hostname
+#   whenUnsatisfiable: ScheduleAnyway
 #   labelSelector:
 #     app: test
 
@@ -164,6 +157,13 @@ schedulerName: ""
 
 # Annotations to add to the deployment
 deploymentAnnotations: {}
+
+# Deployment update strategy
+updateStrategy: {}
+#   type: RollingUpdate
+#   rollingUpdate:
+#     maxSurge: 0
+#     maxUnavailable: 1
 
 # Metrics Server configuration.
 metrics-server:

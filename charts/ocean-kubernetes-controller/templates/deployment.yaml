@@ -1,3 +1,4 @@
+{{ include "ocean-kubernetes-controller.deployMetricsServer" . }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,10 +17,12 @@ spec:
       {{- include "ocean-kubernetes-controller.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        # This will restart the deployment in case of configmap changes
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
         {{- include "ocean-kubernetes-controller.selectorLabels" . | nindent 8 }}
         {{- with .Values.podLabels }}
@@ -163,12 +166,12 @@ spec:
                 operator: NotIn
                 values:
                 - windows
-        preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          preference:
-            matchExpressions:
-            - key: node-role.kubernetes.io/master
-              operator: Exists
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            preference:
+              matchExpressions:
+              - key: node-role.kubernetes.io/master
+                operator: Exists
       {{- else }}
       {{- with .Values.affinity }}
       affinity:
@@ -199,8 +202,10 @@ spec:
       topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
         labelSelector:
-          {{- include "ocean-kubernetes-controller.selectorLabels" . | nindent 6 }}
+          matchLabels:
+            {{- include "ocean-kubernetes-controller.selectorLabels" . | nindent 12 }}
       {{- else }}
       {{- with .Values.topologySpreadConstraints }}
       topologySpreadConstraints:
