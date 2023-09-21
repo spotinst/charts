@@ -75,7 +75,7 @@ Secret name.
 CA bundle secret name.
 */}}
 {{- define "ocean-kubernetes-controller.caBundleSecretName" -}}
-{{ default (include "ocean-kubernetes-controller.fullname" .) .Values.caBundleSecret.name }}
+{{ default (printf "%s-ca-bundle" (include "ocean-kubernetes-controller.fullname" .)) .Values.caBundleSecret.name }}
 {{- end }}
 
 {{/*
