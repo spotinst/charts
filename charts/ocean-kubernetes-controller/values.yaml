@@ -85,8 +85,6 @@ securityContext:
     drop:
     - ALL
 
-priorityClassName: system-cluster-critical
-
 args: []
 #  - --test
 

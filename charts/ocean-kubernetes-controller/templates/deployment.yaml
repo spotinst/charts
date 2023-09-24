@@ -156,7 +156,6 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
       volumes:
-      # TODO: handle caBundleSecret volume
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
