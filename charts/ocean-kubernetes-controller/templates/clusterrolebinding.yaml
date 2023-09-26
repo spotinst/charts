@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "ocean-kubernetes-controller.fullname" . }}
+  labels:
+  {{- include "ocean-kubernetes-controller.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "ocean-kubernetes-controller.fullname" . }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "ocean-kubernetes-controller.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}

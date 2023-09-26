@@ -1,0 +1,22 @@
+apiVersion: v2
+name: ocean-kubernetes-controller
+description: A Helm chart for Ocean Controller
+type: application
+version: 0.1.0
+appVersion: 2.0.17
+kubeVersion: ">=1.20.0-0"
+maintainers:
+- name: spotinst
+  email: ng-spot-info@netapp.com
+icon: https://docs.spot.io/_media/images/spot_mark.png
+keywords:
+- spot
+- ocean
+- controller
+dependencies:
+- name: metrics-server
+  version: 3.11.0
+  repository: https://kubernetes-sigs.github.io/metrics-server
+  condition: metrics-server.enabled
+annotations:
+  artifacthub.io/prerelease: "true"

@@ -4,4 +4,6 @@
 #   - incubator=https://charts.helm.sh/incubator
 target-branch: main
 helm-extra-args: --debug
+chart-repos:
+- metrics-server=https://kubernetes-sigs.github.io/metrics-server
 debug: true
