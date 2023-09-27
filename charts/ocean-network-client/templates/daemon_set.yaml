@@ -7,6 +7,10 @@ spec:
   selector:
     matchLabels:
       {{- include "ocean-network-client.daemon-set.labels" . | nindent 6 }}
+  {{- with .Values.updateStrategy }}
+  updateStrategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   template:
     metadata:
       labels:
