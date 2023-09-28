@@ -25,7 +25,7 @@ spotinst:
   enableCsrApproval: false
 
 # -- Configure the amount of replicas for the controller (Optional)
-replicas: 3
+replicas: 2
 
 image:
   repository: us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller
