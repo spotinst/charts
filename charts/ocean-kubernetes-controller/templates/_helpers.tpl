@@ -104,6 +104,22 @@ Create the name of the service-account to use
 {{- end }}
 
 {{/*
+NO_PROXY environment variable
+*/}}
+{{- define "ocean-kubernetes-controller.noProxyEnvVar" -}}
+{{- $hasNoProxyEnvVar := false -}}
+{{- range .Values.extraEnv }}
+{{- if eq .name "NO_PROXY" }}
+{{- $hasNoProxyEnvVar = true }}
+{{- end }}
+{{- end }}
+{{- if and .Values.spotinst.proxyUrl (not $hasNoProxyEnvVar) -}}
+- name: NO_PROXY
+  value: '$(KUBERNETES_SERVICE_HOST)' # will be replaced to $(KUBERNETES_SERVICE_HOST) in cluster
+{{ end -}}
+{{- end }}
+
+{{/*
 Figure out if we should deploy metrics server. We are checking:
 - if 'metrics-server.deployChart' is true:
   - try to fetch the 'v1beta1.metrics.k8s.io' APIService

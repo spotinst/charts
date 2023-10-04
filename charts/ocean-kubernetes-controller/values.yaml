@@ -52,8 +52,15 @@ secret:
 # CA bundle.
 # Ref: https://kubernetes.io/docs/concepts/configuration/secret/
 caBundleSecret:
-  # -- Secret name. (Optional)
+  # -- CA bundle Secret name. (Optional)
   name: ""
+  # -- Key inside the secret to inject the CA bundle from
+  key: "userEnvCertificates.pem"
+  # -- Controls whether a CA bundle secret should be created.
+  create: false
+  # -- Must contain the CA bundle data in case `caBundleSecret.create` is true.
+  # For example by using `--set caBundleSecret.data="$(cat ./ca.pem)"`
+  data: ""
 
 # Config Map.
 # Ref: https://kubernetes.io/docs/concepts/configuration/configmap/

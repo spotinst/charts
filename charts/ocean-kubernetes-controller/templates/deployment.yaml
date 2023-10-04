@@ -95,7 +95,7 @@ spec:
                 name: {{ include "ocean-kubernetes-controller.configMapName" . }}
                 key: base-url
                 optional: true
-          - name: PROXY_URL
+          - name: HTTPS_PROXY
             valueFrom:
               configMapKeyRef:
                 name: {{ include "ocean-kubernetes-controller.configMapName" . }}
@@ -117,7 +117,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: {{ include "ocean-kubernetes-controller.caBundleSecretName" . }}
-                key: userEnvCertificates.pem
+                key: {{ .Values.caBundleSecret.key }}
                 optional: true
           - name: POD_ID
             valueFrom:
@@ -134,6 +134,7 @@ spec:
           {{- with .Values.extraEnv }}
             {{- toYaml . | nindent 10 }}
           {{- end }}
+          {{- include "ocean-kubernetes-controller.noProxyEnvVar" . | nindent 10 -}}
           ports:
           - name: metrics
             containerPort: 9080
