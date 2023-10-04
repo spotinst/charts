@@ -21,10 +21,39 @@ helm repo update
 3. Install `ocean-kubernetes-controller`:
 
 ```sh
-helm install my-release spot/ocean-kubernetes-controller
+helm install spot spot/ocean-kubernetes-controller \
+  --set spotinst.account=$SPOTINST_ACCOUNT \
+  --set spotinst.clusterIdentifier=$SPOTINST_CLUSTER_IDENTIFIER \
+  --set spotinst.token=$SPOTINST_TOKEN
 ```
 
 > NOTE: Please configure all required chart values using the `set` command line argument or a `values.yaml` file.
+
+## Installation With HTTPS Proxy
+
+In case you need to configure a proxy with a custom CA bundle you should use the following:
+
+```sh
+helm install spot spot/ocean-kubernetes-controller \
+  --set spotinst.account=$SPOTINST_ACCOUNT \
+  --set spotinst.clusterIdentifier=$SPOTINST_CLUSTER_IDENTIFIER \
+  --set spotinst.token=$SPOTINST_TOKEN \
+  --set spotinst.proxyUrl=$SPOTINST_PROXY_URL \
+  --set caBundleSecret.create=true \
+  --set caBundleSecret.data="$(cat ./path/to/ca.pem)"
+```
+
+If you already have a CA bundle secret you can instead use:
+
+```sh
+helm install spot spot/ocean-kubernetes-controller \
+  --set spotinst.account=$SPOTINST_ACCOUNT \
+  --set spotinst.clusterIdentifier=$SPOTINST_CLUSTER_IDENTIFIER \
+  --set spotinst.token=$SPOTINST_TOKEN \
+  --set spotinst.proxyUrl=$SPOTINST_PROXY_URL \
+  --set caBundleSecret.name=my-ca-bundle-secret \
+  --set caBundleSecret.key=bundle.pem
+```
 
 ## Requirements
 
