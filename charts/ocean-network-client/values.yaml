@@ -30,3 +30,9 @@ resources:
 # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 tolerations:
   - operator: "Exists"
+
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 0
+    maxUnavailable: 10%
