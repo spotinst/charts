@@ -1,6 +1,6 @@
 # ocean-network-client
 
-![Version: 1.0.13](https://img.shields.io/badge/Version-1.0.13-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.4](https://img.shields.io/badge/AppVersion-1.0.4-informational?style=flat-square)
+![Version: 1.0.13](https://img.shields.io/badge/Version-1.0.13-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.5](https://img.shields.io/badge/AppVersion-1.0.5-informational?style=flat-square)
 
 A Helm chart for Ocean Network Client
 
@@ -42,17 +42,17 @@ helm install my-release spot/ocean-network-client
 
 ## Values
 
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| image.pullPolicy | Optional | `"Always"` | Image pull policy. |
-| image.pullSecrets | Optional | `[]` | Image pull secrets. |
-| image.repository | Optional | `"public.ecr.aws/spotinst/spot-network-client"` | Image repository. |
-| image.tag | Optional | `""` | Image tag. Defaults to `.Chart.AppVersion`. |
-| namespace | Optional | `"kube-system"` | Namespace where components should be installed. |
-| oceanController.configMapName | Optional | `"spotinst-kubernetes-cluster-controller-config"` | ConfigMap name. |
-| oceanController.secretName | Optional | `"spotinst-kubernetes-cluster-controller"` | Secret name. |
-| resources | Optional | `{"limits":{"cpu":"300m","memory":"500Mi"},"requests":{"cpu":"10m","memory":"100Mi"}}` | Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
-| tolerations | Optional | `[{"operator":"Exists"}]` | Tolerations - Enable pods to run an all nodes in cluster Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/ |
-
+| Key | Type | Default                                                                                | Description                                                                                                                                 |
+|-----|------|----------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| image.pullPolicy | Optional | `"Always"`                                                                             | Image pull policy.                                                                                                                          |
+| image.pullSecrets | Optional | `[]`                                                                                   | Image pull secrets.                                                                                                                         |
+| image.repository | Optional | `"public.ecr.aws/spotinst/spot-network-client"`                                        | Image repository.                                                                                                                           |
+| image.tag | Optional | `""`                                                                                   | Image tag. Defaults to `.Chart.AppVersion`.                                                                                                 |
+| namespace | Optional | `"kube-system"`                                                                        | Namespace where components should be installed.                                                                                             |
+| oceanController.configMapName | Optional | `"spotinst-kubernetes-cluster-controller-config"`                                      | ConfigMap name.                                                                                                                             |
+| oceanController.secretName | Optional | `"spotinst-kubernetes-cluster-controller"`                                             | Secret name.                                                                                                                                |
+| resources | Optional | `{"limits":{"cpu":"300m","memory":"500Mi"},"requests":{"cpu":"10m","memory":"100Mi"}}` | Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/                                                  |
+| tolerations | Optional | `[{"operator":"Exists"}]`                                                              | Tolerations - Enable pods to run an all nodes in cluster Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/ |
+| updateStrategy | Optional | `{"type":"RollingUpdate"},"rollingUpdate":{"maxSurge":"0","maxUnavailable":"10%"}}` | updateStrategy. Ref: https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/                                                      |
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
