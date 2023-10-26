@@ -31,8 +31,3 @@ resources:
 tolerations:
   - operator: "Exists"
 
-updateStrategy:
-  type: RollingUpdate
-  rollingUpdate:
-    maxSurge: 0
-    maxUnavailable: 10%
