@@ -7,6 +7,10 @@ spec:
   selector:
     matchLabels:
       {{- include "ocean-network-client.daemon-set.labels" . | nindent 6 }}
+  updateStrategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 10%
   template:
     metadata:
       labels:
