@@ -11,6 +11,10 @@ on:
         description: 'The new app-version'
         required: true
         type: string
+      token:
+        description: 'The github token to use to create the PR'
+        type: string
+        default: ${{ github.token }}
 
 jobs:
   update-app-version:
@@ -43,8 +47,8 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ inputs.token }}
           title: '[bump] ${{ inputs.chart-name }} - ${{inputs.app-version}}'
-          branch: release
+          branch: bump/${{ inputs.chart-name }}_${{inputs.app-version}}
           delete-branch: true
-          labels: release_auto_version_bump
+          labels: auto_version_bump
