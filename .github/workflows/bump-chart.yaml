@@ -1,0 +1,48 @@
+name: Create Release
+
+on:
+  workflow_call:
+    inputs:
+      chart-name:
+        description: 'The name of the chart'
+        required: true
+        type: string
+      app-version:
+        description: 'The new app-version'
+        required: true
+        type: string
+
+jobs:
+  update-app-version:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Clean version
+        id: clean-version
+        run: |
+          VERSION_INPUT=${{ inputs.app-version }}
+          echo "version=${VERSION_INPUT#v}" >> $GITHUB_OUTPUT
+
+      - name: Bump version
+        uses: mikefarah/yq@v4.40.4
+        with: 
+          cmd: |
+            yq -i '.appVersion = "${{ steps.clean-version.outputs.version }}"' ./charts/${{ inputs.chart-name }}/Chart.yaml
+            yq -i '.version |= (split(".") | .[-1] |= ((. tag = "!!int") + 1) | join("."))' ./charts/${{ inputs.chart-name }}/Chart.yaml
+
+      - name: Generate version bump commit
+        run: |
+          git config user.name ${{ github.actor }}
+          git config user.email '${{ github.actor }}@users.noreply.github.com'
+          git commit -a -m "bump ${{ inputs.chart-name }} app version to ${{ steps.clean-version.outputs.version }}"
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: '[bump] ${{ inputs.chart-name }} - ${{inputs.app-version}}'
+          branch: release
+          delete-branch: true
+          labels: release_auto_version_bump
