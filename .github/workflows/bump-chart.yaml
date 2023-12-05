@@ -12,7 +12,7 @@ on:
         required: true
         type: string
     secrets:
-      GITHUB_TOKEN:
+      token:
         description: 'The github token to use to create the PR'
         required: true
 
@@ -47,7 +47,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.token }}
           title: '[bump] ${{ inputs.chart-name }} - ${{inputs.app-version}}'
           branch: bump/${{ inputs.chart-name }}_${{inputs.app-version}}
           delete-branch: true
