@@ -20,7 +20,10 @@ image:
 # Ref: http://kubernetes.io/docs/user-guide/compute-resources/
 resources:
   requests:
-    cpu: 30m
+    cpu: 40m
+    memory: 150Mi
+  limits:
+    cpu: 40m
     memory: 150Mi
 
 # -- (Optional) Tolerations - Enable pods to run an all nodes in cluster
