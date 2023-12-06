@@ -25,7 +25,7 @@ resources:
   limits:
     cpu: 40m
     memory: 150Mi
-  
+
 # -- (Optional) Tolerations - Enable pods to run an all nodes in cluster
 # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 tolerations:
