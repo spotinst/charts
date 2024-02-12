@@ -23,6 +23,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: spotinst/charts
+      - uses: gabe565/setup-helm-docs-action@v1.0.3
 
       - name: Clean version
         id: clean-version
@@ -37,19 +38,16 @@ jobs:
             yq -i '.appVersion = "${{ steps.clean-version.outputs.version }}"' ./charts/${{ inputs.chart-name }}/Chart.yaml
             yq -i '.version |= (split(".") | .[-1] |= ((. tag = "!!int") + 1) | join("."))' ./charts/${{ inputs.chart-name }}/Chart.yaml
 
+      - name: Update helm docs
+        run: |
+          helm-docs --chart-to-generate charts/${{ inputs.chart-name }}
+
       - name: Generate version bump commit
         run: |
           git config user.name ${{ github.actor }}
           git config user.email '${{ github.actor }}@users.noreply.github.com'
           git commit -a -m "bump ${{ inputs.chart-name }} app version to ${{ steps.clean-version.outputs.version }}"
-      
-      - name: Update helm docs
-        uses: losisin/helm-docs-github-action@v1.1.7
-        with:
-          git-push: true
-          git-push-user-email: ${{ github.actor }}@users.noreply.github.com
-          git-push-user-name: ${{ github.actor }}
-      
+
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v4
