@@ -44,9 +44,9 @@ jobs:
           git commit -a -m "bump ${{ inputs.chart-name }} app version to ${{ steps.clean-version.outputs.version }}"
       
       - name: Update helm docs
-        uses: shaybentk/helm-docs-action@v0.0.1
+        uses: losisin/helm-docs-github-action@v1.1.7
         with:
-          working-dir: ./charts/${{ inputs.chart-name }}
+          chart-search-root: ./charts/${{ inputs.chart-name }}
           git-push: true
           git-push-user-email: ${{ github.actor }}@users.noreply.github.com
           git-push-user-name: ${{ github.actor }}
