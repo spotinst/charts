@@ -42,7 +42,15 @@ jobs:
           git config user.name ${{ github.actor }}
           git config user.email '${{ github.actor }}@users.noreply.github.com'
           git commit -a -m "bump ${{ inputs.chart-name }} app version to ${{ steps.clean-version.outputs.version }}"
-
+      
+      - name: Update helm docs
+        uses: shaybentk/helm-docs-action@v0.0.1
+        with:
+          working-dir: ./charts/${{ inputs.chart-name }}
+          git-push: true
+          git-push-user-email: ${{ github.actor }}@users.noreply.github.com
+          git-push-user-name: ${{ github.actor }}
+      
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v4
