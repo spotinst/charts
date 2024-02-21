@@ -204,8 +204,8 @@ spec:
         operator: Exists
       {{- else }}
       {{- with .Values.tolerations }}
-            tolerations:
-        {{- toYaml . | nindent 8 }}
+      tolerations:
+        {{- toYaml . | nindent 6 }}
       {{- end }}
       {{- end }}
       {{- if kindIs "invalid" .Values.topologySpreadConstraints }}
