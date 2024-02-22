@@ -34,7 +34,7 @@ helm install my-release spot/ocean-network-client
 | image.pullSecrets | Optional | `[]` | Image pull secrets. |
 | image.repository | Optional | `"public.ecr.aws/spotinst/spot-network-client"` | Image repository. |
 | image.tag | Optional | `""` | Image tag. Defaults to `.Chart.AppVersion`. |
-| namespace | string | `"kube-system"` |  |
+| namespace | Optional | `"kube-system"` | Namespace where components should be installed. |
 | oceanController.configMapName | Optional | `"spotinst-kubernetes-cluster-controller-config"` | ConfigMap name. |
 | oceanController.secretName | Optional | `"spotinst-kubernetes-cluster-controller"` | Secret name. |
 | resources | Optional | `{"requests":{"cpu":"30m","memory":"150Mi"}}` | Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
