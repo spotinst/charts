@@ -1,0 +1,35 @@
+{{ template "chart.header" . }}
+
+{{ template "chart.deprecationWarning" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+{{ template "chart.description" . }}.
+
+## Installation
+
+1. Add the Spot Helm chart repository:
+
+```sh
+helm repo add spot https://charts.spot.io
+```
+
+2. Update your local Helm chart repository cache:
+
+```sh
+helm repo update
+```
+
+3. Install `{{ template "chart.name" . }}`:
+
+```sh
+helm install my-release spot/{{ template "chart.name" . }}
+```
+
+> NOTE: Please configure all required chart values using the `set` command line argument or a `values.yaml` file.
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}

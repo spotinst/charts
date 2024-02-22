@@ -1,3 +1,4 @@
+# -- (Optional) Namespace where components should be installed.
 namespace: kube-system
 
 oceanController:

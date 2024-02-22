@@ -59,3 +59,18 @@ lint: ## Lint charts
 		-type d \
 		-exec $(HELM) lint {} \;
 endif
+
+define HELP_DOCS
+# Generates documentation for the charts.
+#
+# Example:
+#   make docs
+endef
+.PHONY: docs
+ifeq ($(HELP),y)
+docs:
+	$(Q) echo "$$HELP_DOCS"
+else
+docs: ## Document the charts
+	@docker run --rm --volume "$(shell pwd):/helm-docs" -u $(shell id -u) jnorwood/helm-docs:v1.12.0
+endif
