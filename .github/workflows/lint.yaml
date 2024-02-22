@@ -36,4 +36,5 @@ jobs:
 
       - uses: gabe565/setup-helm-docs-action@v1.0.3
       - run: helm-docs
-      - run: git diff --exit-code || (echo "Docs are out of date. Please run 'make docs' and commit the changes." && exit 1)
+      - name: Check for changes in docs
+        run: git diff --exit-code || (echo "***\nDocs are out of date. Please run 'make docs' and commit the changes.\n***" && exit 1)
