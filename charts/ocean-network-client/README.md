@@ -1,20 +1,30 @@
 # ocean-network-client
 
-![Version: 1.0.16](https://img.shields.io/badge/Version-1.0.16-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.6](https://img.shields.io/badge/AppVersion-1.0.6-informational?style=flat-square)
+![Version: 1.0.17](https://img.shields.io/badge/Version-1.0.17-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.6](https://img.shields.io/badge/AppVersion-1.0.6-informational?style=flat-square)
 
-A Helm chart for Ocean Network Client
+A Helm chart for Ocean Network Client.
 
-**Homepage:** <https://github.com/spotinst/charts/tree/main/charts/ocean-network-client>
+## Installation
 
-## Maintainers
+1. Add the Spot Helm chart repository:
 
-| Name | Email | Url |
-| ---- | ------ | --- |
-| spotinst | <ng-spot-info@netapp.com> |  |
+```sh
+helm repo add spot https://charts.spot.io
+```
 
-## Source Code
+2. Update your local Helm chart repository cache:
 
-* <https://github.com/spotinst/spot-network-client>
+```sh
+helm repo update
+```
+
+3. Install `ocean-network-client`:
+
+```sh
+helm install my-release spot/ocean-network-client
+```
+
+> NOTE: Please configure all required chart values using the `set` command line argument or a `values.yaml` file.
 
 ## Values
 
