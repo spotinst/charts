@@ -3,7 +3,7 @@ name: ocean-metric-exporter
 description: A Helm chart for Ocean Metric Exporter
 type: application
 version: 1.0.6
-appVersion: 1.0.3
+appVersion: 1.0.4
 home: https://github.com/spotinst/charts/tree/main/charts/ocean-metric-exporter
 icon: https://docs.spot.io/_media/images/spot_mark.png
 sources:

@@ -90,6 +90,18 @@ spec:
         - --deny-labels={{ join "," .Values.metricsConfiguration.denyLabels }}
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
+        livenessProbe:
+          initialDelaySeconds: 10
+          timeoutSeconds: 10
+          httpGet:
+            path: /health/liveness
+            port: exporter
+        readinessProbe:
+          initialDelaySeconds: 10
+          timeoutSeconds: 10
+          httpGet:
+            path: /health/readiness
+            port: exporter
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
