@@ -90,6 +90,7 @@ spec:
         - --deny-labels={{ join "," .Values.metricsConfiguration.denyLabels }}
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
+        {{- include "ocean-metric-exporter.probes" . | nindent 8 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
