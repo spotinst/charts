@@ -72,5 +72,5 @@ docs:
 	$(Q) echo "$$HELP_DOCS"
 else
 docs: ## Document the charts
-	@docker run --rm --volume "$(shell pwd):/helm-docs" -u $(shell id -u) jnorwood/helm-docs:v1.12.0
+	@docker run --rm --volume "$(shell pwd):/helm-docs" -u $(shell id -u) jnorwood/helm-docs:v1.13.1
 endif
