@@ -65,8 +65,8 @@ service:
 
 # Probes configuration
 probes:
-  # -- (Bool) Whether to include both liveness and readiness probe, this option will ignore the nested enabled booleans.
-  enabled: false
+  # -- (Bool) Whether to include both liveness and readiness probe, if this is set to true it will ignore the nested enabled booleans.
+  enabled: true
 
   # Liveness probe configuration.
   liveness:

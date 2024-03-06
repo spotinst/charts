@@ -48,7 +48,7 @@ helm install my-release spot/ocean-metric-exporter
 | oceanController.secretName | Optional | `"spotinst-kubernetes-cluster-controller"` | Secret name. |
 | podAnnotations | Optional | `{}` | Pod annotations. Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
 | podEnvVariables | Optional | `[]` | Additional environment variables for the exporter container. |
-| probes.enabled | Bool | `false` | Whether to include both liveness and readiness probe, this option will ignore the nested enabled booleans. |
+| probes.enabled | Bool | `true` | Whether to include both liveness and readiness probe, if this is set to true it will ignore the nested enabled booleans. |
 | probes.liveness.enabled | Bool | `false` | Whether to include liveness probe, this will be ignored if probes.enabled was set to true. |
 | probes.liveness.failureThreshold | Integer | `3` | Liveness probe failure threshold. |
 | probes.liveness.initialDelaySeconds | Integer | `15` | Liveness probe initial delay. |
