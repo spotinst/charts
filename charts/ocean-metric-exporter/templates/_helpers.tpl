@@ -103,3 +103,29 @@ Container command.
 {{- printf "[ \"java\", \"-Dspring.profiles.active=prod,default\", \"-jar\", \"/app/app.jar\" ]" -}}
 {{- end }}
 
+{{/*
+probes.
+*/}}
+{{- define "ocean-metric-exporter.probes" -}}
+{{- if or .Values.probes.liveness.enabled .Values.probes.enabled }}
+livenessProbe:
+  httpGet:
+    path: /health/liveness
+    port: exporter
+  initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
+  periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
+  failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
+  timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds }}
+{{- end}}
+{{- if or .Values.probes.readiness.enabled .Values.probes.enabled }}
+readinessProbe:
+  httpGet:
+    path: /health/readiness
+    port: exporter
+  initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
+  periodSeconds: {{ .Values.probes.readiness.periodSeconds }}
+  failureThreshold: {{ .Values.probes.readiness.failureThreshold }}
+  successThreshold: {{ .Values.probes.readiness.successThreshold }}
+  timeoutSeconds: {{ .Values.probes.readiness.timeoutSeconds }}
+{{- end}}
+{{- end }}

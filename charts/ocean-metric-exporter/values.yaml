@@ -63,6 +63,39 @@ service:
   # -- (Optional) Controls whether a service should be created.
   create: true
 
+# Probes configuration
+probes:
+  # -- (Bool) Whether to include both liveness and readiness probe, this option will ignore the nested enabled booleans.
+  enabled: false
+
+  # Liveness probe configuration.
+  liveness:
+    # -- (Bool) Whether to include liveness probe, this will be ignored if probes.enabled was set to true.
+    enabled: false
+    # -- (Integer) Liveness probe initial delay.
+    initialDelaySeconds: 15
+    # -- (Integer) Liveness probe period.
+    periodSeconds: 10
+    # -- (Integer) Liveness probe failure threshold.
+    failureThreshold: 3
+    # -- (Integer) Liveness probe timeout.
+    timeoutSeconds: 1
+
+  # Readiness probe configuration.
+  readiness:
+    # -- (Bool) Whether to include readiness probe, this will be ignored if probes.enabled was set to true.
+    enabled: false
+    # -- (Integer) Readiness probe initial delay.
+    initialDelaySeconds: 15
+    # -- (Integer) Readiness probe period.
+    periodSeconds: 10
+    # -- (Integer) Readiness probe failure threshold.
+    failureThreshold: 3
+    # -- (Integer) Readiness probe success threshold.
+    successThreshold: 1
+    # -- (Integer) Readiness probe timeout.
+    timeoutSeconds: 1
+
 # -- (Optional) Exporter Metrics Configurations
 metricsConfiguration:
   # -- (Array[string]) List of Categories to enable - if empty will get no metrics. Additional possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=categories

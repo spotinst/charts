@@ -48,6 +48,18 @@ helm install my-release spot/ocean-metric-exporter
 | oceanController.secretName | Optional | `"spotinst-kubernetes-cluster-controller"` | Secret name. |
 | podAnnotations | Optional | `{}` | Pod annotations. Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
 | podEnvVariables | Optional | `[]` | Additional environment variables for the exporter container. |
+| probes.enabled | Bool | `false` | Whether to include both liveness and readiness probe, this option will ignore the nested enabled booleans. |
+| probes.liveness.enabled | Bool | `false` | Whether to include liveness probe, this will be ignored if probes.enabled was set to true. |
+| probes.liveness.failureThreshold | Integer | `3` | Liveness probe failure threshold. |
+| probes.liveness.initialDelaySeconds | Integer | `15` | Liveness probe initial delay. |
+| probes.liveness.periodSeconds | Integer | `10` | Liveness probe period. |
+| probes.liveness.timeoutSeconds | Integer | `1` | Liveness probe timeout. |
+| probes.readiness.enabled | Bool | `false` | Whether to include readiness probe, this will be ignored if probes.enabled was set to true. |
+| probes.readiness.failureThreshold | Integer | `3` | Readiness probe failure threshold. |
+| probes.readiness.initialDelaySeconds | Integer | `15` | Readiness probe initial delay. |
+| probes.readiness.periodSeconds | Integer | `10` | Readiness probe period. |
+| probes.readiness.successThreshold | Integer | `1` | Readiness probe success threshold. |
+| probes.readiness.timeoutSeconds | Integer | `1` | Readiness probe timeout. |
 | replicaCount | Optional | `1` | Replicas. Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas |
 | resources | Optional | `{"limits":{"cpu":"500m","memory":"500Mi"},"requests":{"cpu":"100m","memory":"50Mi"}}` | Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
 | service.create | Optional | `true` | Controls whether a service should be created. |
