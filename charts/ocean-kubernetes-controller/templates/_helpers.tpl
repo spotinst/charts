@@ -24,6 +24,20 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
+Create a default fully qualified app name for the auto-updater job.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+If release name contains chart name it will be used as a full name.
+*/}}
+{{- define "auto-updater.fullname" -}}
+{{- if .Values.autoUpdate.fullnameOverride }}
+{{- .Values.autoUpdate.fullnameOverride | trunc 63 | trimSuffix "-" }}
+{{- else }}
+{{- $name := default "auto-updater" .Values.autoUpdate.nameOverride }}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- end }}
+
+{{/*
 Create chart name and version as used by the chart label.
 */}}
 {{- define "ocean-kubernetes-controller.chart" -}}
@@ -100,6 +114,17 @@ Create the name of the service-account to use
 {{- default (include "ocean-kubernetes-controller.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the service-account to use for the auto-updater
+*/}}
+{{- define "auto-updater.serviceAccountName" -}}
+{{- if .Values.autoUpdate.serviceAccount.create }}
+{{- default (include "auto-updater.fullname" .) .Values.autoUpdate.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.autoUpdate.serviceAccount.name }}
 {{- end }}
 {{- end }}
 

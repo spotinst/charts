@@ -107,6 +107,10 @@ spec:
                 name: {{ include "ocean-kubernetes-controller.configMapName" . }}
                 key: disable-auto-update
                 optional: true
+          {{- if not .Values.spotinst.disableAutoUpdate }}
+          - name: RELEASE_NAME
+            value: {{ .Release.Name }}
+          {{- end }}
           - name: ENABLE_CSR_APPROVAL
             valueFrom:
               configMapKeyRef:

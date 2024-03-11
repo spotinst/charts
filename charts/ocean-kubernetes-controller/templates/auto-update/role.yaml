@@ -1,0 +1,59 @@
+{{- if not .Values.spotinst.disableAutoUpdate }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "auto-updater.fullname" . }}
+  labels:
+  {{- include "ocean-kubernetes-controller.labels" . | nindent 4 }}
+rules:
+# Auto Updater requires
+- apiGroups: [ "rbac.authorization.k8s.io" ]
+  resources: [ "rolebindings" ]
+  resourceNames: [ {{ include "auto-updater.fullname" . }} ]
+  verbs: [ "get", "patch" ]
+- apiGroups: [ "rbac.authorization.k8s.io" ]
+  resources: [ "roles" ]
+  resourceNames: [ {{ include "auto-updater.fullname" . }} ]
+  verbs: [ "get", "patch" ]
+# Helm Management (resource name not required because the name is dynamic)
+- apiGroups: [ "" ]
+  resources: [ "secrets" ]
+  verbs: [ "create", "get", "update", "list", "delete" ]
+# Required to monitor the deployments rollout after the upgrade
+# (resource name not required because the name is dynamic)
+- apiGroups: [ "apps" ]
+  resources: [ "replicasets" ]
+  verbs: [ "list", "watch" ]
+
+# Controller requires
+- apiGroups: [ "apps" ]
+  resources: [ "deployments" ]
+  resourceNames: [ {{ include "ocean-kubernetes-controller.fullname" . }} ]
+  verbs: [ "get", "patch" ]
+- apiGroups: [ "" ]
+  resources: "configmaps"
+  resourceNames: [ {{ include "ocean-kubernetes-controller.configMapName" . }} ]
+  verbs: [ "get", "patch" ]
+- apiGroups: [ "" ]
+  resources: "secrets"
+  resourceNames: [ {{ include "ocean-kubernetes-controller.secretName" . }} ]
+  verbs: [ "get", "patch" ]
+- apiGroups: [ "" ]
+  resources: "serviceaccounts"
+  resourceNames: [ {{ include "ocean-kubernetes-controller.serviceAccountName" . }} ]
+  verbs: [ "get", "patch" ]
+
+# Metrics Server requires
+- apiGroups: [ "" ]
+  resources: [ "serviceaccounts" ]
+  resourceNames: [ {{ template "metrics-server.serviceAccountName" . }} ]
+  verbs: [ "get", "patch" ]
+- apiGroups: [ "" ]
+  resources: [ "services" ]
+  resourceNames: [ {{ include "metrics-server.fullname" . }} ]
+  verbs: [ "get", "patch" ]
+- apiGroups: [ "apps" ]
+  resources: [ "deployments" ]
+  resourceNames: [ {{ include "metrics-server.fullname" . }} ]
+  verbs: [ "get", "patch" ]
+{{- end }}

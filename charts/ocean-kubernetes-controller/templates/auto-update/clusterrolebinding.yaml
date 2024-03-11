@@ -1,0 +1,16 @@
+{{- if not .Values.spotinst.disableAutoUpdate }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "auto-updater.fullname" . }}
+  labels:
+  {{- include "ocean-kubernetes-controller.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "auto-updater.fullname" . }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "auto-updater.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
+{{- end }}
