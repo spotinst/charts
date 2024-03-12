@@ -198,6 +198,29 @@ autoUpdate:
     # -- Image pull policy. (Optional)
     pullPolicy: IfNotPresent
 
+  # -- Image pull secrets. (Optional)
+  imagePullSecrets: []
+
+  # -- Pod Security Context for the auto-updater job. (Optional)
+  # Ref: https://kubernetes.io/docs/concepts/security/pod-security-standards/
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 10001
+    runAsGroup: 10001
+    fsGroup: 10001
+
+  # -- Security Context for the auto-updater container. (Optional)
+  securityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    capabilities:
+      drop:
+      - ALL
+
+  # -- Resource requests and limits for the auto-updater job. (Optional)
+  resources: {}
+
   serviceAccount:
     # Specifies whether a service account should be created
     create: true

@@ -4,7 +4,7 @@ kind: RoleBinding
 metadata:
   name: {{ include "auto-updater.fullname" . }}
   labels:
-  {{- include "ocean-kubernetes-controller.labels" . | nindent 4 }}
+  {{- include "auto-updater.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role

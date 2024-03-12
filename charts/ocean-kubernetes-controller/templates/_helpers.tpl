@@ -72,6 +72,26 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Common labels Auto Updater
+*/}}
+{{- define "auto-updater.labels" -}}
+helm.sh/chart: {{ include "ocean-kubernetes-controller.chart" . }}
+{{ include "auto-updater.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
+Selector labels Auto Updater
+*/}}
+{{- define "auto-updater.selectorLabels" -}}
+app.kubernetes.io/name: auto-updater
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
 ConfigMap name.
 */}}
 {{- define "ocean-kubernetes-controller.configMapName" -}}
@@ -125,6 +145,119 @@ Create the name of the service-account to use for the auto-updater
 {{- default (include "auto-updater.fullname" .) .Values.autoUpdate.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.autoUpdate.serviceAccount.name }}
+{{- end }}
+{{- end }}
+
+{{/*
+Controller default affinity
+*/}}
+{{- define "ocean-kubernetes-controller.defaultAffinity" -}}
+nodeAffinity:
+  requiredDuringSchedulingIgnoredDuringExecution:
+    nodeSelectorTerms:
+    - matchExpressions:
+      - key: kubernetes.io/os
+        operator: NotIn
+        values:
+        - windows
+  preferredDuringSchedulingIgnoredDuringExecution:
+  - weight: 100
+    preference:
+      matchExpressions:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+{{- end }}
+
+{{/*
+Controller default tolerations
+*/}}
+{{- define "ocean-kubernetes-controller.defaultTolerations" -}}
+- key: node.kubernetes.io/not-ready
+  effect: NoExecute
+  operator: Exists
+  tolerationSeconds: 150
+- key: node.kubernetes.io/unreachable
+  effect: NoExecute
+  operator: Exists
+  tolerationSeconds: 150
+- key: node-role.kubernetes.io/master
+  operator: Exists
+- key: node-role.kubernetes.io/control-plane
+  operator: Exists
+- key: CriticalAddonsOnly
+  operator: Exists
+{{- end }}
+
+{{/*
+Controller affinity
+*/}}
+{{- define "ocean-kubernetes-controller.affinity" -}}
+{{- if kindIs "invalid" .Values.affinity -}}
+{{- include "ocean-kubernetes-controller.defaultAffinity" . -}}
+{{- else }}
+{{- .Values.affinity | toYaml -}}
+{{- end }}
+{{- end }}
+
+{{/*
+Controller tolerations
+*/}}
+{{- define "ocean-kubernetes-controller.tolerations" -}}
+{{- if kindIs "invalid" .Values.tolerations -}}
+{{- include "ocean-kubernetes-controller.defaultTolerations" . }}
+{{- else }}
+{{- .Values.tolerations | toYaml -}}
+{{- end }}
+{{- end }}
+
+{{/*
+Controller topology spread constraints
+*/}}
+{{- define "ocean-kubernetes-controller.topologySpreadConstraints" -}}
+{{- if kindIs "invalid" .Values.topologySpreadConstraints -}}
+- maxSkew: 1
+  topologyKey: kubernetes.io/hostname
+  whenUnsatisfiable: DoNotSchedule
+  labelSelector:
+    matchLabels:
+      {{- include "ocean-kubernetes-controller.selectorLabels" . | nindent 6 }}
+{{- else }}
+{{- .Values.topologySpreadConstraints | toYaml -}}
+{{- end }}
+{{- end }}
+
+{{/*
+Auto-Updater affinity
+*/}}
+{{- define "auto-updater.affinity" -}}
+{{- if kindIs "invalid" .Values.autoUpdate.affinity -}}
+{{- include "ocean-kubernetes-controller.defaultAffinity" . -}}
+{{- else }}
+{{- .Values.autoUpdate.affinity | toYaml -}}
+{{- end }}
+{{- end }}
+
+{{/*
+Auto-Updater tolerations
+*/}}
+{{- define "auto-updater.tolerations" -}}
+{{- if kindIs "invalid" .Values.autoUpdate.tolerations -}}
+- key: node.kubernetes.io/not-ready
+  effect: NoExecute
+  operator: Exists
+  tolerationSeconds: 150
+- key: node.kubernetes.io/unreachable
+  effect: NoExecute
+  operator: Exists
+  tolerationSeconds: 150
+- key: node-role.kubernetes.io/master
+  operator: Exists
+- key: node-role.kubernetes.io/control-plane
+  operator: Exists
+- key: CriticalAddonsOnly
+  operator: Exists
+{{- else }}
+{{- .Values.autoUpdate.tolerations | toYaml -}}
 {{- end }}
 {{- end }}
 

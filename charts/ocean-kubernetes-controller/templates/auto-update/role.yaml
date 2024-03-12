@@ -4,7 +4,7 @@ kind: Role
 metadata:
   name: {{ include "auto-updater.fullname" . }}
   labels:
-  {{- include "ocean-kubernetes-controller.labels" . | nindent 4 }}
+  {{- include "auto-updater.labels" . | nindent 4 }}
 rules:
 # Auto Updater requires
 - apiGroups: [ "rbac.authorization.k8s.io" ]
@@ -31,19 +31,20 @@ rules:
   resourceNames: [ {{ include "ocean-kubernetes-controller.fullname" . }} ]
   verbs: [ "get", "patch" ]
 - apiGroups: [ "" ]
-  resources: "configmaps"
+  resources: [ "configmaps" ]
   resourceNames: [ {{ include "ocean-kubernetes-controller.configMapName" . }} ]
   verbs: [ "get", "patch" ]
 - apiGroups: [ "" ]
-  resources: "secrets"
+  resources: [ "secrets" ]
   resourceNames: [ {{ include "ocean-kubernetes-controller.secretName" . }} ]
   verbs: [ "get", "patch" ]
 - apiGroups: [ "" ]
-  resources: "serviceaccounts"
+  resources: [ "serviceaccounts" ]
   resourceNames: [ {{ include "ocean-kubernetes-controller.serviceAccountName" . }} ]
   verbs: [ "get", "patch" ]
 
 # Metrics Server requires
+{{- if (index .Values "metrics-server" "deployChart") }}
 - apiGroups: [ "" ]
   resources: [ "serviceaccounts" ]
   resourceNames: [ {{ template "metrics-server.serviceAccountName" . }} ]
@@ -56,4 +57,5 @@ rules:
   resources: [ "deployments" ]
   resourceNames: [ {{ include "metrics-server.fullname" . }} ]
   verbs: [ "get", "patch" ]
+{{- end }}
 {{- end }}
