@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.25](https://img.shields.io/badge/Version-0.1.25-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.49](https://img.shields.io/badge/AppVersion-2.0.49-informational?style=flat-square)
+![Version: 0.1.26](https://img.shields.io/badge/Version-0.1.26-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.49](https://img.shields.io/badge/AppVersion-2.0.49-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
@@ -62,7 +62,7 @@ Kubernetes: `>=1.20.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | https://charts.spot.io | ocean-metric-exporter | 1.0.10 |
-| https://charts.spot.io | ocean-network-client | 1.0.17 |
+| https://charts.spot.io | ocean-network-client | 1.0.18 |
 | https://kubernetes-sigs.github.io/metrics-server | metrics-server | 3.11.0 |
 
 ## Values
