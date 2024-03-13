@@ -1,0 +1,85 @@
+name: Bump Chart Dependencies
+
+on:
+  push:
+    branches:
+      - feat/CON-24236-auto-update-support
+  workflow_call:
+    inputs:
+      chart-name:
+        description: 'The name of the chart'
+        default: 'ocean-kubernetes-controller'
+        type: string
+
+jobs:
+  bump-local-dependencies:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: spotinst/charts
+      - uses: gabe565/setup-helm-docs-action@v1.0.3
+      - uses: azure/setup-helm@v4.1.0
+        with:
+          version: v3.12.1
+
+      - name: Check Dependencies Versions
+        id: check-dependencies
+        run: |
+            for chart in `yq '.dependencies[].name' ./charts/ocean-kubernetes-controller/Chart.yaml`; do
+                if [ ! -f ./charts/${chart}/Chart.yaml ]; then
+                    continue
+                fi
+
+                dep_version=$(yq '.dependencies[] | select(.name == "'${chart}'") | .version' ./charts/ocean-kubernetes-controller/Chart.yaml)
+                chart_version=$(yq '.version' ./charts/${chart}/Chart.yaml)
+
+                if [ "${dep_version}" == "${chart_version}" ]; then
+                    echo "Dependency \"${chart}\" has version \"${dep_version}\" and is up to date"
+                    continue
+                fi
+                
+                echo "Dependency \"${chart}\" has version \"${dep_version}\" but should be \"${chart_version}\", bumping to \"${chart_version}\""
+                yq -i '(.dependencies[] | select(.name == "'${chart}'") | .version) = "'${chart_version}'"' ./charts/ocean-kubernetes-controller/Chart.yaml
+            done
+
+      - name: Check Diff
+        id: check-diff
+        run: |
+          git diff --exit-code && (echo "Nothing to do" && echo "should_update=false" >> $GITHUB_OUTPUT && exit 0) || echo "Changes detected"
+          echo "should_update=true" >> $GITHUB_OUTPUT
+
+
+      - name: Update Chart Version
+        if: steps.check-diff.outputs.should_update == 'true'
+        run: |
+          yq -i '.version |= (split(".") | .[-1] |= ((. tag = "!!int") + 1) | join("."))' ./charts/ocean-kubernetes-controller/Chart.yaml
+
+      - name: Update Dependencies
+        if: steps.check-diff.outputs.should_update == 'true'
+        run: |
+          helm dependency update ./charts/ocean-kubernetes-controller
+  
+      - name: Update helm docs
+        if: steps.check-diff.outputs.should_update == 'true'
+        run: |
+          helm-docs --chart-to-generate charts/ocean-kubernetes-controller
+
+      - name: Generate version bump commit
+        if: steps.check-diff.outputs.should_update == 'true'
+        run: |
+          git config user.name ${{ github.actor }}
+          git config user.email '${{ github.actor }}@users.noreply.github.com'
+          git add .
+          git commit -a -m "bump ocean-kubernetes-controller dependencies"
+
+      - name: Create Pull Request
+        if: steps.check-diff.outputs.should_update == 'true'
+        id: cpr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: '[bump] ocean-kubernetes-controller dependencies'
+          branch: bump/dependencies-for-ocean-kubernetes-controller
+          delete-branch: true
+          labels: bump_dependencies
