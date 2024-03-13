@@ -4,9 +4,9 @@ dependencies:
   version: 3.11.0
 - name: ocean-network-client
   repository: https://charts.spot.io
-  version: 1.0.17
+  version: 1.0.18
 - name: ocean-metric-exporter
   repository: https://charts.spot.io
   version: 1.0.10
-digest: sha256:5c6db1e80d216b94e99a5e85db30d4d759087f41e2b9cfe29365f884c4991010
-generated: "2024-03-13T12:07:39.544519+02:00"
+digest: sha256:11b152de1606b8d323e1bf9acda3c4f8a1f80f46a61e508cf1f2d6dc9ffc5567
+generated: "2024-03-13T10:20:22.641899337Z"

@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.24](https://img.shields.io/badge/Version-0.1.24-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.48](https://img.shields.io/badge/AppVersion-2.0.48-informational?style=flat-square)
+![Version: 0.1.25](https://img.shields.io/badge/Version-0.1.25-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.48](https://img.shields.io/badge/AppVersion-2.0.48-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
@@ -61,6 +61,8 @@ Kubernetes: `>=1.20.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
+| https://charts.spot.io | ocean-metric-exporter | 1.0.10 |
+| https://charts.spot.io | ocean-network-client | 1.0.18 |
 | https://kubernetes-sigs.github.io/metrics-server | metrics-server | 3.11.0 |
 
 ## Values
@@ -69,6 +71,17 @@ Kubernetes: `>=1.20.0-0`
 |-----|------|---------|-------------|
 | affinity | string | `nil` |  |
 | args | list | `[]` |  |
+| autoUpdate.image | object | `{"pullPolicy":"IfNotPresent","repository":"quay.io/roikramer120/auto-updater","tag":"v0.0.1"}` | Configures the image for the auto-updater job. (Optional) |
+| autoUpdate.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy. (Optional) |
+| autoUpdate.image.repository | string | `"quay.io/roikramer120/auto-updater"` | Image repository. (Optional) TODO: roi - replace with the actual repository |
+| autoUpdate.image.tag | string | `"v0.0.1"` | Overrides the image tag. (Optional) |
+| autoUpdate.imagePullSecrets | list | `[]` | Image pull secrets. (Optional) |
+| autoUpdate.podSecurityContext | object | `{"fsGroup":10001,"runAsGroup":10001,"runAsNonRoot":true,"runAsUser":10001}` | Pod Security Context for the auto-updater job. (Optional) Ref: https://kubernetes.io/docs/concepts/security/pod-security-standards/ |
+| autoUpdate.resources | object | `{}` | Resource requests and limits for the auto-updater job. (Optional) |
+| autoUpdate.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsNonRoot":true}` | Security Context for the auto-updater container. (Optional) |
+| autoUpdate.serviceAccount.annotations | object | `{}` |  |
+| autoUpdate.serviceAccount.create | bool | `true` |  |
+| autoUpdate.serviceAccount.name | string | `""` |  |
 | caBundleSecret.create | bool | `false` | Controls whether a CA bundle secret should be created. |
 | caBundleSecret.data | string | `""` | Must contain the CA bundle data in case `caBundleSecret.create` is true. For example by using `--set caBundleSecret.data="$(cat ./ca.pem)"` |
 | caBundleSecret.key | string | `"userEnvCertificates.pem"` | Key inside the secret to inject the CA bundle from |
