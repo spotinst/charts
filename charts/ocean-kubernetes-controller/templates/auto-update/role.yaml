@@ -51,7 +51,7 @@ rules:
   resourceNames: [ {{ include "ocean-kubernetes-controller.fullname" . }} ]
   verbs: [ "get", "patch", "escalate", "bind" ]
 - apiGroups: [ "rbac.authorization.k8s.io" ]
-  resources: [ "rolesbindings" ]
+  resources: [ "rolebindings" ]
   resourceNames: [ {{ include "ocean-kubernetes-controller.fullname" . }} ]
   verbs: [ "get", "patch" ]
 

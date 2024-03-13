@@ -12,7 +12,7 @@ rules:
   resourceNames: [ {{ include "auto-updater.fullname" . }} ]
   verbs: [ "get", "patch" ]
 - apiGroups: [ "rbac.authorization.k8s.io" ]
-  resources: [ "clusterrole" ]
+  resources: [ "clusterroles" ]
   resourceNames: [ {{ include "auto-updater.fullname" . }} ]
   verbs: [ "get", "patch", "escalate", "bind" ]
 
