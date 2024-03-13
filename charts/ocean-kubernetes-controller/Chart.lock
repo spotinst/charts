@@ -2,5 +2,11 @@ dependencies:
 - name: metrics-server
   repository: https://kubernetes-sigs.github.io/metrics-server
   version: 3.11.0
-digest: sha256:472915f28d2f1016d5e51ec6c5173c3c01856132a1012dc951242452533b99a9
-generated: "2023-09-27T13:21:52.700746+03:00"
+- name: ocean-network-client
+  repository: https://charts.spot.io
+  version: 1.0.17
+- name: ocean-metric-exporter
+  repository: https://charts.spot.io
+  version: 1.0.10
+digest: sha256:5c6db1e80d216b94e99a5e85db30d4d759087f41e2b9cfe29365f884c4991010
+generated: "2024-03-13T12:07:39.544519+02:00"

@@ -6,4 +6,6 @@ target-branch: main
 helm-extra-args: --debug
 chart-repos:
 - metrics-server=https://kubernetes-sigs.github.io/metrics-server
+- ocean-network-client=https://charts.spot.io
+- ocean-metric-exporter=https://charts.spot.io
 debug: true

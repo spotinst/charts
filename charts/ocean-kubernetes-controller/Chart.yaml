@@ -18,5 +18,13 @@ dependencies:
     version: 3.11.0
     repository: https://kubernetes-sigs.github.io/metrics-server
     condition: metrics-server.deployChart
+  - name: ocean-network-client
+    version: 1.0.17
+    repository: https://charts.spot.io
+    condition: ocean-network-client.deployChart
+  - name: ocean-metric-exporter
+    version: 1.0.10
+    repository: https://charts.spot.io
+    condition: ocean-metric-exporter.deployChart
 annotations:
   artifacthub.io/prerelease: "true"

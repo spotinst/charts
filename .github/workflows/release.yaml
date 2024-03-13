@@ -26,3 +26,9 @@ jobs:
         uses: helm/chart-releaser-action@v1.0.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+  bump-dependencies:
+    needs: release
+    uses: spotinst/charts/.github/workflows/bump-chart-dependencies.yaml@main
+    with:
+      chart-name: ocean-kubernetes-controller

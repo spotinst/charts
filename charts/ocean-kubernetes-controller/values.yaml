@@ -191,7 +191,7 @@ metrics-server:
 autoUpdate:
   # -- Configures the image for the auto-updater job. (Optional)
   image:
-    # -- Image repository. (Optional) TODO: roi - replace with the actual repository
+    # -- Image repository. (Optional)
     repository: quay.io/roikramer120/auto-updater
     # -- Overrides the image tag. (Optional)
     tag: "v0.0.1"
@@ -228,3 +228,13 @@ autoUpdate:
     annotations: {}
     # The name of the service account to use. (Optional)
     name: ""
+
+# -- Configure the ocean-metric-exporter
+ocean-metric-exporter:
+  # -- Specifies whether the ocean-metric-exporter chart should be deployed. (Default: false)
+  deployChart: false
+
+# -- Configure the ocean-network-client
+ocean-network-client:
+  # -- Specifies whether the ocean-network-client chart should be deployed. (Default: false)
+  deployChart: false
