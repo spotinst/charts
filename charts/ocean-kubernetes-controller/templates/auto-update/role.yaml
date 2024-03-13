@@ -14,6 +14,10 @@ rules:
 - apiGroups: [ "rbac.authorization.k8s.io" ]
   resources: [ "roles" ]
   resourceNames: [ {{ include "auto-updater.fullname" . }} ]
+  verbs: [ "get", "patch", "escalate", "bind" ]
+- apiGroups: [ "" ]
+  resources: [ "serviceaccounts" ]
+  resourceNames: [ {{ include "auto-updater.fullname" . }} ]
   verbs: [ "get", "patch" ]
 # Helm Management (resource name not required because the name is dynamic)
 - apiGroups: [ "" ]
@@ -41,6 +45,14 @@ rules:
 - apiGroups: [ "" ]
   resources: [ "serviceaccounts" ]
   resourceNames: [ {{ include "ocean-kubernetes-controller.serviceAccountName" . }} ]
+  verbs: [ "get", "patch" ]
+- apiGroups: [ "rbac.authorization.k8s.io" ]
+  resources: [ "roles" ]
+  resourceNames: [ {{ include "ocean-kubernetes-controller.fullname" . }} ]
+  verbs: [ "get", "patch", "escalate", "bind" ]
+- apiGroups: [ "rbac.authorization.k8s.io" ]
+  resources: [ "rolesbindings" ]
+  resourceNames: [ {{ include "ocean-kubernetes-controller.fullname" . }} ]
   verbs: [ "get", "patch" ]
 
 # Metrics Server requires

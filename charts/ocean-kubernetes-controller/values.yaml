@@ -218,8 +218,19 @@ autoUpdate:
       drop:
       - ALL
 
-  # -- Resource requests and limits for the auto-updater job. (Optional)
-  resources: {}
+  # -- Resource requests and limits for the auto-updater job.
+  # Defaults to 100m CPU and 256Mi memory to make the job run with 'Guranteed' QoS. (Optional)
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 100m
+      memory: 256Mi
+
+  # -- Priority class name for the auto-updater job.
+  # Defaults to the same priority class as the controller to prevent eviction. (Optional)
+  priorityClassName: system-cluster-critical
 
   serviceAccount:
     # Specifies whether a service account should be created

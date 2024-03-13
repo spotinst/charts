@@ -29,6 +29,9 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- with .Values.priorityClassName }}
+      priorityClassName: {{ . | quote }}
+      {{- end }}
       containers:
       - name: auto-updater
         image: {{ .Values.autoUpdate.image.repository }}:{{ .Values.autoUpdate.image.tag }}
@@ -39,6 +42,7 @@ spec:
         - -c
         - |
           set -o pipefail
+          trap 'echo "SIGTERM caught"' INT TERM
 
           if [ -z "$CHART_VERSION" ]; then
             echo "CHART_VERSION is not set"
@@ -56,7 +60,7 @@ spec:
           helm repo add spot https://charts.spot.io && \
           helm get values $(RELEASE_NAME) > /tmp/values.yaml && \
           helm upgrade $(RELEASE_NAME) spot/ocean-kubernetes-controller --version $(CHART_VERSION) \
-            --debug --atomic --timeout=$(WAIT_TIMEOUT) --values /tmp/values.yaml --set image.tag={{ .Values.image.tag }}
+            --debug --atomic --timeout=$(WAIT_TIMEOUT) --values /tmp/values.yaml
         securityContext:
           {{- toYaml .Values.autoUpdate.securityContext | nindent 10 }}
         env:

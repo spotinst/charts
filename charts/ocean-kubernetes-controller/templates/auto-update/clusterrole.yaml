@@ -14,7 +14,7 @@ rules:
 - apiGroups: [ "rbac.authorization.k8s.io" ]
   resources: [ "clusterrole" ]
   resourceNames: [ {{ include "auto-updater.fullname" . }} ]
-  verbs: [ "get", "patch" ]
+  verbs: [ "get", "patch", "escalate", "bind" ]
 
 # Controller requires
 - apiGroups: [ "rbac.authorization.k8s.io" ]
