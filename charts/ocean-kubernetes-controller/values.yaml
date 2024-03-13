@@ -186,3 +186,66 @@ metrics-server:
   - --logtostderr
   # enable this if you have self-signed certificates, see: https://github.com/kubernetes-incubator/metrics-server
   #  - --kubelet-insecure-tls
+
+# Auto Update process configuration.
+autoUpdate:
+  # -- Configures the image for the auto-updater job. (Optional)
+  image:
+    # -- Image repository. (Optional)
+    repository: quay.io/roikramer120/auto-updater
+    # -- Overrides the image tag. (Optional)
+    tag: "v0.0.1"
+    # -- Image pull policy. (Optional)
+    pullPolicy: IfNotPresent
+
+  # -- Image pull secrets. (Optional)
+  imagePullSecrets: []
+
+  # -- Pod Security Context for the auto-updater job. (Optional)
+  # Ref: https://kubernetes.io/docs/concepts/security/pod-security-standards/
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 10001
+    runAsGroup: 10001
+    fsGroup: 10001
+
+  # -- Security Context for the auto-updater container. (Optional)
+  securityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    capabilities:
+      drop:
+      - ALL
+
+  # -- Resource requests and limits for the auto-updater job.
+  # Defaults to 100m CPU and 256Mi memory to make the job run with 'Guranteed' QoS. (Optional)
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 100m
+      memory: 256Mi
+
+  # -- Priority class name for the auto-updater job.
+  # Defaults to the same priority class as the controller to prevent eviction. (Optional)
+  priorityClassName: system-cluster-critical
+
+  serviceAccount:
+    # Specifies whether a service account should be created
+    create: true
+    # Annotations to add to the service account
+    annotations: {}
+    # The name of the service account to use. (Optional)
+    name: ""
+
+# -- Configure the ocean-metric-exporter
+ocean-metric-exporter:
+  # -- Specifies whether the ocean-metric-exporter chart should be deployed. (Default: false)
+  deployChart: false
+
+# -- Configure the ocean-network-client
+ocean-network-client:
+  # -- Specifies whether the ocean-network-client chart should be deployed. (Default: false)
+  deployChart: false

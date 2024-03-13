@@ -1,0 +1,84 @@
+{{- define "auto-updater.job" -}}
+{{- if not .Values.spotinst.disableAutoUpdate -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: {{ include "auto-updater.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "auto-updater.labels" . | nindent 4 }}
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 600
+  template:
+    metadata:
+      labels:
+        {{- include "auto-updater.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "auto-updater.serviceAccountName" . }}
+      restartPolicy: Never
+      {{- with .Values.autoUpdate.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.autoUpdate.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.autoUpdate.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.priorityClassName }}
+      priorityClassName: {{ . | quote }}
+      {{- end }}
+      containers:
+      - name: auto-updater
+        image: {{ .Values.autoUpdate.image.repository }}:{{ .Values.autoUpdate.image.tag }}
+        imagePullPolicy: {{ .Values.autoUpdate.image.pullPolicy }}
+        command:
+        - /bin/bash
+        args:
+        - -c
+        - |
+          set -o pipefail
+          trap 'echo "SIGTERM caught"' INT TERM
+
+          if [ -z "$CHART_VERSION" ]; then
+            echo "CHART_VERSION is not set"
+            exit 1
+          fi
+          if [ -z "$WAIT_TIMEOUT" ]; then
+            echo "WAIT_TIMEOUT is not set"
+            exit 1
+          fi
+
+          export HELM_CACHE_HOME=/tmp/.helm
+          export HELM_CONFIG_HOME=/tmp/.helm
+          export HELM_DATA_HOME=/tmp/.helm
+
+          helm repo add spot https://charts.spot.io && \
+          helm get values $(RELEASE_NAME) > /tmp/values.yaml && \
+          helm upgrade $(RELEASE_NAME) spot/ocean-kubernetes-controller --version $(CHART_VERSION) \
+            --debug --atomic --timeout=$(WAIT_TIMEOUT) --values /tmp/values.yaml
+        securityContext:
+          {{- toYaml .Values.autoUpdate.securityContext | nindent 10 }}
+        env:
+        - name: RELEASE_NAME
+          value: {{ .Release.Name }}
+        resources:
+        {{- with .Values.autoUpdate.resources }}
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        volumeMounts:
+        - name: helm-data
+          mountPath: /tmp
+      affinity:
+        {{- include "auto-updater.affinity" . | nindent 8 }}
+      tolerations:
+        {{- include "auto-updater.tolerations" . | nindent 6 }}
+      volumes:
+      - name: helm-data
+        emptyDir: {}
+{{- end }}
+{{- end }}

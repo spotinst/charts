@@ -107,6 +107,14 @@ spec:
                 name: {{ include "ocean-kubernetes-controller.configMapName" . }}
                 key: disable-auto-update
                 optional: true
+          {{- if not .Values.spotinst.disableAutoUpdate }}
+          - name: AUTO_UPDATE_JOB_SPEC
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "ocean-kubernetes-controller.configMapName" . }}
+                key: auto-update.job
+                optional: true
+          {{- end }}
           - name: ENABLE_CSR_APPROVAL
             valueFrom:
               configMapKeyRef:
@@ -164,61 +172,9 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if kindIs "invalid" .Values.affinity }}
       affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/os
-                operator: NotIn
-                values:
-                - windows
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            preference:
-              matchExpressions:
-              - key: node-role.kubernetes.io/master
-                operator: Exists
-      {{- else }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- end }}
-      {{- if kindIs "invalid" .Values.tolerations }}
+        {{- include "ocean-kubernetes-controller.affinity" . | nindent 8 }}
       tolerations:
-      - key: node.kubernetes.io/not-ready
-        effect: NoExecute
-        operator: Exists
-        tolerationSeconds: 150
-      - key: node.kubernetes.io/unreachable
-        effect: NoExecute
-        operator: Exists
-        tolerationSeconds: 150
-      - key: node-role.kubernetes.io/master
-        operator: Exists
-      - key: node-role.kubernetes.io/control-plane
-        operator: Exists
-      - key: CriticalAddonsOnly
-        operator: Exists
-      {{- else }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 6 }}
-      {{- end }}
-      {{- end }}
-      {{- if kindIs "invalid" .Values.topologySpreadConstraints }}
+        {{- include "ocean-kubernetes-controller.tolerations" . | nindent 6 }}
       topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            {{- include "ocean-kubernetes-controller.selectorLabels" . | nindent 12 }}
-      {{- else }}
-      {{- with .Values.topologySpreadConstraints }}
-      topologySpreadConstraints:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- end }}
+        {{- include "ocean-kubernetes-controller.topologySpreadConstraints" . | nindent 6 }}
