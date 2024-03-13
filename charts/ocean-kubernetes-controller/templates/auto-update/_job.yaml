@@ -57,10 +57,11 @@ spec:
           export HELM_CONFIG_HOME=/tmp/.helm
           export HELM_DATA_HOME=/tmp/.helm
 
+          echo "Upgrading release $(RELEASE_NAME) to version $(CHART_VERSION)" && \
           helm repo add spot https://charts.spot.io && \
           helm get values $(RELEASE_NAME) > /tmp/values.yaml && \
           helm upgrade $(RELEASE_NAME) spot/ocean-kubernetes-controller --version $(CHART_VERSION) \
-            --debug --atomic --timeout=$(WAIT_TIMEOUT) --values /tmp/values.yaml
+            --atomic --timeout=$(WAIT_TIMEOUT) --values /tmp/values.yaml
         securityContext:
           {{- toYaml .Values.autoUpdate.securityContext | nindent 10 }}
         env:
