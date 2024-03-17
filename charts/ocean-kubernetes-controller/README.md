@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.29](https://img.shields.io/badge/Version-0.1.29-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.50](https://img.shields.io/badge/AppVersion-2.0.50-informational?style=flat-square)
+![Version: 0.1.30](https://img.shields.io/badge/Version-0.1.30-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.50](https://img.shields.io/badge/AppVersion-2.0.50-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
@@ -135,6 +135,7 @@ Kubernetes: `>=1.20.0-0`
 | spotinst.baseUrl | string | `""` | Base URL. (Optional) |
 | spotinst.clusterIdentifier | string | `""` | Unique identifier used by the Ocean Controller to connect (Required) between the Ocean backend and the Kubernetes cluster. Ref: https://docs.spot.io/ocean/tutorials/spot-kubernetes-controller/ |
 | spotinst.disableAutoUpdate | bool | `false` | Disable auto update. (Optional) |
+| spotinst.disableAutomaticRightSizing | bool | `false` | Disable automatic RightSizing. (Optional) |
 | spotinst.enableCsrApproval | bool | `false` | Enable CSR approval. (Optional) |
 | spotinst.proxyUrl | string | `""` | Proxy URL. (Optional) |
 | spotinst.token | string | `""` | Spot Token. (Required) Ref: https://docs.spot.io/administration/api/create-api-token |
