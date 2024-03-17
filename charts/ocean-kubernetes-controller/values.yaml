@@ -23,6 +23,8 @@ spotinst:
   disableAutoUpdate: false
   # -- Enable CSR approval. (Optional)
   enableCsrApproval: false
+  # -- Disable automatic RightSizing. (Optional)
+  disableAutomaticRightSizing: false
 
 # -- Configure the amount of replicas for the controller (Optional)
 replicas: 2
