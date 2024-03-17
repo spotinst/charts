@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.30](https://img.shields.io/badge/Version-0.1.30-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.50](https://img.shields.io/badge/AppVersion-2.0.50-informational?style=flat-square)
+![Version: 0.1.31](https://img.shields.io/badge/Version-0.1.31-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.50](https://img.shields.io/badge/AppVersion-2.0.50-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
@@ -108,6 +108,46 @@ Kubernetes: `>=1.20.0-0`
 | metrics-server.image.tag | string | `""` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
+| ocean-metric-exporter | object | `{"affinity":{},"deployChart":false,"image":{"pullPolicy":"IfNotPresent","pullSecrets":[],"repository":"gcr.io/spotinst-artifacts/spot-ocean-metric-exporter","tag":"1.0.4"},"metricsConfiguration":{"allowLabels":null,"allowMetrics":null,"categories":["scaling"],"denyLabels":null,"denyMetrics":null},"nodeSelector":{},"podAnnotations":{},"podEnvVariables":[],"probes":{"enabled":true,"liveness":{"enabled":false,"failureThreshold":3,"initialDelaySeconds":15,"periodSeconds":10,"timeoutSeconds":1},"readiness":{"enabled":false,"failureThreshold":3,"initialDelaySeconds":15,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1}},"replicaCount":1,"resources":{"limits":{"cpu":"500m","memory":"500Mi"},"requests":{"cpu":"100m","memory":"50Mi"}},"service":{"create":true},"tolerations":[{"key":"node-role.kubernetes.io/master","operator":"Exists"},{"key":"node-role.kubernetes.io/control-plane","operator":"Exists"}]}` | Configurations for Ocean Metric Exporter. |
+| ocean-metric-exporter.affinity | Optional | `{}` | Pod scheduling preferences. Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity |
+| ocean-metric-exporter.deployChart | bool | `false` | Specifies whether the Ocean Metric Exporter should be deployed. (Optional) |
+| ocean-metric-exporter.image.pullPolicy | Optional | `"IfNotPresent"` | Image pull policy. |
+| ocean-metric-exporter.image.pullSecrets | Optional | `[]` | Image pull secrets. |
+| ocean-metric-exporter.image.repository | Optional | `"gcr.io/spotinst-artifacts/spot-ocean-metric-exporter"` | Image repository. |
+| ocean-metric-exporter.image.tag | Optional | `"1.0.4"` | Image tag. Defaults to `.Chart.AppVersion`. |
+| ocean-metric-exporter.metricsConfiguration | Optional | `{"allowLabels":null,"allowMetrics":null,"categories":["scaling"],"denyLabels":null,"denyMetrics":null}` | Exporter Metrics Configurations |
+| ocean-metric-exporter.metricsConfiguration.allowLabels | Array[string] | `nil` | List of Labels to allow - if empty will get everything. Shouldn't be used with `denyLabels`. Possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=labels |
+| ocean-metric-exporter.metricsConfiguration.allowMetrics | Array[string] | `nil` | List of Metrics to allow - if empty will get everything. Shouldn't be used with `denyMetrics`. Possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=metrics |
+| ocean-metric-exporter.metricsConfiguration.categories | Array[string] | `["scaling"]` | List of Categories to enable - if empty will get no metrics. Additional possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=categories |
+| ocean-metric-exporter.metricsConfiguration.denyLabels | Array[string] | `nil` | List of Labels to deny - if empty will get everything. Shouldn't be used with `allowLabels`. Possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=labels |
+| ocean-metric-exporter.metricsConfiguration.denyMetrics | Array[string] | `nil` | List of Metrics to deny - if empty will get everything. Shouldn't be used with `allowMetrics`. Possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=metrics |
+| ocean-metric-exporter.nodeSelector | Optional | `{}` | Node selector. |
+| ocean-metric-exporter.podAnnotations | Optional | `{}` | Pod annotations. Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/ |
+| ocean-metric-exporter.podEnvVariables | Optional | `[]` | Additional environment variables for the exporter container. |
+| ocean-metric-exporter.probes.enabled | Bool | `true` | Whether to include both liveness and readiness probe, if this is set to true it will ignore the nested enabled booleans. |
+| ocean-metric-exporter.probes.liveness.enabled | Bool | `false` | Whether to include liveness probe, this will be ignored if probes.enabled was set to true. |
+| ocean-metric-exporter.probes.liveness.failureThreshold | Integer | `3` | Liveness probe failure threshold. |
+| ocean-metric-exporter.probes.liveness.initialDelaySeconds | Integer | `15` | Liveness probe initial delay. |
+| ocean-metric-exporter.probes.liveness.periodSeconds | Integer | `10` | Liveness probe period. |
+| ocean-metric-exporter.probes.liveness.timeoutSeconds | Integer | `1` | Liveness probe timeout. |
+| ocean-metric-exporter.probes.readiness.enabled | Bool | `false` | Whether to include readiness probe, this will be ignored if probes.enabled was set to true. |
+| ocean-metric-exporter.probes.readiness.failureThreshold | Integer | `3` | Readiness probe failure threshold. |
+| ocean-metric-exporter.probes.readiness.initialDelaySeconds | Integer | `15` | Readiness probe initial delay. |
+| ocean-metric-exporter.probes.readiness.periodSeconds | Integer | `10` | Readiness probe period. |
+| ocean-metric-exporter.probes.readiness.successThreshold | Integer | `1` | Readiness probe success threshold. |
+| ocean-metric-exporter.probes.readiness.timeoutSeconds | Integer | `1` | Readiness probe timeout. |
+| ocean-metric-exporter.replicaCount | Optional | `1` | Replicas. Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas |
+| ocean-metric-exporter.resources | Optional | `{"limits":{"cpu":"500m","memory":"500Mi"},"requests":{"cpu":"100m","memory":"50Mi"}}` | Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
+| ocean-metric-exporter.service.create | Optional | `true` | Controls whether a service should be created. |
+| ocean-metric-exporter.tolerations | Optional | `[{"key":"node-role.kubernetes.io/master","operator":"Exists"},{"key":"node-role.kubernetes.io/control-plane","operator":"Exists"}]` | Tolerations for nodes that have taints on them. Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
+| ocean-network-client | object | `{"deployChart":false,"image":{"pullPolicy":"IfNotPresent","pullSecrets":[],"repository":"public.ecr.aws/spotinst/spot-network-client","tag":"1.0.6"},"resources":{"requests":{"cpu":"30m","memory":"150Mi"}},"tolerations":[{"operator":"Exists"}]}` | Configurations for Ocean Network Client. |
+| ocean-network-client.deployChart | bool | `false` | Specifies whether the Ocean Network Client should be deployed. (Optional) |
+| ocean-network-client.image.pullPolicy | Optional | `"IfNotPresent"` | Image pull policy. |
+| ocean-network-client.image.pullSecrets | Optional | `[]` | Image pull secrets. |
+| ocean-network-client.image.repository | Optional | `"public.ecr.aws/spotinst/spot-network-client"` | Image repository. |
+| ocean-network-client.image.tag | Optional | `"1.0.6"` | Image tag. Defaults to `.Chart.AppVersion`. |
+| ocean-network-client.resources | Optional | `{"requests":{"cpu":"30m","memory":"150Mi"}}` | Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
+| ocean-network-client.tolerations | Optional | `[{"operator":"Exists"}]` | Tolerations - Enable pods to run an all nodes in cluster Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/ |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `10001` |  |
@@ -137,6 +177,7 @@ Kubernetes: `>=1.20.0-0`
 | spotinst.disableAutoUpdate | bool | `false` | Disable auto update. (Optional) |
 | spotinst.disableAutomaticRightSizing | bool | `false` | Disable automatic RightSizing. (Optional) |
 | spotinst.enableCsrApproval | bool | `false` | Enable CSR approval. (Optional) |
+| spotinst.httpBaseUrl | string | `""` | HTTP Base URL. (Optional) |
 | spotinst.proxyUrl | string | `""` | Proxy URL. (Optional) |
 | spotinst.token | string | `""` | Spot Token. (Required) Ref: https://docs.spot.io/administration/api/create-api-token |
 | tolerations | string | `nil` | Tolerations for nodes that have taints on them. (Optional) Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |

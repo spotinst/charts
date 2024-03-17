@@ -1,5 +1,5 @@
 {{- if index .Values "ocean-network-client" "deployChart" -}}
-{{ $values := index .Values "ocean-network-client" }}
+{{- $values := index .Values "ocean-network-client" }}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:

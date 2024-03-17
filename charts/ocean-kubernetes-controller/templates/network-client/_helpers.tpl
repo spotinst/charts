@@ -26,21 +26,11 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
-DaemonSet labels.
-*/}}
-{{- define "ocean-network-client.daemon-set.labels" -}}
-app: ocean-network-client
-{{- end }}
-
-{{/*
 Common labels
 */}}
 {{- define "ocean-network-client.labels" -}}
 helm.sh/chart: {{ include "ocean-kubernetes-controller.chart" . }}
 {{ include "ocean-network-client.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 

@@ -17,6 +17,8 @@ spotinst:
   clusterIdentifier: ""
   # -- Base URL. (Optional)
   baseUrl: ""
+  # -- HTTP Base URL. (Optional)
+  httpBaseUrl: ""
   # -- Proxy URL. (Optional)
   proxyUrl: ""
   # -- Disable auto update. (Optional)
@@ -245,7 +247,7 @@ autoUpdate:
 # -- Configurations for Ocean Network Client.
 ocean-network-client:
   # -- Specifies whether the Ocean Network Client should be deployed. (Optional)
-  deployChart: true
+  deployChart: false
 
   image:
     # -- (Optional) Image repository.
@@ -268,3 +270,114 @@ ocean-network-client:
   # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
   tolerations:
     - operator: "Exists"
+
+# -- Configurations for Ocean Metric Exporter.
+ocean-metric-exporter:
+  # -- Specifies whether the Ocean Metric Exporter should be deployed. (Optional)
+  deployChart: false
+
+  # -- (Optional) Replicas.
+  # Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas
+  replicaCount: 1
+
+  # Image.
+  # Ref: https://kubernetes.io/docs/concepts/containers/images/
+  image:
+    # -- (Optional) Image repository.
+    repository: gcr.io/spotinst-artifacts/spot-ocean-metric-exporter
+    # -- (Optional) Image pull policy.
+    pullPolicy: IfNotPresent
+    # -- (Optional) Image pull secrets.
+    pullSecrets: []
+    # -- (Optional) Image tag. Defaults to `.Chart.AppVersion`.
+    tag: "1.0.4"
+
+  # -- (Optional) Pod annotations.
+  # Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  podAnnotations: {}
+
+  # -- (Optional) Additional environment variables for the exporter container.
+  podEnvVariables: []
+  #  - name: envName
+  #    value: envValue
+
+  # -- (Optional) Resource requests and limits.
+  # Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 100m
+      memory: 50Mi
+
+  # -- (Optional) Node selector.
+  nodeSelector: {}
+
+  # -- (Optional) Tolerations for nodes that have taints on them.
+  # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+    - key: node-role.kubernetes.io/control-plane
+      operator: Exists
+
+  # -- (Optional) Pod scheduling preferences.
+  # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  affinity: {}
+
+  # Service.
+  service:
+    # -- (Optional) Controls whether a service should be created.
+    create: true
+
+  # Probes configuration
+  probes:
+    # -- (Bool) Whether to include both liveness and readiness probe, if this is set to true it will ignore the nested enabled booleans.
+    enabled: true
+
+    # Liveness probe configuration.
+    liveness:
+      # -- (Bool) Whether to include liveness probe, this will be ignored if probes.enabled was set to true.
+      enabled: false
+      # -- (Integer) Liveness probe initial delay.
+      initialDelaySeconds: 15
+      # -- (Integer) Liveness probe period.
+      periodSeconds: 10
+      # -- (Integer) Liveness probe failure threshold.
+      failureThreshold: 3
+      # -- (Integer) Liveness probe timeout.
+      timeoutSeconds: 1
+
+    # Readiness probe configuration.
+    readiness:
+      # -- (Bool) Whether to include readiness probe, this will be ignored if probes.enabled was set to true.
+      enabled: false
+      # -- (Integer) Readiness probe initial delay.
+      initialDelaySeconds: 15
+      # -- (Integer) Readiness probe period.
+      periodSeconds: 10
+      # -- (Integer) Readiness probe failure threshold.
+      failureThreshold: 3
+      # -- (Integer) Readiness probe success threshold.
+      successThreshold: 1
+      # -- (Integer) Readiness probe timeout.
+      timeoutSeconds: 1
+
+  # -- (Optional) Exporter Metrics Configurations
+  metricsConfiguration:
+    # -- (Array[string]) List of Categories to enable - if empty will get no metrics. Additional possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=categories
+    categories:
+      - scaling
+
+    # -- (Array[string]) List of Metrics to allow - if empty will get everything. Shouldn't be used with `denyMetrics`. Possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=metrics
+    allowMetrics:
+
+    # -- (Array[string]) List of Metrics to deny - if empty will get everything. Shouldn't be used with `allowMetrics`. Possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=metrics
+    denyMetrics:
+
+    # -- (Array[string]) List of Labels to allow - if empty will get everything. Shouldn't be used with `denyLabels`. Possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=labels
+    allowLabels:
+
+    # -- (Array[string]) List of Labels to deny - if empty will get everything. Shouldn't be used with `allowLabels`. Possible values can be found here: https://docs.spot.io/ocean/tools-and-integrations/prometheus/scrape?id=labels
+    denyLabels:
