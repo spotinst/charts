@@ -241,3 +241,30 @@ autoUpdate:
     annotations: {}
     # The name of the service account to use. (Optional)
     name: ""
+
+# -- Configurations for Ocean Network Client.
+ocean-network-client:
+  # -- Specifies whether the Ocean Network Client should be deployed. (Optional)
+  deployChart: true
+
+  image:
+    # -- (Optional) Image repository.
+    repository: public.ecr.aws/spotinst/spot-network-client
+    # -- (Optional) Image pull policy.
+    pullPolicy: IfNotPresent
+    # -- (Optional) Image pull secrets.
+    pullSecrets: []
+    # -- (Optional) Image tag. Defaults to `.Chart.AppVersion`.
+    tag: "1.0.6"
+
+  # -- (Optional) Resource requests and limits.
+  # Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  resources:
+    requests:
+      cpu: 30m
+      memory: 150Mi
+
+  # -- (Optional) Tolerations - Enable pods to run an all nodes in cluster
+  # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+  tolerations:
+    - operator: "Exists"

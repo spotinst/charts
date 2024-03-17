@@ -70,4 +70,16 @@ rules:
   resourceNames: [ {{ include "metrics-server.fullname" . }} ]
   verbs: [ "get", "patch" ]
 {{- end }}
+
+# Network Client requires
+{{- if (index .Values "ocean-network-client" "deployChart") }}
+- apiGroups: [ "" ]
+  resources: [ "serviceaccounts" ]
+  resourceNames: [ {{ include "ocean-network-client.fullname" . }} ]
+  verbs: [ "get", "patch" ]
+- apiGroups: ["apps"]
+  resources: [ "daemonsets" ]
+  resourceNames: [ {{ include "ocean-network-client.fullname" . }} ]
+  verbs: [ "get", "patch" ]
+{{- end }}
 {{- end }}

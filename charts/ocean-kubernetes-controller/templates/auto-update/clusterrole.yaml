@@ -50,4 +50,16 @@ rules:
   resourceNames:
   - {{ printf "%s-auth-reader" (include "metrics-server.fullname" .)  }}
 {{- end }}
+
+# Network Client requires
+{{- if (index .Values "ocean-network-client" "deployChart") }}
+- apiGroups: [ "rbac.authorization.k8s.io" ]
+  resources: [ "clusterroles" ]
+  verbs: [ "get", "patch", "escalate", "bind" ]
+  resourceNames: [ {{ include "ocean-network-client.fullname" . }} ]
+- apiGroups: [ "rbac.authorization.k8s.io" ]
+  resources: [ "clusterrolebindings" ]
+  verbs: [ "get", "patch" ]
+  resourceNames: [ {{ include "ocean-network-client.fullname" . }} ]
+{{- end }}
 {{- end }}
