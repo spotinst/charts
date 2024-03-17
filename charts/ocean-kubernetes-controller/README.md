@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.27](https://img.shields.io/badge/Version-0.1.27-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.49](https://img.shields.io/badge/AppVersion-2.0.49-informational?style=flat-square)
+![Version: 0.1.28](https://img.shields.io/badge/Version-0.1.28-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.50](https://img.shields.io/badge/AppVersion-2.0.50-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
