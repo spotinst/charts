@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.28](https://img.shields.io/badge/Version-0.1.28-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.50](https://img.shields.io/badge/AppVersion-2.0.50-informational?style=flat-square)
+![Version: 0.1.29](https://img.shields.io/badge/Version-0.1.29-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.50](https://img.shields.io/badge/AppVersion-2.0.50-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
@@ -61,8 +61,6 @@ Kubernetes: `>=1.20.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.spot.io | ocean-metric-exporter | 1.0.10 |
-| https://charts.spot.io | ocean-network-client | 1.0.18 |
 | https://kubernetes-sigs.github.io/metrics-server | metrics-server | 3.11.0 |
 
 ## Values
@@ -71,10 +69,10 @@ Kubernetes: `>=1.20.0-0`
 |-----|------|---------|-------------|
 | affinity | string | `nil` |  |
 | args | list | `[]` |  |
-| autoUpdate.image | object | `{"pullPolicy":"IfNotPresent","repository":"quay.io/roikramer120/auto-updater","tag":"v0.0.1"}` | Configures the image for the auto-updater job. (Optional) |
-| autoUpdate.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy. (Optional) |
-| autoUpdate.image.repository | string | `"quay.io/roikramer120/auto-updater"` | Image repository. (Optional) |
-| autoUpdate.image.tag | string | `"v0.0.1"` | Overrides the image tag. (Optional) |
+| autoUpdate.image | object | `{"pullPolicy":"Always","repository":"us-docker.pkg.dev/spotit-today/container-labs/auto-updater","tag":"latest"}` | Configures the image for the auto-updater job. (Optional) |
+| autoUpdate.image.pullPolicy | string | `"Always"` | Image pull policy. (Optional) |
+| autoUpdate.image.repository | string | `"us-docker.pkg.dev/spotit-today/container-labs/auto-updater"` | Image repository. (Optional) |
+| autoUpdate.image.tag | string | `"latest"` | Overrides the image tag. (Optional) |
 | autoUpdate.imagePullSecrets | list | `[]` | Image pull secrets. (Optional) |
 | autoUpdate.podSecurityContext | object | `{"fsGroup":10001,"runAsGroup":10001,"runAsNonRoot":true,"runAsUser":10001}` | Pod Security Context for the auto-updater job. (Optional) Ref: https://kubernetes.io/docs/concepts/security/pod-security-standards/ |
 | autoUpdate.priorityClassName | string | `"system-cluster-critical"` | Priority class name for the auto-updater job. Defaults to the same priority class as the controller to prevent eviction. (Optional) |
@@ -110,10 +108,6 @@ Kubernetes: `>=1.20.0-0`
 | metrics-server.image.tag | string | `""` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
-| ocean-metric-exporter | object | `{"deployChart":false}` | Configure the ocean-metric-exporter |
-| ocean-metric-exporter.deployChart | bool | `false` | Specifies whether the ocean-metric-exporter chart should be deployed. (Default: false) |
-| ocean-network-client | object | `{"deployChart":false}` | Configure the ocean-network-client |
-| ocean-network-client.deployChart | bool | `false` | Specifies whether the ocean-network-client chart should be deployed. (Default: false) |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `10001` |  |
