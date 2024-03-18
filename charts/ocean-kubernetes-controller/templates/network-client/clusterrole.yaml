@@ -1,0 +1,15 @@
+{{- if index .Values "ocean-network-client" "deployChart" -}}
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ include "ocean-network-client.fullname" . }}
+  labels:
+  {{- include "ocean-network-client.labels" . | nindent 4 }}
+rules:
+  # ----------------------------------------------------------------------------
+  # Required for functional operation (read-only).
+  # ----------------------------------------------------------------------------
+  - apiGroups: [""]
+    resources: ["pods", "nodes"]
+    verbs: ["get", "list", "watch"]
+{{- end }}

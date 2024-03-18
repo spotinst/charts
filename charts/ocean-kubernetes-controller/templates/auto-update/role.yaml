@@ -70,4 +70,31 @@ rules:
   resourceNames: [ {{ include "metrics-server.fullname" . }} ]
   verbs: [ "get", "patch" ]
 {{- end }}
+
+# Network Client requires
+{{- if (index .Values "ocean-network-client" "deployChart") }}
+- apiGroups: [ "" ]
+  resources: [ "serviceaccounts" ]
+  resourceNames: [ {{ include "ocean-network-client.fullname" . }} ]
+  verbs: [ "get", "patch" ]
+- apiGroups: ["apps"]
+  resources: [ "daemonsets" ]
+  resourceNames: [ {{ include "ocean-network-client.fullname" . }} ]
+  verbs: [ "get", "patch" ]
+{{- end }}
+
+# Metric Exporter requires
+{{- if index .Values "ocean-metric-exporter" "deployChart" -}}
+{{- $values := index .Values "ocean-metric-exporter" }}
+{{- if $values.service.create }}
+- apiGroups: [ "" ]
+  resources: [ "services" ]
+  resourceNames: [ {{ include "ocean-metric-exporter.fullname" . }} ]
+  verbs: [ "get", "patch" ]
+{{- end }}
+- apiGroups: [ "apps" ]
+  resources: [ "deployments" ]
+  resourceNames: [ {{ include "ocean-metric-exporter.fullname" . }} ]
+  verbs: [ "get", "patch" ]
+{{- end }}
 {{- end }}
