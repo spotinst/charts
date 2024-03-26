@@ -189,7 +189,7 @@ metrics-server:
   # enable this if you have self-signed certificates, see: https://github.com/kubernetes-incubator/metrics-server
   #  - --kubelet-insecure-tls
 
-# Log Shipping
+# -- Log Shipping configuration.
 logShipping:
   # -- Specifies whether to send the controller logs to Spot for analysis. (Optional)
   enabled: true

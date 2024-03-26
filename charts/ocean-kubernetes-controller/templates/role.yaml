@@ -1,5 +1,5 @@
-# This role is required only to fetch the logs of the auto-updater job.
 {{- if not .Values.spotinst.disableAutoUpdate }}
+# This role is required only to fetch the logs of the auto-updater job.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
