@@ -189,6 +189,23 @@ metrics-server:
   # enable this if you have self-signed certificates, see: https://github.com/kubernetes-incubator/metrics-server
   #  - --kubelet-insecure-tls
 
+# Log Shipping
+logShipping:
+  # -- Specifies whether to send the controller logs to Spot for analysis. (Optional)
+  enabled: true
+
+  # -- Specifies the log shipping container image. (Optional)
+  image:
+    repository: public.ecr.aws/aws-observability/aws-for-fluent-bit
+    tag: "stable"
+    pullPolicy: IfNotPresent
+
+  # -- Log shipping destination configuration.
+  destination:
+    host: api.spotinst.io
+    port: 443
+    tls: true
+
 # Auto Update process configuration.
 autoUpdate:
   # -- Configures the image for the auto-updater job. (Optional)
