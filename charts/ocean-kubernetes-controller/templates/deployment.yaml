@@ -53,6 +53,14 @@ spec:
           {{- range .Values.args }}
             - {{ . }}
           {{- end }}
+          {{- if eq (include "ocean-kubernetes-controller.logShipping.enabled" .) "true" }}
+          - --log_file=/var/log/controller.logs
+          - --logtostderr=false
+          - --skip_log_headers=true
+          - --log_file_max_size=1
+          - --stderrthreshold=INFO
+          - -v=2
+          {{- end }}
           env:
           - name: SPOTINST_TOKEN
             valueFrom:
@@ -160,13 +168,66 @@ spec:
           {{- with .Values.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- if eq (include "ocean-kubernetes-controller.logShipping.enabled" .) "true" }}
+          - name: logs
+            mountPath: /var/log
+          {{- end }}
           resources:
           {{- with .Values.resources }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
+        {{- if eq (include "ocean-kubernetes-controller.logShipping.enabled" .) "true" }}
+        - name: log-shipper
+          image: {{ .Values.logShipping.image.repository }}:{{ .Values.logShipping.image.tag }}
+          imagePullPolicy: {{ .Values.logShipping.image.pullPolicy }}
+          command:
+          - /fluent-bit/bin/fluent-bit
+          - -c
+          - /tmp/fluent-bit.conf
+          - -q
+          env:
+          - name: SPOTINST_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "ocean-kubernetes-controller.secretName" . }}
+                key: token
+                optional: true
+          - name: SPOTINST_ACCOUNT
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "ocean-kubernetes-controller.secretName" . }}
+                key: account
+                optional: true
+          - name: CLUSTER_IDENTIFIER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "ocean-kubernetes-controller.configMapName" . }}
+                key: spotinst.cluster-identifier
+          volumeMounts:
+          - name: logs
+            mountPath: /var/log
+          - name: fluentbit-config
+            mountPath: /tmp/fluent-bit.conf
+            subPath: fluent-bit.conf
+          - name: fluentbit-config
+            mountPath: /tmp/parsers.conf
+            subPath: parsers.conf
+        {{- end }}
       volumes:
       {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if eq (include "ocean-kubernetes-controller.logShipping.enabled" .) "true" }}
+      - name: logs
+        emptyDir: {}
+      - name: fluentbit-config
+        configMap:
+          name: {{ include "ocean-kubernetes-controller.configMapName" . }}
+          items:
+          - key: fluent-bit.conf
+            path: fluent-bit.conf
+          - key: parsers.conf
+            path: parsers.conf
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

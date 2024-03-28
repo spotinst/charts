@@ -312,3 +312,20 @@ Figure out if we should deploy metrics server. We are checking:
 {{- end }}
 {{- end }}
 {{- end }}
+
+{{/*
+Log Shipping - Should Enable
+
+Should only enabled log shipping if controller is installed against prod SaaS environment
+or if another log shipping destination host is specified.
+*/}}
+{{- define "ocean-kubernetes-controller.logShipping.enabled" -}}
+{{- if and .Values.logShipping .Values.logShipping.enabled -}}
+{{- if (or
+    (or (eq .Values.spotinst.baseUrl "") (eq .Values.spotinst.baseUrl "ocean.api.spot.io:443"))
+    (ne .Values.logShipping.destination.host "api.spotinst.io")
+) -}}
+true
+{{- end }}
+{{- end }}
+{{- end }}
