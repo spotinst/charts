@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.31](https://img.shields.io/badge/Version-0.1.31-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.51](https://img.shields.io/badge/AppVersion-2.0.51-informational?style=flat-square)
+![Version: 0.1.32](https://img.shields.io/badge/Version-0.1.32-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.51](https://img.shields.io/badge/AppVersion-2.0.51-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
@@ -101,6 +101,10 @@ Kubernetes: `>=1.20.0-0`
 | livenessProbe.httpGet.port | string | `"readiness"` |  |
 | livenessProbe.initialDelaySeconds | int | `15` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
+| logShipping | object | `{"destination":{"host":"api.spotinst.io","port":443,"tls":true},"enabled":true,"image":{"pullPolicy":"IfNotPresent","repository":"public.ecr.aws/aws-observability/aws-for-fluent-bit","tag":"stable"}}` | Log Shipping configuration. |
+| logShipping.destination | object | `{"host":"api.spotinst.io","port":443,"tls":true}` | Log shipping destination configuration. |
+| logShipping.enabled | bool | `true` | Specifies whether to send the controller logs to Spot for analysis. (Optional) |
+| logShipping.image | object | `{"pullPolicy":"IfNotPresent","repository":"public.ecr.aws/aws-observability/aws-for-fluent-bit","tag":"stable"}` | Specifies the log shipping container image. (Optional) |
 | metrics-server.args | list | `["--logtostderr"]` | Arguments to pass to metrics-server on start up. (Optional) |
 | metrics-server.deployChart | bool | `true` | Specifies whether the metrics-server chart should be deployed. (Optional) |
 | metrics-server.image.pullPolicy | string | `"IfNotPresent"` |  |
