@@ -1,0 +1,13 @@
+{{- if .Values.admissionController.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "ocean-vertical-pod-autoscaler.fullname" . }}-webhook
+spec:
+  ports:
+    - port: 443
+      targetPort: {{ .Values.admissionController.httpPort | default 8000 }}
+  selector:
+    app.kubernetes.io/component: admission-controller
+    {{- include "ocean-vertical-pod-autoscaler.selectorLabels" . | nindent 4 }}
+{{- end }}

@@ -1,0 +1,18 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "ocean-vertical-pod-autoscaler.fullname" . }}-admission-certgen
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade,post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-weight": "-110"
+  labels:
+    app.kubernetes.io/component: admission-certgen
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "ocean-vertical-pod-autoscaler.fullname" . }}-admission-certgen
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "ocean-vertical-pod-autoscaler.fullname" . }}-admission-certgen
+    namespace: {{ .Release.Namespace }}
