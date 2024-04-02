@@ -69,8 +69,8 @@ Return the name for the webhook tls secret
 */}}
 {{- define "ocean-vertical-pod-autoscaler.webhook.secret" -}}
 {{- if .Values.admissionController.secretName }}
-{{- default (printf "%s-%s" (include "vpa.fullname" .) "tls-certs") (tpl (.Values.admissionController.secretName | toString) .) }}
+{{- default (printf "%s-%s" (include "ocean-vertical-pod-autoscaler.fullname" .) "tls-certs") (tpl (.Values.admissionController.secretName | toString) .) }}
 {{- else }}
-{{- printf "%s-%s" (include "vpa.fullname" .) "tls-certs" }}
+{{- printf "%s-%s" (include "ocean-vertical-pod-autoscaler.fullname" .) "tls-certs" }}
 {{- end }}
 {{- end }}

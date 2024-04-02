@@ -14,16 +14,16 @@ spec:
       {{- include "ocean-vertical-pod-autoscaler.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-    {{- with .Values.updater.podAnnotations }}
-    annotations:
-      {{- toYaml . | nindent 8 }}
-    {{- end }}
-    labels:
-    {{- with .Values.updater.podLabels }}
-    {{- toYaml . | nindent 8 }}
-    {{- end }}
-    app.kubernetes.io/component: updater
-    {{- include "ocean-vertical-pod-autoscaler.selectorLabels" . | nindent 8 }}
+      annotations:
+        {{- with .Values.updater.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        app.kubernetes.io/component: updater
+        {{- include "ocean-vertical-pod-autoscaler.selectorLabels" . | nindent 8 }}
+        {{- with .Values.updater.podLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

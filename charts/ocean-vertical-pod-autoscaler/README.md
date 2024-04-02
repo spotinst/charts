@@ -50,7 +50,7 @@ helm install my-release spot/ocean-vertical-pod-autoscaler
 | admissionController.podSecurityContext | object | `{"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}` | The security context for the admission controller pod |
 | admissionController.replicaCount | int | `1` |  |
 | admissionController.resources | object | `{"limits":{},"requests":{"cpu":"50m","memory":"200Mi"}}` | The resources block for the admission controller pod |
-| admissionController.secretName | string | `"{{ include \"vpa.fullname\" . }}-tls-secret"` | Name for the TLS secret created for the webhook. Default {{ .Release.Name }}-tls-secret |
+| admissionController.secretName | string | `"{{ include \"ocean-vertical-pod-autoscaler.fullname\" . }}-tls-secret"` | Name for the TLS secret created for the webhook. Default {{ .Release.Name }}-tls-secret |
 | admissionController.tlsSecretKeys | list | `[]` | The keys in the vpa-tls-certs secret to map in to the admission controller |
 | admissionController.tolerations | list | `[]` |  |
 | fullnameOverride | string | `""` | A template override for the fullname |

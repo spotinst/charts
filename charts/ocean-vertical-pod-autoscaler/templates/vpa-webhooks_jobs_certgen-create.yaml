@@ -22,7 +22,7 @@ spec:
       serviceAccountName: {{ include "ocean-vertical-pod-autoscaler.fullname" . }}-admission-certgen
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-      {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
         - name: create
@@ -49,4 +49,4 @@ spec:
       {{- with .Values.admissionController.certGen.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
-
+      {{- end }}
