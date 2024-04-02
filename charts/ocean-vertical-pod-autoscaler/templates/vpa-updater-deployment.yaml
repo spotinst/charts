@@ -41,6 +41,8 @@ spec:
             {{- toYaml .Values.updater.securityContext | nindent 12 }}
           image: {{ printf "%s:%s" .Values.updater.image.repository (.Values.updater.image.tag | default .Chart.AppVersion) }}
           imagePullPolicy: {{ .Values.updater.image.pullPolicy }}
+          args:
+            - --"eviction-tolerance"={{ .Values.updater.evictionTolerance }}
           env:
             - name: NAMESPACE
               valueFrom:

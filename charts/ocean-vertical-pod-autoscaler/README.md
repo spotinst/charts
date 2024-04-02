@@ -58,10 +58,10 @@ helm install my-release spot/ocean-vertical-pod-autoscaler
 | nameOverride | string | `""` | A template override for the name |
 | priorityClassName | string | `""` | To set the priorityclass for all pods |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service accounts for each component |
-| serviceAccount.automountServiceAccountToken | bool | `true` | Automount API credentials for the Service Account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created for each component |
 | serviceAccount.name | string | `""` | The base name of the service account to use (appended with the component). If not set and create is true, a name is generated using the fullname template and appended for each component |
 | updater.affinity | object | `{}` |  |
+| updater.evictionTolerance | float | `0.25` |  |
 | updater.image.pullPolicy | string | `"Always"` | The pull policy for the updater image. Recommend not changing this |
 | updater.image.repository | string | `"registry.k8s.io/autoscaling/vpa-updater"` | The location of the updater image |
 | updater.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion |
