@@ -42,12 +42,11 @@ spec:
           image: {{ printf "%s:%s" .Values.admissionController.image.repository (.Values.admissionController.image.tag | default .Chart.AppVersion) }}
           imagePullPolicy: {{ .Values.admissionController.image.pullPolicy }}
           args:
+          - --register-webhook=false
           - --webhook-service={{ include "ocean-vertical-pod-autoscaler.fullname" . }}-webhook
-          {{- if .Values.admissionController.generateCertificate }}
           - --client-ca-file=/etc/tls-certs/ca
           - --tls-cert-file=/etc/tls-certs/cert
           - --tls-private-key=/etc/tls-certs/key
-          {{- end }}
           volumeMounts:
             - name: tls-certs
               mountPath: "/etc/tls-certs"
