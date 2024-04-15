@@ -1,10 +1,10 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
-  name: {{ include "ocean-vertical-pod-autoscaler.fullname" . }}-webhook-config
+  name: {{ include "ocean-vpa.fullname" . }}-webhook-config
   labels:
     app.kubernetes.io/component: admission-controller
-    {{- include "ocean-vertical-pod-autoscaler.labels" . | nindent 4 }}
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
   {{- with .Values.admissionController.mutatingWebhookConfiguration.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -14,7 +14,7 @@ webhooks:
   - v1
   clientConfig:
     service:
-      name: {{ include "ocean-vertical-pod-autoscaler.fullname" . }}-webhook
+      name: {{ include "ocean-vpa.fullname" . }}-webhook
       namespace: {{ .Release.Namespace }}
       port: 443
   failurePolicy: Ignore

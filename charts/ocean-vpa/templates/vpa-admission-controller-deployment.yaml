@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "ocean-vertical-pod-autoscaler.fullname" . }}-admission-controller
+  name: {{ include "ocean-vpa.fullname" . }}-admission-controller
   labels:
     app.kubernetes.io/component: admission-controller
-    {{- include "ocean-vertical-pod-autoscaler.labels" . | nindent 4 }}
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.admissionController.replicaCount }}
   revisionHistoryLimit: 10
   selector:
     matchLabels:
       app.kubernetes.io/component: admission-controller
-      {{- include "ocean-vertical-pod-autoscaler.selectorLabels" . | nindent 6 }}
+      {{- include "ocean-vpa.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -20,7 +20,7 @@ spec:
         {{- end }}
       labels:
         app.kubernetes.io/component: admission-controller
-        {{- include "ocean-vertical-pod-autoscaler.selectorLabels" . | nindent 8 }}
+        {{- include "ocean-vpa.selectorLabels" . | nindent 8 }}
         {{- with .Values.admissionController.podLabels }}
             {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -32,7 +32,7 @@ spec:
       {{- with .Values.priorityClassName }}
       priorityClassName: {{ . }}
       {{- end }}
-      serviceAccountName: {{ include "ocean-vertical-pod-autoscaler.serviceAccountName" . }}-admission-controller
+      serviceAccountName: {{ include "ocean-vpa.serviceAccountName" . }}-admission-controller
       securityContext:
         {{- toYaml .Values.admissionController.podSecurityContext | nindent 8 }}
       containers:
@@ -43,7 +43,7 @@ spec:
           imagePullPolicy: {{ .Values.admissionController.image.pullPolicy }}
           args:
           - --register-webhook=false
-          - --webhook-service={{ include "ocean-vertical-pod-autoscaler.fullname" . }}-webhook
+          - --webhook-service={{ include "ocean-vpa.fullname" . }}-webhook
           - --client-ca-file=/etc/tls-certs/ca
           - --tls-cert-file=/etc/tls-certs/cert
           - --tls-private-key=/etc/tls-certs/key
@@ -65,7 +65,7 @@ spec:
       volumes:
         - name: tls-certs
           secret:
-            secretName: {{ include "ocean-vertical-pod-autoscaler.webhook.secret" . }}
+            secretName: {{ include "ocean-vpa.webhook.secret" . }}
             {{- with .Values.admissionController.tlsSecretKeys }}
             items:
               {{- toYaml . | nindent 14 }}

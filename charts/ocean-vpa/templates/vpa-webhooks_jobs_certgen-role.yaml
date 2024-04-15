@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
+kind: Role
 metadata:
-  name: {{ include "ocean-vertical-pod-autoscaler.fullname" . }}-admission-certgen
+  name:  {{ include "ocean-vpa.fullname" . }}-admission-certgen
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade,post-install,post-upgrade
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
@@ -10,9 +10,9 @@ metadata:
     app.kubernetes.io/component: admission-certgen
 rules:
   - apiGroups:
-      - admissionregistration.k8s.io
+      - ""
     resources:
-      - mutatingwebhookconfigurations
+      - secrets
     verbs:
       - get
-      - update
+      - create

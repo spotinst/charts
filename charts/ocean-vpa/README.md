@@ -1,4 +1,4 @@
-# ocean-vertical-pod-autoscaler
+# ocean-vpa
 
 ![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
@@ -18,10 +18,10 @@ helm repo add spot https://charts.spot.io
 helm repo update
 ```
 
-3. Install `ocean-vertical-pod-autoscaler`:
+3. Install `ocean-vpa`:
 
 ```sh
-helm install my-release spot/ocean-vertical-pod-autoscaler
+helm install my-release spot/ocean-vpa
 ```
 
 ## Values
@@ -50,7 +50,7 @@ helm install my-release spot/ocean-vertical-pod-autoscaler
 | admissionController.podSecurityContext | object | `{"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}` | The security context for the admission controller pod |
 | admissionController.replicaCount | int | `1` |  |
 | admissionController.resources | object | `{"limits":{},"requests":{"cpu":"50m","memory":"200Mi"}}` | The resources block for the admission controller pod |
-| admissionController.secretName | string | `"{{ include \"ocean-vertical-pod-autoscaler.fullname\" . }}-tls-secret"` | Name for the TLS secret created for the webhook. Default {{ .Release.Name }}-tls-secret |
+| admissionController.secretName | string | `"{{ include \"ocean-vpa.fullname\" . }}-tls-secret"` | Name for the TLS secret created for the webhook. Default {{ .Release.Name }}-tls-secret |
 | admissionController.tlsSecretKeys | list | `[]` | The keys in the vpa-tls-certs secret to map in to the admission controller |
 | admissionController.tolerations | list | `[]` |  |
 | fullnameOverride | string | `""` | A template override for the fullname |

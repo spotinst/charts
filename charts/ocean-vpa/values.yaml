@@ -53,7 +53,7 @@ admissionController:
   # admissionController.generateCertificate -- If true and admissionController is enabled, a pre-install hook will run to create the certificate for the webhook
   generateCertificate: true
   # admissionController.secretName -- Name for the TLS secret created for the webhook. Default {{ .Release.Name }}-tls-secret
-  secretName: "{{ include \"ocean-vertical-pod-autoscaler.fullname\" . }}-tls-secret"
+  secretName: "{{ include \"ocean-vpa.fullname\" . }}-tls-secret"
   certGen:
     image:
       # admissionController.certGen.image.repository -- An image that contains certgen for creating certificates. Only used if admissionController.generateCertificate is true

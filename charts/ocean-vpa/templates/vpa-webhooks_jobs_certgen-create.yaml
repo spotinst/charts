@@ -1,38 +1,37 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name:  {{ include "ocean-vertical-pod-autoscaler.fullname" . }}-admission-certgen-patch
+  name:  {{ include "ocean-vpa.fullname" . }}-admission-certgen
   annotations:
-    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook": pre-install,pre-upgrade
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-weight": "-110"
   labels:
-    app.kubernetes.io/component: admission-certgen
-    {{- include "ocean-vertical-pod-autoscaler.labels" . | nindent 4 }}
+    app.kubernetes.io/component: certgen
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 spec:
   ttlSecondsAfterFinished: 300
   template:
     metadata:
-      name: {{ include "ocean-vertical-pod-autoscaler.fullname" . }}-admission-certgen-patch
+      name: {{ include "ocean-vpa.fullname" . }}-admission-certgen
       labels:
         app.kubernetes.io/component: admission-certgen
-        {{- include "ocean-vertical-pod-autoscaler.labels" . | nindent 8 }}
+        {{- include "ocean-vpa.labels" . | nindent 8 }}
     spec:
       restartPolicy: OnFailure
-      serviceAccountName: {{ include "ocean-vertical-pod-autoscaler.fullname" . }}-admission-certgen
+      serviceAccountName: {{ include "ocean-vpa.fullname" . }}-admission-certgen
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
       {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-        - name: patch
+        - name: create
           image: {{ printf "%s:%s" .Values.admissionController.certGen.image.repository .Values.admissionController.certGen.image.tag }}
           args:
-            - patch
-            - --webhook-name={{ include "ocean-vertical-pod-autoscaler.fullname" . }}-webhook-config
+            - create
+            - --host={{ include "ocean-vpa.fullname" . }}-webhook,{{ include "ocean-vpa.fullname" . }}-webhook.{{ .Release.Namespace }}.svc
             - --namespace={{ .Release.Namespace }}
-            - --secret-name={{ include "ocean-vertical-pod-autoscaler.webhook.secret" . }}
-            - --patch-validating=false
-            - --log-level=debug
+            - --secret-name={{ include "ocean-vpa.webhook.secret" . }}
           resources:
             {{- toYaml .Values.admissionController.certGen.resources | nindent 12 }}
       {{- with .Values.admissionController.certGen.securityContext }}
