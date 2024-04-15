@@ -16,4 +16,59 @@ data:
   auto-update.job: |
     {{- include "auto-updater.job" . | nindent 4 }}
   {{- end }}
+  {{- if eq (include "ocean-kubernetes-controller.logShipping.enabled" .) "true" }}
+  fluent-bit.conf: |
+    [SERVICE]
+        Parsers_File parsers.conf
+        Flush        60
+        Daemon       Off
+
+    [INPUT]
+        Name            tail
+        Path            /var/log/controller.logs
+        Parser          klog
+        Buffer_Max_Size 2MB
+        Skip_Long_Lines On
+
+    # nest all fields under log key
+    [FILTER]
+        Name       nest
+        Match      *
+        Operation  nest
+        Wildcard   *
+        Nest_Under log
+
+    # covert log level (E -> ERROR, I -> INFO)
+    [FILTER]
+        Name Lua
+        Match *
+        call covert_log_lvl
+        code function covert_log_lvl(tag, timestamp, record) new_record = record local newLvl = "INFO" if record["log"]["l"] == "E" then newLvl = "ERROR" end new_record["log"]["l"] = newLvl return 1, timestamp, new_record end
+
+    # stringify log field
+    [FILTER]
+        Name Lua
+        Match *
+        call parse
+        code function stringify(obj) result = {} for key, value in pairs(obj) do table.insert(result, string.format("\"%s\":%q", key, value)) end result = "{" .. table.concat(result, ",") .. "}" return result end function parse(tag, timestamp, record) new_record = record new_record["log"] = stringify(record["log"]) return 1, timestamp, new_record end
+
+    [OUTPUT]
+        Name        http
+        Match       *
+        Format      json
+        Host        {{ .Values.logShipping.destination.host }}
+        Port        {{ .Values.logShipping.destination.port }}
+        TLS         {{ .Values.logShipping.destination.tls }}
+        URI         /logs/${CLUSTER_IDENTIFIER}?accountId=${SPOTINST_ACCOUNT}
+        Header      Authorization Bearer ${SPOTINST_TOKEN}
+        Retry_Limit no_retries
+  parsers.conf: |
+    [PARSER]
+        Name        klog
+        Format      regex
+        Time_Key    time
+        Time_Keep   true
+        Time_Format %H:%M:%S.%L
+        Regex       (?<l>\S)(?<month>\d{2})(?<day>\d{2})\s(?<time>\d{2}:\d{2}:\d{2}\.\d{6})\s*(?<thread>\d*)\s(?<file>[^\]]*)\]\s(?<message>.*)
+  {{- end }}
 {{- end }}
