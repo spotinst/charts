@@ -3,6 +3,7 @@ apiVersion: v1
 kind: ResourceQuota
 metadata:
   name: {{ include "ocean-kubernetes-controller.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
   {{- include "ocean-kubernetes-controller.labels" . | nindent 4 }}
 spec:
