@@ -22,7 +22,7 @@ spotinst:
   # -- Disable auto update. (Optional)
   disableAutoUpdate: false
   # -- Enable CSR approval. (Optional)
-  enableCsrApproval: false
+  enableCsrApproval: true
   # -- Disable automatic RightSizing. (Optional)
   disableAutomaticRightSizing: false
 
@@ -83,7 +83,14 @@ podSecurityContext:
   runAsGroup: 10001
   fsGroup: 10001
 
-priorityClassName: system-cluster-critical
+
+# -- Priority class name for the controller pod.
+priorityClassName: system-node-critical
+
+# -- Resource Quota configuration. Required when running in a namespace other than kube-system in GKE.
+# Ref: https://kubernetes.io/docs/concepts/policy/resource-quotas/
+resourceQuota:
+  enabled: true
 
 # Container Security Context
 securityContext:
