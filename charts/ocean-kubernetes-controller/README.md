@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.32](https://img.shields.io/badge/Version-0.1.32-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.52](https://img.shields.io/badge/AppVersion-2.0.52-informational?style=flat-square)
+![Version: 0.1.33](https://img.shields.io/badge/Version-0.1.33-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.53](https://img.shields.io/badge/AppVersion-2.0.53-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
@@ -101,10 +101,10 @@ Kubernetes: `>=1.20.0-0`
 | livenessProbe.httpGet.port | string | `"readiness"` |  |
 | livenessProbe.initialDelaySeconds | int | `15` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
-| logShipping | object | `{"destination":{"host":"api.spotinst.io","port":443,"tls":true},"enabled":true,"image":{"pullPolicy":"IfNotPresent","repository":"public.ecr.aws/aws-observability/aws-for-fluent-bit","tag":"stable"}}` | Log Shipping configuration. |
+| logShipping | object | `{"destination":{"host":"api.spotinst.io","port":443,"tls":true},"enabled":true,"image":{"pullPolicy":"IfNotPresent","repository":"cr.fluentbit.io/fluent/fluent-bit","tag":"3.0.1"}}` | Log Shipping configuration. |
 | logShipping.destination | object | `{"host":"api.spotinst.io","port":443,"tls":true}` | Log shipping destination configuration. |
 | logShipping.enabled | bool | `true` | Specifies whether to send the controller logs to Spot for analysis. (Optional) |
-| logShipping.image | object | `{"pullPolicy":"IfNotPresent","repository":"public.ecr.aws/aws-observability/aws-for-fluent-bit","tag":"stable"}` | Specifies the log shipping container image. (Optional) |
+| logShipping.image | object | `{"pullPolicy":"IfNotPresent","repository":"cr.fluentbit.io/fluent/fluent-bit","tag":"3.0.1"}` | Specifies the log shipping container image. (Optional) |
 | metrics-server.args | list | `["--logtostderr"]` | Arguments to pass to metrics-server on start up. (Optional) |
 | metrics-server.deployChart | bool | `true` | Specifies whether the metrics-server chart should be deployed. (Optional) |
 | metrics-server.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -118,12 +118,13 @@ Kubernetes: `>=1.20.0-0`
 | podSecurityContext.runAsGroup | int | `10001` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
 | podSecurityContext.runAsUser | int | `10001` |  |
-| priorityClassName | string | `"system-cluster-critical"` |  |
+| priorityClassName | string | `"system-node-critical"` | Priority class name for the controller pod. |
 | readinessProbe.httpGet.path | string | `"/readyz"` |  |
 | readinessProbe.httpGet.port | string | `"readiness"` |  |
 | readinessProbe.initialDelaySeconds | int | `5` |  |
 | readinessProbe.periodSeconds | int | `10` |  |
 | replicas | int | `2` | Configure the amount of replicas for the controller (Optional) |
+| resourceQuota | object | `{"enabled":true}` | Resource Quota configuration. Required when running in a namespace other than kube-system in GKE. Ref: https://kubernetes.io/docs/concepts/policy/resource-quotas/ |
 | resources | object | `{}` |  |
 | schedulerName | string | `""` |  |
 | secret.create | bool | `true` | Controls whether a Secret should be created. (Optional) |
@@ -140,7 +141,7 @@ Kubernetes: `>=1.20.0-0`
 | spotinst.clusterIdentifier | string | `""` | Unique identifier used by the Ocean Controller to connect (Required) between the Ocean backend and the Kubernetes cluster. Ref: https://docs.spot.io/ocean/tutorials/spot-kubernetes-controller/ |
 | spotinst.disableAutoUpdate | bool | `false` | Disable auto update. (Optional) |
 | spotinst.disableAutomaticRightSizing | bool | `false` | Disable automatic RightSizing. (Optional) |
-| spotinst.enableCsrApproval | bool | `false` | Enable CSR approval. (Optional) |
+| spotinst.enableCsrApproval | bool | `true` | Enable CSR approval. (Optional) |
 | spotinst.proxyUrl | string | `""` | Proxy URL. (Optional) |
 | spotinst.token | string | `""` | Spot Token. (Required) Ref: https://docs.spot.io/administration/api/create-api-token |
 | tolerations | string | `nil` | Tolerations for nodes that have taints on them. (Optional) Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
