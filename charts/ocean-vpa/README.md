@@ -33,7 +33,7 @@ helm install my-release spot/ocean-vpa
 | admissionController.certGen.env | object | `{}` | Additional environment variables to be added to the certgen container. Format is KEY: Value format |
 | admissionController.certGen.image.pullPolicy | string | `"Always"` | The pull policy for the certgen image. Recommend not changing this |
 | admissionController.certGen.image.repository | string | `"registry.k8s.io/ingress-nginx/kube-webhook-certgen"` | An image that contains certgen for creating certificates. Only used if admissionController.generateCertificate is true |
-| admissionController.certGen.image.tag | string | `"v20230312-helm-chart-4.5.2-28-g66a760794"` | An image tag for the admissionController.certGen.image.repository image. Only used if admissionController.generateCertificate is true |
+| admissionController.certGen.image.tag | string | `"v1.4.1"` | An image tag for the admissionController.certGen.image.repository image. Only used if admissionController.generateCertificate is true |
 | admissionController.certGen.nodeSelector | object | `{}` |  |
 | admissionController.certGen.resources | object | `{}` | The resources block for the certgen pod |
 | admissionController.certGen.securityContext | object | `{}` | The securityContext block for the certgen pod |
