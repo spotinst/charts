@@ -83,7 +83,6 @@ podSecurityContext:
   runAsGroup: 10001
   fsGroup: 10001
 
-
 # -- Priority class name for the controller pod.
 priorityClassName: system-node-critical
 
