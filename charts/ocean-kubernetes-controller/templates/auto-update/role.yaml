@@ -56,8 +56,11 @@ rules:
   verbs: [ "get", "patch" ]
 {{- if and (ne .Release.Namespace "kube-system") .Values.resourceQuota.enabled }}
 - apiGroups: [ "" ]
+  # Cannot limit to specific resource name due to limitation with K8s RBAC.
+  # We need to create this resource with the auto-updater and it will not allow
+  # 'create' verb if we limit to specific resource name.
+  # resourceNames: [ {{ include "ocean-kubernetes-controller.fullname" . }} ]
   resources: [ "resourcequotas" ]
-  resourceNames: [ {{ include "ocean-kubernetes-controller.fullname" . }} ]
   verbs: [ "get", "patch", "create" ]
 {{- end }}
 

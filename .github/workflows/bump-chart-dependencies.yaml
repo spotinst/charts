@@ -1,12 +1,6 @@
 name: Bump Chart Dependencies
 
-on:
-  workflow_call:
-    inputs:
-      chart-name:
-        description: 'The name of the chart'
-        required: true
-        type: string
+on: {}
 
 jobs:
   bump-local-dependencies:
