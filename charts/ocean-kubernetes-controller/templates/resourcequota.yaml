@@ -1,0 +1,19 @@
+{{- if and (ne .Release.Namespace "kube-system") .Values.resourceQuota.enabled }}
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: {{ include "ocean-kubernetes-controller.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+  {{- include "ocean-kubernetes-controller.labels" . | nindent 4 }}
+spec:
+  hard:
+    pods: "1000"
+  scopeSelector:
+    matchExpressions:
+      - operator: In
+        scopeName: PriorityClass
+        values:
+          - system-node-critical
+          - system-cluster-critical
+{{- end }}
