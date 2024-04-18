@@ -1,0 +1,26 @@
+apiVersion: v2
+name: ocean-vpa
+description: A Helm chart for Kubernetes
+type: application
+home: https://github.com/spotinst/charts/tree/main/charts/ocean-vpa
+icon: https://docs.spot.io/_media/images/spot_mark.png
+sources:
+  - https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler
+keywords:
+  - spot
+  - ocean
+  - rightsizing
+maintainers:
+  - name: spotinst
+    email: ng-spot-info@netapp.com
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 1.0.0
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application. Versions are not expected to
+# follow Semantic Versioning. They should reflect the version the application is using.
+# It is recommended to use it with quotes.
+appVersion: "1.0.0"
