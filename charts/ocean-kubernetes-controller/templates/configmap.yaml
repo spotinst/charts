@@ -26,9 +26,50 @@ data:
     [INPUT]
         Name            tail
         Path            /var/log/controller.logs
-        Parser          klog
+        Parser          json
         Buffer_Max_Size 2MB
         Skip_Long_Lines On
+        Skip_Empty_Lines On
+        Refresh_Interval 10
+
+    # rename msg -> message , level -> l
+    [FILTER]
+        Name       modify
+        Match      *
+        Rename     msg message
+        Rename     level l
+
+    # info -> INFO
+    [FILTER]
+        Name       modify
+        Match      *
+
+        Condition Key_Value_Equals l info
+        SET l INFO
+
+    # debug -> DEBUG
+    [FILTER]
+        Name       modify
+        Match      *
+
+        Condition Key_Value_Equals l debug
+        SET l DEBUG
+
+    # trace -> TRACE
+    [FILTER]
+        Name       modify
+        Match      *
+
+        Condition Key_Value_Equals l trace
+        SET l TRACE
+
+    # error -> ERROR
+    [FILTER]
+        Name       modify
+        Match      *
+
+        Condition Key_Value_Equals l error
+        SET l ERROR
 
     # nest all fields under log key
     [FILTER]
@@ -37,13 +78,6 @@ data:
         Operation  nest
         Wildcard   *
         Nest_Under log
-
-    # covert log level (E -> ERROR, I -> INFO)
-    [FILTER]
-        Name Lua
-        Match *
-        call covert_log_lvl
-        code function covert_log_lvl(tag, timestamp, record) new_record = record local newLvl = "INFO" if record["log"]["l"] == "E" then newLvl = "ERROR" end new_record["log"]["l"] = newLvl return 1, timestamp, new_record end
 
     # stringify log field
     [FILTER]
@@ -64,11 +98,7 @@ data:
         Retry_Limit no_retries
   parsers.conf: |
     [PARSER]
-        Name        klog
-        Format      regex
-        Time_Key    time
-        Time_Keep   true
-        Time_Format %H:%M:%S.%L
-        Regex       (?<l>\S)(?<month>\d{2})(?<day>\d{2})\s(?<time>\d{2}:\d{2}:\d{2}\.\d{6})\s*(?<thread>\d*)\s(?<file>[^\]]*)\]\s(?<message>.*)
+        Name        json
+        Format      json
   {{- end }}
 {{- end }}
