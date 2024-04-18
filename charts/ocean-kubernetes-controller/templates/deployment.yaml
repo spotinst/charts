@@ -21,6 +21,7 @@ spec:
         # This will restart the deployment in case of configmap/secret changes
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        kubectl.kubernetes.io/default-container: {{ .Chart.Name }}
 
         {{- with .Values.podAnnotations }}
           {{- toYaml . | nindent 8 }}
@@ -54,12 +55,9 @@ spec:
             - {{ . }}
           {{- end }}
           {{- if eq (include "ocean-kubernetes-controller.logShipping.enabled" .) "true" }}
+          - --log_to_file
           - --log_file=/var/log/controller.logs
-          - --logtostderr=false
-          - --skip_log_headers=true
           - --log_file_max_size=1
-          - --stderrthreshold=INFO
-          - -v=2
           {{- end }}
           env:
           - name: SPOTINST_TOKEN

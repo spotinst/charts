@@ -54,6 +54,12 @@ rules:
   resources: [ "rolebindings" ]
   resourceNames: [ {{ include "ocean-kubernetes-controller.fullname" . }} ]
   verbs: [ "get", "patch" ]
+{{- if and (ne .Release.Namespace "kube-system") .Values.resourceQuota.enabled }}
+- apiGroups: [ "" ]
+  resources: [ "resourcequotas" ]
+  resourceNames: [ {{ include "ocean-kubernetes-controller.fullname" . }} ]
+  verbs: [ "get", "patch" ]
+{{- end }}
 
 # Metrics Server requires
 {{- if (index .Values "metrics-server" "deployChart") }}
