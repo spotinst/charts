@@ -298,8 +298,7 @@ Metrics-server fullname
 Metrics-server name
 */}}
 {{- define "metrics-server.name" -}}
-{{- $name := "metrics-server" }}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
+metrics-server
 {{- end }}
 
 {{/*
