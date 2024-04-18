@@ -27,8 +27,8 @@ jobs:
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
-  bump-dependencies:
-    needs: release
-    uses: spotinst/charts/.github/workflows/bump-chart-dependencies.yaml@main
-    with:
-      chart-name: ocean-kubernetes-controller
+#   bump-dependencies:
+#     needs: release
+#     uses: spotinst/charts/.github/workflows/bump-chart-dependencies.yaml@main
+#     with:
+#       chart-name: ocean-kubernetes-controller
