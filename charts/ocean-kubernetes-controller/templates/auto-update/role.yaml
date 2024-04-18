@@ -68,7 +68,7 @@ rules:
 {{- if (index .Values "metrics-server" "deployChart") }}
 - apiGroups: [ "" ]
   resources: [ "serviceaccounts" ]
-  resourceNames: [ {{ template "metrics-server.serviceAccountName" . }} ]
+  resourceNames: [ {{ include "metrics-server.serviceAccountName" . }} ]
   verbs: [ "get", "patch" ]
 - apiGroups: [ "" ]
   resources: [ "services" ]

@@ -278,6 +278,31 @@ NO_PROXY environment variable
 {{- end }}
 
 {{/*
+Metrics-server serviceaccount name
+*/}}
+{{- define "metrics-server.serviceAccountName" -}}
+{{- $name := "metrics-server" }}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+Metrics-server fullname
+*/}}
+{{- define "metrics-server.fullname" -}}
+{{- $name := "metrics-server" }}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+
+{{/*
+Metrics-server name
+*/}}
+{{- define "metrics-server.name" -}}
+{{- $name := "metrics-server" }}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
 Figure out if we should deploy metrics server. We are checking:
 - if 'metrics-server.deployChart' is true:
   - try to fetch the 'v1beta1.metrics.k8s.io' APIService
