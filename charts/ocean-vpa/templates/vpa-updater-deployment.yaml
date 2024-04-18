@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ocean-vpa.fullname" . }}-updater
+  labels:
+    app.kubernetes.io/component: updater
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.updater.replicaCount }}
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: updater
+      {{- include "ocean-vpa.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        {{- with .Values.updater.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        app.kubernetes.io/component: updater
+        {{- include "ocean-vpa.selectorLabels" . | nindent 8 }}
+        {{- with .Values.updater.podLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.priorityClassName }}
+      priorityClassName: {{ . }}
+      {{- end }}
+      serviceAccountName: {{ include "ocean-vpa.serviceAccountName" . }}-updater
+      securityContext:
+        {{- toYaml .Values.updater.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.updater.securityContext | nindent 12 }}
+          image: {{ printf "%s:%s" .Values.updater.image.repository (.Values.updater.image.tag | default .Chart.AppVersion) }}
+          imagePullPolicy: {{ .Values.updater.image.pullPolicy }}
+          args:
+            - --eviction-tolerance={{ .Values.updater.evictionTolerance }}
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          resources:
+            {{- toYaml .Values.updater.resources | nindent 12 }}
+      {{- with .Values.updater.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.updater.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.updater.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
