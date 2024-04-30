@@ -47,6 +47,14 @@ spec:
           volumeMounts:
             - name: varlog
               mountPath: /var/log
+          readinessProbe:
+            exec:
+              command:
+              - cat
+              - /tmp/healthy
+            initialDelaySeconds: 60
+            periodSeconds: 300
+            failureThreshold: 10
           env:
             - name: REPORT_INTERVAL
               value: "60"
