@@ -346,7 +346,7 @@ or if another log shipping destination host is specified.
 {{- define "ocean-kubernetes-controller.logShipping.enabled" -}}
 {{- if and .Values.logShipping .Values.logShipping.enabled -}}
 {{- if (or
-    (or (eq .Values.spotinst.baseUrl "") (eq .Values.spotinst.baseUrl "ocean.api.spot.io:443"))
+    (or (eq .Values.spotinst.baseUrl "") (eq .Values.spotinst.baseUrl "api.spotinst.io:443"))
     (ne .Values.logShipping.destination.host "api.spotinst.io")
 ) -}}
 true
