@@ -18,5 +18,3 @@ dependencies:
     version: 3.11.0
     repository: https://kubernetes-sigs.github.io/metrics-server
     condition: metrics-server.deployChart
-annotations:
-  artifacthub.io/prerelease: "true"
