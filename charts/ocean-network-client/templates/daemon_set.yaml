@@ -47,7 +47,7 @@ spec:
           volumeMounts:
             - name: varlog
               mountPath: /var/log
-          readinessProbe:
+          livenessProbe:
             exec:
               command:
               - cat
