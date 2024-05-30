@@ -7,6 +7,20 @@ oceanController:
   # -- (Optional) ConfigMap name.
   configMapName: spotinst-kubernetes-cluster-controller-config
 
+# Spot Configuration.
+spotinst:
+  # -- Spot Token. (Required)
+  # Ref: https://docs.spot.io/administration/api/create-api-token
+  token: ""
+  # -- Spot Account. (Required)
+  # Ref: https://docs.spot.io/administration/organizations?id=account
+  account: ""
+  # -- Unique identifier used by the Ocean Controller to connect (Required)
+  # between the Ocean backend and the Kubernetes cluster.
+  # Ref: https://docs.spot.io/ocean/tutorials/spot-kubernetes-controller/
+  clusterIdentifier: ""
+
+
 image:
   # -- (Optional) Image repository.
   repository: public.ecr.aws/spotinst/spot-network-client
