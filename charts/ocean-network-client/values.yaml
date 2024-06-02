@@ -3,9 +3,9 @@ namespace: kube-system
 
 oceanController:
   # -- (Optional) Secret name.
-  secretName: spotinst-kubernetes-cluster-controller
+  secretName: spotinst-kubernetes-cluster
   # -- (Optional) ConfigMap name.
-  configMapName: spotinst-kubernetes-cluster-controller-config
+  configMapName: spotinst-kubernetes-cluster-config
 
 # Spot Configuration.
 spotinst:
