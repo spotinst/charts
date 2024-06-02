@@ -1,7 +1,7 @@
-Thank you for installing spotinst-ocean-network-client
+Thank you for installing {{ .Release.Name }}.
 
 Please make sure that each node in your cluster has the Network-Client DaemonSet running:
 
-  $ kubectl get daemonset spotinst-ocean-network-client -n kube-system
+  $ kubectl get daemonset {{ .Release.Name }} -n {{ .Values.namespace }}
 
 The collection of the data has already begun, you can see the data in our UI console or via API in 2-3 hours.
