@@ -39,7 +39,7 @@ helm install my-release spot/ocean-network-client
 | oceanController.secretName | Optional | `"spotinst-kubernetes-cluster-controller"` | Secret name. |
 | resources | Optional | `{"requests":{"cpu":"30m","memory":"150Mi"}}` | Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
 | spotinst.account | string | `""` | Spot Account. (Required) Ref: https://docs.spot.io/administration/organizations?id=account |
-| spotinst.clusterIdentifier | string | `""` | Unique identifier used by the Ocean Controller to connect (Required) between the Ocean backend and the Kubernetes cluster. |
+| spotinst.clusterIdentifier | string | `""` | Unique identifier used by the Ocean Controller to connect (Required) between the Ocean backend and the Kubernetes cluster. Ref: https://docs.spot.io/ocean/tutorials/spot-kubernetes-controller/ |
 | spotinst.token | string | `""` | Spot Token. (Required) Ref: https://docs.spot.io/administration/api/create-api-token |
 | tolerations | Optional | `[{"operator":"Exists"}]` | Tolerations - Enable pods to run an all nodes in cluster Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/ |
 
