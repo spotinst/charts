@@ -30,17 +30,17 @@ helm install my-release spot/ocean-network-client
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| configMapName | Optional | `"spotinst-kubernetes-cluster-controller-config"` | ConfigMap name. |
 | image.pullPolicy | Optional | `"IfNotPresent"` | Image pull policy. |
 | image.pullSecrets | Optional | `[]` | Image pull secrets. |
 | image.repository | Optional | `"public.ecr.aws/spotinst/spot-network-client"` | Image repository. |
 | image.tag | Optional | `""` | Image tag. Defaults to `.Chart.AppVersion`. |
 | namespace | Optional | `"kube-system"` | Namespace where components should be installed. |
-| configMapName | Optional | `"spotinst-kubernetes-cluster-config"` | ConfigMap name. |
-| secretName | Optional | `"spotinst-kubernetes-cluster"` | Secret name. |
 | resources | Optional | `{"requests":{"cpu":"30m","memory":"150Mi"}}` | Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
-| spotinst.account | string | `""` | Spot Account. (Required) Ref: https://docs.spot.io/administration/organizations?id=account |
-| spotinst.clusterIdentifier | string | `""` | Unique identifier used by the Ocean Controller to connect (Required) between the Ocean backend and the Kubernetes cluster. Ref: https://docs.spot.io/ocean/tutorials/spot-kubernetes-controller/ |
-| spotinst.token | string | `""` | Spot Token. (Required) Ref: https://docs.spot.io/administration/api/create-api-token |
+| secretName | Optional | `"spotinst-kubernetes-cluster-controller"` | Secret name. |
+| spotinst.account |  Optional | `""` | Spot Account. (Required) Ref: https://docs.spot.io/administration/organizations?id=account |
+| spotinst.clusterIdentifier |  Optional | `""` | Unique identifier used by the Ocean Controller to connect (Required) between the Ocean backend and the Kubernetes cluster. Ref: https://docs.spot.io/ocean/tutorials/spot-kubernetes-controller/ |
+| spotinst.token | Optional  | `""` | Spot Token. (Required) Ref: https://docs.spot.io/administration/api/create-api-token |
 | tolerations | Optional | `[{"operator":"Exists"}]` | Tolerations - Enable pods to run an all nodes in cluster Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/ |
 
 ----------------------------------------------
