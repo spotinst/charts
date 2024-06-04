@@ -6,6 +6,9 @@ secretName: spotinst-kubernetes-cluster-controller
 # -- (Optional) ConfigMap name.
 configMapName: spotinst-kubernetes-cluster-controller-config
 
+# -- (Optional) ConfigMap name.
+oceanInfoData: spotinst-ocean-cluster
+
 # Spot Configuration.
 spotinst:
   # -- (Optional) Spot Token.
