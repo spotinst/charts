@@ -16,14 +16,14 @@ Namespace.
 ConfigMap name.
 */}}
 {{- define "ocean-network-client.configMapName" -}}
-{{ default (include "ocean-network-client.name" .) .Values.oceanController.configMapName }}
+{{ default (include "ocean-network-client.name" .) .Values.configMapName }}
 {{- end }}
 
 {{/*
 Secret name.
 */}}
 {{- define "ocean-network-client.secretName" -}}
-{{ default (include "ocean-network-client.name" .) .Values.oceanController.secretName }}
+{{ default (include "ocean-network-client.name" .) .Values.secretName }}
 {{- end }}
 
 {{/*

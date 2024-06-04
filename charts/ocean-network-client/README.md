@@ -35,8 +35,8 @@ helm install my-release spot/ocean-network-client
 | image.repository | Optional | `"public.ecr.aws/spotinst/spot-network-client"` | Image repository. |
 | image.tag | Optional | `""` | Image tag. Defaults to `.Chart.AppVersion`. |
 | namespace | Optional | `"kube-system"` | Namespace where components should be installed. |
-| oceanController.configMapName | Optional | `"spotinst-kubernetes-cluster-config"` | ConfigMap name. |
-| oceanController.secretName | Optional | `"spotinst-kubernetes-cluster"` | Secret name. |
+| configMapName | Optional | `"spotinst-kubernetes-cluster-config"` | ConfigMap name. |
+| secretName | Optional | `"spotinst-kubernetes-cluster"` | Secret name. |
 | resources | Optional | `{"requests":{"cpu":"30m","memory":"150Mi"}}` | Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
 | spotinst.account | string | `""` | Spot Account. (Required) Ref: https://docs.spot.io/administration/organizations?id=account |
 | spotinst.clusterIdentifier | string | `""` | Unique identifier used by the Ocean Controller to connect (Required) between the Ocean backend and the Kubernetes cluster. Ref: https://docs.spot.io/ocean/tutorials/spot-kubernetes-controller/ |
