@@ -59,6 +59,8 @@ helm install spot spot/ocean-kubernetes-controller \
 
 Kubernetes: `>=1.20.0-0`
 
+Helm: `>=3.7.0`
+
 | Repository | Name | Version |
 |------------|------|---------|
 | https://kubernetes-sigs.github.io/metrics-server | metrics-server | 3.11.0 |
