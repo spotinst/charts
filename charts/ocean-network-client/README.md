@@ -36,6 +36,7 @@ helm install my-release spot/ocean-network-client
 | image.repository | Optional | `"public.ecr.aws/spotinst/spot-network-client"` | Image repository. |
 | image.tag | Optional | `""` | Image tag. Defaults to `.Chart.AppVersion`. |
 | namespace | Optional | `"kube-system"` | Namespace where components should be installed. |
+| oceanInfoData | Optional | `"spotinst-ocean-cluster"` | ConfigMap name. |
 | resources | Optional | `{"requests":{"cpu":"30m","memory":"150Mi"}}` | Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
 | secretName | Optional | `"spotinst-kubernetes-cluster-controller"` | Secret name. |
 | spotinst.account | Optional | `""` | Spot Account. Ref: https://docs.spot.io/administration/organizations?id=account |
