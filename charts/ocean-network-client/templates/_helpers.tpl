@@ -16,15 +16,23 @@ Namespace.
 ConfigMap name.
 */}}
 {{- define "ocean-network-client.configMapName" -}}
-{{ default (include "ocean-network-client.name" .) .Values.oceanController.configMapName }}
-{{- end }}
+{{- if ne .Values.spotinst.clusterIdentifier "" -}}
+{{- .Values.oceanInfoData  -}}
+{{- else -}}
+{{- default (include "ocean-network-client.name" .) .Values.configMapName -}}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Secret name.
 */}}
 {{- define "ocean-network-client.secretName" -}}
-{{ default (include "ocean-network-client.name" .) .Values.oceanController.secretName }}
-{{- end }}
+{{- if ne .Values.spotinst.account "" -}}
+{{- .Values.oceanInfoData  -}}
+{{- else -}}
+{{ default (include "ocean-network-client.name" .) .Values.secretName }}
+{{- end -}}
+{{- end -}}
 
 {{/*
 DaemonSet labels.

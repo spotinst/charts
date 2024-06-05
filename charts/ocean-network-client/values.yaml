@@ -1,21 +1,23 @@
 # -- (Optional) Namespace where components should be installed.
 namespace: kube-system
 
-oceanController:
-  # -- (Optional) Secret name.
-  secretName: spotinst-kubernetes-cluster
-  # -- (Optional) ConfigMap name.
-  configMapName: spotinst-kubernetes-cluster-config
+# -- (Optional) Secret name.
+secretName: spotinst-kubernetes-cluster-controller
+# -- (Optional) ConfigMap name.
+configMapName: spotinst-kubernetes-cluster-controller-config
+
+# -- (Optional) ConfigMap name.
+oceanInfoData: spotinst-ocean-cluster
 
 # Spot Configuration.
 spotinst:
-  # -- Spot Token. (Required)
+  # -- (Optional) Spot Token.
   # Ref: https://docs.spot.io/administration/api/create-api-token
   token: ""
-  # -- Spot Account. (Required)
+  # -- (Optional) Spot Account.
   # Ref: https://docs.spot.io/administration/organizations?id=account
   account: ""
-  # -- Unique identifier used by the Ocean Controller to connect (Required)
+  # -- (Optional) Unique identifier used by the Ocean Controller to connect
   # between the Ocean backend and the Kubernetes cluster.
   # Ref: https://docs.spot.io/ocean/tutorials/spot-kubernetes-controller/
   clusterIdentifier: ""
