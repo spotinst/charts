@@ -361,7 +361,7 @@ If the Helm version is less than 3.7, it will cause the Helm operation to fail w
 {{- define "ocean-kubernetes-controller.validateHelmVersion" -}}
 {{- $helmVersion := .Capabilities.HelmVersion.Version }}
 {{- if $helmVersion -}}
-{{- if semverCompare ">=v3.7.0" (semver .Capabilities.HelmVersion.Version).String -}}
+{{- if semverCompare ">=v3.7.0" (semver $helmVersion).String -}}
 {{- else -}}
 {{- fail "Helm version 3.7.0 or higher is required to install this chart" -}}
 {{- end -}}
