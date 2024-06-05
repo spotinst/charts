@@ -59,7 +59,7 @@ helm install spot spot/ocean-kubernetes-controller \
 
 Kubernetes: `>=1.20.0-0`
 
-Helm: `>=3.7.0`
+Helm: `>=3.9.0`
 
 | Repository | Name | Version |
 |------------|------|---------|
