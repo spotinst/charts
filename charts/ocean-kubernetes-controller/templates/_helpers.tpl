@@ -365,6 +365,5 @@ If the Helm version is less than 3.7, it will cause the Helm operation to fail w
 {{- else -}}
 {{- fail "Helm version 3.9.0 or higher is required to install this chart" -}}
 {{- end -}}
-{{- else -}}
 {{- end -}}
 {{- end -}}
