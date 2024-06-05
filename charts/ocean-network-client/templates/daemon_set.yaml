@@ -91,7 +91,6 @@ spec:
                 configMapKeyRef:
                   name: {{ include "ocean-network-client.configMapName" . }}
                   key: spotinst.cluster-identifier
-                  optional: true
             - name: MY_POD_IP
               valueFrom:
                 fieldRef:
