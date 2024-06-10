@@ -20,10 +20,19 @@ helm repo add spot https://charts.spot.io
 helm repo update
 ```
 
-3. Install `{{ template "chart.name" . }}`:
-
+3a. Install `{{ template "chart.name" . }}` and generate secret and configMap:
 ```sh
-helm install my-release spot/{{ template "chart.name" . }}
+helm install my-release spot/{{ template "chart.name" . }} \
+  --set spotinst.account=$SPOTINST_ACCOUNT \
+  --set spotinst.clusterIdentifier=$SPOTINST_CLUSTER_IDENTIFIER \
+  --set spotinst.token=$SPOTINST_TOKEN
+```
+
+3b. Install `{{ template "chart.name" . }}` with your own secret or configMap:
+```sh
+helm install my-release spot/{{ template "chart.name" . }} \
+  --set oceanController.secretName=$SECRET_NAME \
+  --set oceanController.configMapName=$CONFIG_MAP_NAME
 ```
 
 > NOTE: Please configure all required chart values using the `set` command line argument or a `values.yaml` file.

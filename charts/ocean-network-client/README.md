@@ -18,10 +18,19 @@ helm repo add spot https://charts.spot.io
 helm repo update
 ```
 
-3. Install `ocean-network-client`:
-
+3a. Install `ocean-network-client` and generate secret and configMap:
 ```sh
-helm install my-release spot/ocean-network-client
+helm install spot spot/ocean-network-client \
+  --set spotinst.account=$SPOTINST_ACCOUNT \
+  --set spotinst.clusterIdentifier=$SPOTINST_CLUSTER_IDENTIFIER \
+  --set spotinst.token=$SPOTINST_TOKEN
+```
+
+3b. Install `ocean-network-client` with your own secret or configMap:
+```sh
+helm install spot spot/ocean-network-client \
+  --set oceanController.secretName=$SECRET_NAME \
+  --set oceanController.configMapName=$CONFIG_MAP_NAME
 ```
 
 > NOTE: Please configure all required chart values using the `set` command line argument or a `values.yaml` file.
@@ -30,15 +39,16 @@ helm install my-release spot/ocean-network-client
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| configMapName | Optional | `"spotinst-kubernetes-cluster-controller-config"` | ConfigMap name. |
+| fullnameOverride | string | `""` |  |
 | image.pullPolicy | Optional | `"IfNotPresent"` | Image pull policy. |
 | image.pullSecrets | Optional | `[]` | Image pull secrets. |
 | image.repository | Optional | `"public.ecr.aws/spotinst/spot-network-client"` | Image repository. |
 | image.tag | Optional | `""` | Image tag. Defaults to `.Chart.AppVersion`. |
+| nameOverride | string | `""` |  |
 | namespace | Optional | `"kube-system"` | Namespace where components should be installed. |
-| oceanInfoData | Optional | `"spotinst-ocean-cluster"` | ConfigMap name. |
+| oceanController.configMapName | Optional | `"spotinst-kubernetes-cluster-controller-config"` | ConfigMap name. |
+| oceanController.secretName | Optional | `"spotinst-kubernetes-cluster-controller"` | Secret name. |
 | resources | Optional | `{"requests":{"cpu":"30m","memory":"150Mi"}}` | Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
-| secretName | Optional | `"spotinst-kubernetes-cluster-controller"` | Secret name. |
 | spotinst.account | Optional | `""` | Spot Account. Ref: https://docs.spot.io/administration/organizations?id=account |
 | spotinst.clusterIdentifier | Optional | `""` | Unique identifier used by the Ocean Controller to connect between the Ocean backend and the Kubernetes cluster. Ref: https://docs.spot.io/ocean/tutorials/spot-kubernetes-controller/ |
 | spotinst.token | Optional | `""` | Spot Token. Ref: https://docs.spot.io/administration/api/create-api-token |
