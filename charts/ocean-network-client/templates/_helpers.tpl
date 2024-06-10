@@ -30,7 +30,7 @@ Secret name.
 {{- if ne .Values.spotinst.account "" -}}
 {{- .Values.oceanInfoData  -}}
 {{- else -}}
-{{ default (include "ocean-network-client.name" .) .Values.secretName }}
+{{ default (include "ocean-network-client.name" .) .Values.oceanController.secretName }}
 {{- end -}}
 {{- end -}}
 

@@ -5,5 +5,5 @@ metadata:
   name: {{ include "ocean-network-client.configMapName" . }}
   namespace: {{ include "ocean-network-client.namespace" . }}
 data:
-  spotinst.cluster-identifier: {{  .Values.spotinst.clusterIdentifier }}
+  spotinst.cluster-identifier: "{{  .Values.spotinst.clusterIdentifier }}"
 {{- end }}
