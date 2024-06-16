@@ -9,7 +9,7 @@ Expand the name of the chart.
 Namespace.
 */}}
 {{- define "ocean-network-client.namespace" -}}
-{{ .Release.Namespace }}
+{{ default .Release.Namespace .Values.namespace }}
 {{- end }}
 
 {{/*
