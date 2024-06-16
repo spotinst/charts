@@ -15,6 +15,7 @@ secretName: ""
 configMapName: ""
 
 # Spot Configuration.
+# Will create secret and configMap objects.
 spotinst:
   # -- (Optional) Spot Token.
   # Ref: https://docs.spot.io/administration/api/create-api-token
