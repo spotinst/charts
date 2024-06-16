@@ -1,23 +1,18 @@
 nameOverride: ""
 fullnameOverride: ""
 
-secret:
-  # -- Controls whether a Secret should be created. (Optional)
-  create: true
-  # -- Secret name. (Optional)
-  name: ""
-
-# Config Map.
-configMap:
-  create: true
-  # -- ConfigMap name. (Optional)
-  name: ""
+# -- Reference secret and configMap for the Ocean Controller.
+# Deprecated in favor of secret and configMap objects
+oceanController:
+  # -- (Optional) Secret name. Deprecated use secretName instead.
+  secretName: ""
+  # -- (Optional) ConfigMap name. Deprecated use configMapName instead
+  configMapName: ""
 
 # -- (Optional) Secret name.
-#secretName: spotinst-kubernetes-cluster-controller
+secretName: ""
 # -- (Optional) ConfigMap name.
-#configMapName: spotinst-kubernetes-cluster-controller-config
-
+configMapName: ""
 
 # Spot Configuration.
 spotinst:

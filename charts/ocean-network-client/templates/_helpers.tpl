@@ -34,14 +34,56 @@ If release name contains chart name it will be used as a full name.
 ConfigMap name.
 */}}
 {{- define "ocean-network-client.configMapName" -}}
-{{- default (include "ocean-network-client.fullname" .) .Values.configMap.name -}}
+{{- if include "ocean-network-client.createConfigMap" . -}}
+
+{{/*
+Validate oceanController.configMapName was not provided in case we need to create configMap.
+*/}}
+{{- if .Values.oceanController.configMapName -}}
+{{- fail "oceanController.configMapName cannot be provided in case spotinst.controllerClusterId was provided. Please use configMapName instead" }}
+{{- end -}}
+
+{{- default (include "ocean-network-client.fullname" .) .Values.configMapName -}}
+{{- else -}}
+{{- default "spotinst-kubernetes-cluster-controller-config" (default .Values.oceanController.configMapName .Values.configMapName) -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+create ConfigMap.
+*/}}
+{{- define "ocean-network-client.createConfigMap" -}}
+{{- if .Values.spotinst.clusterIdentifier -}}
+{{- true -}}
+{{- end -}}
 {{- end -}}
 
 {{/*
 Secret name.
 */}}
 {{- define "ocean-network-client.secretName" -}}
-{{- default (include "ocean-network-client.fullname" .) .Values.secret.name -}}
+{{- if include "ocean-network-client.createSecret" . -}}
+
+{{/*
+Validate oceanController.secretName was not provided in case we need to create secret.
+*/}}
+{{- if .Values.oceanController.secretName -}}
+{{- fail "oceanController.secretName cannot be provided in case spotinst.token or spotinst.account are provided. Please use secretName instead" }}
+{{- end -}}
+
+{{- default (include "ocean-network-client.fullname" .) .Values.secretName -}}
+{{- else -}}
+{{- default "spotinst-kubernetes-cluster-controller" (default .Values.oceanController.secretName .Values.secretName) -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+create Secret.
+*/}}
+{{- define "ocean-network-client.createSecret" -}}
+{{- if or .Values.spotinst.token .Values.spotinst.account -}}
+{{- true -}}
+{{- end -}}
 {{- end -}}
 
 {{/*

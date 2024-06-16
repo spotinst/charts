@@ -1,4 +1,4 @@
-{{ if .Values.configMap.create }}
+{{ if include "ocean-network-client.createConfigMap" . }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
