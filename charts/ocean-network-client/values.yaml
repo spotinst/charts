@@ -1,7 +1,7 @@
 nameOverride: ""
 fullnameOverride: ""
 # -- (Optional) namespace override.
-namespace: ""
+namespace: kube-system
 
 # -- Reference secret and configMap for the Ocean Controller.
 # Deprecated in favor of secret and configMap objects
