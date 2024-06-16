@@ -110,7 +110,7 @@ create Secret.
 DaemonSet labels.
 */}}
 {{- define "ocean-network-client.daemon-set.labels" -}}
-app: {{ (include "ocean-network-client.fullname" .) }}
+app: ocean-network-client
 {{- end }}
 
 {{/*
