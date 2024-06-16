@@ -40,11 +40,21 @@ ConfigMap name.
 Validate oceanController.configMapName was not provided in case we need to create configMap.
 */}}
 {{- if .Values.oceanController.configMapName -}}
-{{- fail "oceanController.configMapName cannot be provided in case spotinst.controllerClusterId was provided. Please use configMapName instead" }}
+{{- fail "`oceanController.configMapName` cannot be provided in case `spotinst.controllerClusterId` was provided. Please use `configMapName` instead" }}
 {{- end -}}
 
 {{- default (include "ocean-network-client.fullname" .) .Values.configMapName -}}
 {{- else -}}
+
+{{/*
+Validate both oceanController.configMapName and configMapName were not provided together with different values
+*/}}
+{{- if and .Values.oceanController.configMapName .Values.configMapName -}}
+{{- if ne .Values.oceanController.configMapName .Values.configMapName -}}
+{{- fail "Both `oceanController.configMapName` and `configMapName` were provided with different values. Please use `configMapName`" }}
+{{- end -}}
+{{- end -}}
+
 {{- default "spotinst-kubernetes-cluster-controller-config" (default .Values.oceanController.configMapName .Values.configMapName) -}}
 {{- end -}}
 {{- end -}}
@@ -68,11 +78,21 @@ Secret name.
 Validate oceanController.secretName was not provided in case we need to create secret.
 */}}
 {{- if .Values.oceanController.secretName -}}
-{{- fail "oceanController.secretName cannot be provided in case spotinst.token or spotinst.account are provided. Please use secretName instead" }}
+{{- fail "`oceanController.secretName` cannot be provided in case `spotinst.token` or `spotinst.account` are provided. Please use `secretName` instead" }}
 {{- end -}}
 
 {{- default (include "ocean-network-client.fullname" .) .Values.secretName -}}
 {{- else -}}
+
+{{/*
+Validate both oceanController.secretName and secretName were not provided together with different values
+*/}}
+{{- if and .Values.oceanController.secretName .Values.secretName -}}
+{{- if ne .Values.oceanController.secretName .Values.secretName -}}
+{{- fail "Both `oceanController.secretName` and `secretName` were provided with different values. Please use `secretName`" }}
+{{- end -}}
+{{- end -}}
+
 {{- default "spotinst-kubernetes-cluster-controller" (default .Values.oceanController.secretName .Values.secretName) -}}
 {{- end -}}
 {{- end -}}
