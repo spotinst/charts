@@ -3,7 +3,7 @@ name: ocean-kubernetes-controller
 description: A Helm chart for Ocean Kubernetes Controller
 type: application
 version: 0.1.46
-appVersion: 2.0.59
+appVersion: 2.0.60
 kubeVersion: ">=1.20.0-0"
 maintainers:
   - name: spotinst
