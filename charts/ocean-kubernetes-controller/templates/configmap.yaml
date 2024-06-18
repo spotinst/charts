@@ -47,13 +47,13 @@ data:
         Condition Key_Value_Equals l info
         SET l INFO
 
-    # debug -> DEBUG
+    # debug -> INFO
     [FILTER]
         Name       modify
         Match      *
 
         Condition Key_Value_Equals l debug
-        SET l DEBUG
+        SET l INFO
 
     # trace -> TRACE
     [FILTER]
