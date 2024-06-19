@@ -188,6 +188,10 @@ spec:
               configMapKeyRef:
                 name: {{ include "ocean-kubernetes-controller.configMapName" . }}
                 key: spotinst.cluster-identifier
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
           volumeMounts:
           - name: logs
             mountPath: /var/log

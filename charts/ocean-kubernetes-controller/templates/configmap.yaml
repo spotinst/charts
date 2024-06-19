@@ -32,6 +32,11 @@ data:
         Skip_Empty_Lines On
         Refresh_Interval 10
 
+    [FILTER]
+        Name       modify
+        Match      *
+        Add        ctrlPod ${POD_NAME}
+
     # rename msg -> message , level -> l
     [FILTER]
         Name       modify
