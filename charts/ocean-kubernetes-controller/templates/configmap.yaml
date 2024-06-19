@@ -35,7 +35,7 @@ data:
     [FILTER]
         Name       modify
         Match      *
-        Add        ctrlPod ${POD_NAME}
+        Add        ctrlPod ${POD_NAMESPACE}/${POD_NAME}
 
     # rename msg -> message , level -> l
     [FILTER]
