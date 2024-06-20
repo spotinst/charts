@@ -6,6 +6,8 @@ oceanController:
   secretName: spotinst-kubernetes-cluster-controller
   # -- (Optional) ConfigMap name.
   configMapName: spotinst-kubernetes-cluster-controller-config
+  # -- (Optional) Ocean Controller namespace
+  oceanControllerNamespace: kube-system
 
 image:
   # -- (Optional) Image repository.
