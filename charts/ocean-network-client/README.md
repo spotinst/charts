@@ -47,7 +47,7 @@ helm install my-release spot/ocean-network-client \
 | image.repository | Optional | `"public.ecr.aws/spotinst/spot-network-client"` | Image repository. |
 | image.tag | Optional | `""` | Image tag. Defaults to `.Chart.AppVersion`. |
 | namespace | Optional | `"kube-system"` | Namespace where components should be installed. |
-| oceanController | object | `{"configMapName":"","secretName":""}` | Reference secret and configMap for the Ocean Controller. Deprecated in favor of secret and configMap objects |
+| oceanController | object | `{"configMapName":"","secretName":""}` | Reference secret and configMap for the Ocean Controller. Deprecated in favor of spotinst object or secretName and configMapName |
 | oceanController.configMapName | Optional | `""` | ConfigMap name. Deprecated use configMapName instead |
 | oceanController.secretName | Optional | `""` | Secret name. Deprecated use secretName instead. |
 | resources | Optional | `{"requests":{"cpu":"30m","memory":"150Mi"}}` | Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
