@@ -2,7 +2,7 @@
 namespace: kube-system
 
 # -- Reference secret and configMap for the Ocean Controller.
-# Deprecated in favor of secret and configMap objects
+# Deprecated in favor of spotinst object or secretName and configMapName
 oceanController:
   # -- (Optional) Secret name. Deprecated use secretName instead.
   secretName: ""
