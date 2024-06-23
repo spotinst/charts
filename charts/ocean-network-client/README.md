@@ -41,19 +41,17 @@ helm install my-release spot/ocean-network-client \
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| configMapName | Optional | `""` | ConfigMap name. |
-| fullnameOverride | string | `""` |  |
+| configMapName | Optional | `""` | ConfigMap name to use. In case spotinst.clusterIdentifier is provided, this overrides the name of the created configMap. |
 | image.pullPolicy | Optional | `"IfNotPresent"` | Image pull policy. |
 | image.pullSecrets | Optional | `[]` | Image pull secrets. |
 | image.repository | Optional | `"public.ecr.aws/spotinst/spot-network-client"` | Image repository. |
 | image.tag | Optional | `""` | Image tag. Defaults to `.Chart.AppVersion`. |
-| nameOverride | string | `""` |  |
-| namespace | Optional | `"kube-system"` | namespace override. |
+| namespace | Optional | `"kube-system"` | Namespace where components should be installed. |
 | oceanController | object | `{"configMapName":"","secretName":""}` | Reference secret and configMap for the Ocean Controller. Deprecated in favor of secret and configMap objects |
 | oceanController.configMapName | Optional | `""` | ConfigMap name. Deprecated use configMapName instead |
 | oceanController.secretName | Optional | `""` | Secret name. Deprecated use secretName instead. |
 | resources | Optional | `{"requests":{"cpu":"30m","memory":"150Mi"}}` | Resource requests and limits. Ref: http://kubernetes.io/docs/user-guide/compute-resources/ |
-| secretName | Optional | `""` | Secret name. |
+| secretName | Optional | `""` | Secret name to use. In case spotinst.token, spotinst.account are provided, this overrides the name of the created secret. |
 | spotinst.account | Optional | `""` | Spot Account. Ref: https://docs.spot.io/administration/organizations?id=account |
 | spotinst.clusterIdentifier | Optional | `""` | Unique identifier used by the Ocean Controller to connect between the Ocean backend and the Kubernetes cluster. Ref: https://docs.spot.io/ocean/tutorials/spot-kubernetes-controller/ |
 | spotinst.token | Optional | `""` | Spot Token. Ref: https://docs.spot.io/administration/api/create-api-token |

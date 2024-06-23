@@ -9,9 +9,11 @@ oceanController:
   # -- (Optional) ConfigMap name. Deprecated use configMapName instead
   configMapName: ""
 
-# -- (Optional) Secret name.
+# -- (Optional) Secret name to use.
+# In case spotinst.token, spotinst.account are provided, this overrides the name of the created secret.
 secretName: ""
-# -- (Optional) ConfigMap name.
+# -- (Optional) ConfigMap name to use.
+# In case spotinst.clusterIdentifier is provided, this overrides the name of the created configMap.
 configMapName: ""
 
 # Spot Configuration.
