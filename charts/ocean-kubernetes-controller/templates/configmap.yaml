@@ -32,6 +32,11 @@ data:
         Skip_Empty_Lines On
         Refresh_Interval 10
 
+    [FILTER]
+        Name       modify
+        Match      *
+        Add        ctrlPod ${POD_NAMESPACE}/${POD_NAME}
+
     # rename msg -> message , level -> l
     [FILTER]
         Name       modify
@@ -47,13 +52,13 @@ data:
         Condition Key_Value_Equals l info
         SET l INFO
 
-    # debug -> DEBUG
+    # debug -> INFO
     [FILTER]
         Name       modify
         Match      *
 
         Condition Key_Value_Equals l debug
-        SET l DEBUG
+        SET l INFO
 
     # trace -> TRACE
     [FILTER]

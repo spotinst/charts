@@ -1,6 +1,4 @@
-nameOverride: ""
-fullnameOverride: ""
-# -- (Optional) namespace override.
+# -- (Optional) Namespace where components should be installed.
 namespace: kube-system
 
 # -- Reference secret and configMap for the Ocean Controller.
