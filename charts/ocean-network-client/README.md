@@ -42,13 +42,11 @@ helm install my-release spot/ocean-network-client \
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | configMapName | Optional | `""` | ConfigMap name. |
-| fullnameOverride | string | `""` |  |
 | image.pullPolicy | Optional | `"IfNotPresent"` | Image pull policy. |
 | image.pullSecrets | Optional | `[]` | Image pull secrets. |
 | image.repository | Optional | `"public.ecr.aws/spotinst/spot-network-client"` | Image repository. |
 | image.tag | Optional | `""` | Image tag. Defaults to `.Chart.AppVersion`. |
-| nameOverride | string | `""` |  |
-| namespace | Optional | `"kube-system"` | namespace override. |
+| namespace | Optional | `"kube-system"` | Namespace where components should be installed. |
 | oceanController | object | `{"configMapName":"","secretName":""}` | Reference secret and configMap for the Ocean Controller. Deprecated in favor of secret and configMap objects |
 | oceanController.configMapName | Optional | `""` | ConfigMap name. Deprecated use configMapName instead |
 | oceanController.secretName | Optional | `""` | Secret name. Deprecated use secretName instead. |
