@@ -24,6 +24,8 @@ jobs:
         with:
           repository: spotinst/charts
       - uses: gabe565/setup-helm-docs-action@v1.0.3
+        with:
+          version: v1.13.1
 
       - name: Clean version
         id: clean-version
