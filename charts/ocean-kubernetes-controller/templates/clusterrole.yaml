@@ -117,7 +117,7 @@ rules:
 - apiGroups: ["autoscaling.k8s.io"]
   resources: ["verticalpodautoscalers", "verticalpodautoscalers/status"]
   verbs: ["get", "list", "watch", "patch", "update", "create", "delete"]
-- apiGroups: ["autoscaling.k8s.io"]
+- apiGroups: ["autoscaling"]
   resources: ["horizontalpodautoscalers", "horizontalpodautoscalers/status"]
   verbs: ["patch", "update"]
 {{- end }}
