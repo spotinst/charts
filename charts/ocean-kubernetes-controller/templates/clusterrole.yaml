@@ -117,6 +117,9 @@ rules:
 - apiGroups: ["autoscaling.k8s.io"]
   resources: ["verticalpodautoscalers", "verticalpodautoscalers/status"]
   verbs: ["get", "list", "watch", "patch", "update", "create", "delete"]
+- apiGroups: ["autoscaling.k8s.io"]
+  resources: ["horizontalpodautoscalers", "horizontalpodautoscalers/status"]
+  verbs: ["patch", "update"]
 {{- end }}
 # ---------------------------------------------------------------------------
 # feature: controller/leader-election (high-availability)
