@@ -118,7 +118,7 @@ rules:
   resources: ["verticalpodautoscalers", "verticalpodautoscalers/status"]
   verbs: ["get", "list", "watch", "patch", "update", "create", "delete"]
 - apiGroups: ["autoscaling"]
-  resources: ["horizontalpodautoscalers", "horizontalpodautoscalers/status"]
+  resources: ["horizontalpodautoscalers"]
   verbs: ["patch", "update"]
 {{- end }}
 # ---------------------------------------------------------------------------
