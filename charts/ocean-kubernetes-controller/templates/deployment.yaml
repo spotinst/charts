@@ -53,7 +53,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
           {{- range .Values.args }}
-            - {{ . }}
+          - {{ . }}
           {{- end }}
           {{- if eq (include "ocean-kubernetes-controller.logShipping.enabled" .) "true" }}
           - --log_to_file
