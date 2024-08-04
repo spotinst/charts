@@ -27,7 +27,6 @@ updater:
     # updater.image.pullPolicy -- The pull policy for the updater image. Recommend not changing this
     pullPolicy: Always
   evictionTolerance: 0.25
-  minReplicas: 1
   # updater.podAnnotations -- Annotations to add to the updater pod
   podAnnotations: {}
   # updater.podLabels -- Labels to add to the updater pod
@@ -116,3 +115,5 @@ admissionController:
   affinity: {}
   # admissionController.httpPort -- Port of the admission controller for the mutating webhooks
   httpPort: 8000
+  extraArgs:
+    min-replicas: 1
