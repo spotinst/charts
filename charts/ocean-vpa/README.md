@@ -62,6 +62,7 @@ helm install my-release spot/ocean-vpa
 | serviceAccount.name | string | `""` | The base name of the service account to use (appended with the component). If not set and create is true, a name is generated using the fullname template and appended for each component |
 | updater.affinity | object | `{}` |  |
 | updater.evictionTolerance | float | `0.25` |  |
+| updater.minReplicas | int | `1` |  |
 | updater.image.pullPolicy | string | `"Always"` | The pull policy for the updater image. Recommend not changing this |
 | updater.image.repository | string | `"registry.k8s.io/autoscaling/vpa-updater"` | The location of the updater image |
 | updater.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion |
