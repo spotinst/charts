@@ -43,6 +43,9 @@ spec:
           imagePullPolicy: {{ .Values.updater.image.pullPolicy }}
           args:
             - --eviction-tolerance={{ .Values.updater.evictionTolerance }}
+            {{- range $key, $value := .Values.updater.extraArgs }}
+            - --{{ $key }}={{ $value }}
+            {{- end }}
           env:
             - name: NAMESPACE
               valueFrom:
