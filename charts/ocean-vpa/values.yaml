@@ -48,6 +48,8 @@ updater:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  extraArgs:
+    min-replicas: 1
 
 admissionController:
   # admissionController.generateCertificate -- If true and admissionController is enabled, a pre-install hook will run to create the certificate for the webhook
