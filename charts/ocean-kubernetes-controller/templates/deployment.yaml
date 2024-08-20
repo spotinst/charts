@@ -45,12 +45,20 @@ spec:
       {{- with .Values.priorityClassName }}
       priorityClassName: {{ . | quote }}
       {{- end }}
+      {{- with .Values.initContainers }}
+      initContainers:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ include "ocean-kubernetes-controller.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- with .Values.command }}
+          command:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           args:
           {{- range .Values.args }}
           - {{ . }}
@@ -151,7 +159,7 @@ spec:
           {{- end }}
           volumeMounts:
           {{- with .Values.extraVolumeMounts }}
-            {{- toYaml . | nindent 12 }}
+            {{- toYaml . | nindent 10 }}
           {{- end }}
           {{- if eq (include "ocean-kubernetes-controller.logShipping.enabled" .) "true" }}
           - name: logs
@@ -165,11 +173,10 @@ spec:
         - name: log-shipper
           image: {{ .Values.logShipping.image.repository }}:{{ .Values.logShipping.image.tag }}
           imagePullPolicy: {{ .Values.logShipping.image.pullPolicy }}
+          {{- with .Values.logShipping.command }}
           command:
-          - /fluent-bit/bin/fluent-bit
-          - -c
-          - /tmp/fluent-bit.conf
-          - -q
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           env:
           - name: SPOTINST_TOKEN
             valueFrom:
@@ -196,6 +203,9 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
+          {{- with .Values.logShipping.extraEnv }}
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
           volumeMounts:
           - name: logs
             mountPath: /var/log
@@ -205,10 +215,13 @@ spec:
           - name: fluentbit-config
             mountPath: /tmp/parsers.conf
             subPath: parsers.conf
+          {{- with .Values.logShipping.extraVolumeMounts }}
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
         {{- end }}
       volumes:
       {{- with .Values.extraVolumes }}
-        {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 6 }}
       {{- end }}
       {{- if eq (include "ocean-kubernetes-controller.logShipping.enabled" .) "true" }}
       - name: logs
