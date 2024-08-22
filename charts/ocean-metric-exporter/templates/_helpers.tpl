@@ -35,6 +35,15 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
+Create Secret.
+*/}}
+{{- define "ocean-network-client.createSecret" -}}
+{{- if or .Values.spotinst.token .Values.spotinst.account -}}
+{{- true -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Common labels.
 */}}
 {{- define "ocean-metric-exporter.labels" -}}
