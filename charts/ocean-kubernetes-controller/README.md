@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.52](https://img.shields.io/badge/Version-0.1.52-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.65](https://img.shields.io/badge/AppVersion-2.0.65-informational?style=flat-square)
+![Version: 0.1.53](https://img.shields.io/badge/Version-0.1.53-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.65](https://img.shields.io/badge/AppVersion-2.0.65-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
@@ -85,6 +85,7 @@ Kubernetes: `>=1.20.0-0`
 | caBundleSecret.data | string | `""` | Must contain the CA bundle data in case `caBundleSecret.create` is true. For example by using `--set caBundleSecret.data="$(cat ./ca.pem)"` |
 | caBundleSecret.key | string | `"userEnvCertificates.pem"` | Key inside the secret to inject the CA bundle from |
 | caBundleSecret.name | string | `""` | CA bundle Secret name. (Optional) |
+| command | list | `[]` |  |
 | commonLabels | object | `{}` |  |
 | configMap.create | bool | `true` |  |
 | configMap.name | string | `""` | ConfigMap name. (Optional) |
@@ -97,11 +98,12 @@ Kubernetes: `>=1.20.0-0`
 | image.repository | string | `"us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
+| initContainers | list | `[]` |  |
 | livenessProbe.httpGet.path | string | `"/healthz"` |  |
 | livenessProbe.httpGet.port | string | `"readiness"` |  |
 | livenessProbe.initialDelaySeconds | int | `15` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
-| logShipping | object | `{"destination":{"host":"api.spotinst.io","port":443,"tls":true},"enabled":true,"image":{"pullPolicy":"IfNotPresent","repository":"ghcr.io/fluent/fluent-bit","tag":"3.0.7"}}` | Log Shipping configuration. |
+| logShipping | object | `{"command":["/fluent-bit/bin/fluent-bit","-c","/tmp/fluent-bit.conf","-q"],"destination":{"host":"api.spotinst.io","port":443,"tls":true},"enabled":true,"extraEnv":[],"extraVolumeMounts":[],"image":{"pullPolicy":"IfNotPresent","repository":"ghcr.io/fluent/fluent-bit","tag":"3.0.7"}}` | Log Shipping configuration. |
 | logShipping.destination | object | `{"host":"api.spotinst.io","port":443,"tls":true}` | Log shipping destination configuration. |
 | logShipping.enabled | bool | `true` | Specifies whether to send the controller logs to Spot for analysis. (Optional) |
 | logShipping.image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/fluent/fluent-bit","tag":"3.0.7"}` | Specifies the log shipping container image. (Optional) |
