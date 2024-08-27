@@ -241,7 +241,14 @@ spec:
       {{- end }}
       affinity:
         {{- include "ocean-kubernetes-controller.affinity" . | nindent 8 }}
+      {{- if kindIs "invalid" .Values.tolerations }}
       tolerations:
-        {{- include "ocean-kubernetes-controller.tolerations" . | nindent 6 }}
+        {{- include "ocean-kubernetes-controller.defaultTolerations" . | nindent 6 }}
+      {{- else }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- . | toYaml | nindent 6 }}
+      {{- end }}
+      {{- end }}
       topologySpreadConstraints:
         {{- include "ocean-kubernetes-controller.topologySpreadConstraints" . | nindent 6 }}
