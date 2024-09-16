@@ -26,8 +26,8 @@ caBundleSecretName: ""
 # -- Reference secret and configMap for the Ocean Controller.
 # Deprecated in favor of spotinst object or secretName and configMapName
 oceanController:
-  # -- (Optional) Namespace where components should be installed.
-  namespace: kube-system
+  # -- (Optional) Namespace where components should be installed. Deprecated. Use: --namespace= instead.
+  namespace: ""
   # -- (Optional) Secret name. Deprecated. Use: --set secretName= instead.
   secretName: ""
   # -- (Optional) ConfigMap name. Deprecated. Use: --set configMapName= instead.

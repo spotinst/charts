@@ -35,10 +35,30 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
+Namespace.
+*/}}
+{{- define "ocean-metric-exporter.namespace" -}}
+{{- if .Values.oceanController.namespace -}}
+{{ .Values.oceanController.namespace }}
+{{- else -}}
+{{ .Release.Namespace }}
+{{- end }}
+{{- end }}
+
+{{/*
 Create Secret.
 */}}
-{{- define "ocean-network-client.createSecret" -}}
+{{- define "ocean-metric-exporter.createSecret" -}}
 {{- if or .Values.spotinst.token .Values.spotinst.account -}}
+{{- true -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Create ConfigMap.
+*/}}
+{{- define "ocean-metric-exporter.createConfigMap" -}}
+{{- if .Values.spotinst.clusterIdentifier -}}
 {{- true -}}
 {{- end -}}
 {{- end -}}
@@ -82,13 +102,6 @@ CA bundle secret name.
 */}}
 {{- define "ocean-metric-exporter.caBundleSecretName" -}}
 {{ default (include "ocean-metric-exporter.name" .) .Values.oceanController.caBundleSecretName }}
-{{- end }}
-
-{{/*
-Namespace.
-*/}}
-{{- define "ocean-metric-exporter.namespace" -}}
-{{ default (include "ocean-metric-exporter.name" .) .Values.oceanController.namespace }}
 {{- end }}
 
 {{/*
