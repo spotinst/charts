@@ -35,6 +35,8 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+initContainers: []
+
 imagePullSecrets: []
 
 serviceAccount:
@@ -99,6 +101,8 @@ securityContext:
   capabilities:
     drop:
     - ALL
+
+command: []
 
 args: []
 #  - --test
@@ -211,6 +215,16 @@ logShipping:
     host: api.spotinst.io
     port: 443
     tls: true
+
+  extraVolumeMounts: []
+
+  extraEnv: []
+
+  command:
+    - /fluent-bit/bin/fluent-bit
+    - -c
+    - /tmp/fluent-bit.conf
+    - -q
 
 # Auto Update process configuration.
 autoUpdate:
