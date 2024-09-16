@@ -36,12 +36,21 @@ Create chart name and version as used by the chart label.
 
 {{/*
 Namespace.
+
+Precedence is:
+1. --set oceanController.namespace
+2. --namespace
+3. if none of the above is specified, default is "kube-system" for backwards compatibility.
 */}}
 {{- define "ocean-metric-exporter.namespace" -}}
 {{- if .Values.oceanController.namespace -}}
 {{ .Values.oceanController.namespace }}
 {{- else -}}
+{{- if eq .Release.Namespace "default" -}}
+kube-system
+{{- else -}}
 {{ .Release.Namespace }}
+{{- end }}
 {{- end }}
 {{- end }}
 
@@ -87,14 +96,22 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Secret name.
 */}}
 {{- define "ocean-metric-exporter.secretName" -}}
-{{ default (include "ocean-metric-exporter.name" .) .Values.oceanController.secretName }}
+{{- if (include "ocean-metric-exporter.createSecret" .) -}}
+{{ default (include "ocean-metric-exporter.name" .) .Values.secretName  }}
+{{- else -}}
+{{ default "spotinst-kubernetes-cluster-controller" .Values.oceanController.secretName }}
+{{- end }}
 {{- end }}
 
 {{/*
 ConfigMap name.
 */}}
 {{- define "ocean-metric-exporter.configMapName" -}}
-{{ default (include "ocean-metric-exporter.name" .) .Values.oceanController.configMapName }}
+{{- if (include "ocean-metric-exporter.createConfigMap" .) -}}
+{{ default (include "ocean-metric-exporter.name" .) .Values.configMapName  }}
+{{- else -}}
+{{ default "spotinst-kubernetes-cluster-controller-config" .Values.oceanController.configMapName }}
+{{- end }}
 {{- end }}
 
 {{/*
