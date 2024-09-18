@@ -72,7 +72,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: {{ include "ocean-metric-exporter.caBundleSecretName" . }}
-              key: userEnvCertificates.pem
+              key: {{ .Values.caBundleSecret.key }}
               optional: true
         {{- with .Values.podEnvVariables }}
         {{- toYaml . | nindent 8 }}
@@ -87,7 +87,7 @@ spec:
         - --allow-labels={{ join "," .Values.metricsConfiguration.allowLabels }}
         - --deny-labels={{ join "," .Values.metricsConfiguration.denyLabels }}
         resources:
-          {{- toYaml .Values.resources | nindent 12 }}
+          {{- toYaml .Values.resources | nindent 12 -}}
         {{- include "ocean-metric-exporter.probes" . | nindent 8 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

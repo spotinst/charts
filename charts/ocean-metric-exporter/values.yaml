@@ -20,9 +20,6 @@ secretName: ""
 # In case spotinst.clusterIdentifier is provided, this overrides the name of the created configMap.
 configMapName: ""
 
-# -- (Optional) Secret name of CA bundle.
-caBundleSecretName: ""
-
 # -- Reference secret and configMap for the Ocean Controller.
 # Deprecated in favor of spotinst object or secretName and configMapName
 oceanController:
@@ -32,8 +29,21 @@ oceanController:
   secretName: ""
   # -- (Optional) ConfigMap name. Deprecated. Use: --set configMapName= instead.
   configMapName: ""
-  # -- (Optional) Secret name of CA bundle. Deprecated. Use: --set caBundleSecretName= instead.
+  # -- (Optional) Secret name of CA bundle. Deprecated. Use: --set caBundleSecret.name= instead.
   caBundleSecretName: ""
+
+# CA bundle.
+# Ref: https://kubernetes.io/docs/concepts/configuration/secret/
+caBundleSecret:
+  # -- Controls whether a CA bundle secret should be created.
+  create: false
+  # -- CA bundle Secret name. (Optional)
+  name: ""
+  # -- Key inside the secret to inject the CA bundle from
+  key: "userEnvCertificates.pem"
+  # -- Must contain the CA bundle data in case `caBundleSecret.create` is true.
+  # For example by using `--set caBundleSecret.data="$(cat ./ca.pem)"`
+  data: ""
 
 # -- (Optional) Replicas.
 # Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas
