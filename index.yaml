@@ -1472,6 +1472,28 @@ entries:
   ocean-metric-exporter:
   - apiVersion: v2
     appVersion: 1.0.4
+    created: "2024-09-19T08:30:44.89791078Z"
+    description: A Helm chart for Ocean Metric Exporter
+    digest: 1d8815da3a1b15ad71f2564fd9a2b6deabb3805e0980e5e79934dfcb7b40f799
+    home: https://github.com/spotinst/charts/tree/main/charts/ocean-metric-exporter
+    icon: https://docs.spot.io/_media/images/spot_mark.png
+    keywords:
+    - spot
+    - ocean
+    - metric
+    - exporter
+    maintainers:
+    - email: ng-spot-info@netapp.com
+      name: spotinst
+    name: ocean-metric-exporter
+    sources:
+    - https://github.com/spotinst/spotinst-kubernetes-exporter
+    type: application
+    urls:
+    - https://github.com/spotinst/charts/releases/download/ocean-metric-exporter-1.1.0/ocean-metric-exporter-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v2
+    appVersion: 1.0.4
     created: "2024-03-07T08:12:27.899926294Z"
     description: A Helm chart for Ocean Metric Exporter
     digest: b4a7c9d950d1fdd7ee8b6d7a594527659234ce173165e2031a0911a30626ed1a
