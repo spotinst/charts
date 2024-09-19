@@ -1,0 +1,9 @@
+{{ if include "ocean-metric-exporter.createConfigMap" . }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ocean-metric-exporter.configMapName" . }}
+  namespace: {{ include "ocean-metric-exporter.namespace" . }}
+data:
+  spotinst.cluster-identifier: "{{ .Values.spotinst.clusterIdentifier }}"
+{{- end }}

@@ -35,6 +35,73 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
+Namespace.
+
+Precedence is:
+1. --set oceanController.namespace
+2. --namespace
+3. if none of the above is specified, default is "kube-system" for backwards compatibility.
+*/}}
+{{- define "ocean-metric-exporter.namespace" -}}
+{{- if .Values.oceanController.namespace -}}
+{{ .Values.oceanController.namespace }}
+{{- else -}}
+{{- if eq .Release.Namespace "default" -}}
+kube-system
+{{- else -}}
+{{ .Release.Namespace }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create Secret.
+*/}}
+{{- define "ocean-metric-exporter.createSecret" -}}
+{{- if and .Values.spotinst (or .Values.spotinst.token .Values.spotinst.account) -}}
+{{- include "ocean-metric-exporter.standaloneParamCheck" . -}}
+{{- true -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Create ConfigMap.
+*/}}
+{{- define "ocean-metric-exporter.createConfigMap" -}}
+{{- if and .Values.spotinst .Values.spotinst.clusterIdentifier -}}
+{{- include "ocean-metric-exporter.standaloneParamCheck" . -}}
+{{- true -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Standalone parameter checks
+*/}}
+{{- define "ocean-metric-exporter.standaloneParamCheck" -}}
+{{- if not .Values.spotinst.account -}}
+{{- fail "Standalone installation detected (either 'spotinst.clusterIdentifier' or 'spotinst.token' specified), but 'spotinst.account' was not specified" -}}
+{{- end -}}
+{{- if not .Values.spotinst.token -}}
+{{- fail "Standalone installation detected (either 'spotinst.clusterIdentifier' or 'spotinst.account' specified), but 'spotinst.token' was not specified" -}}
+{{- end -}}
+{{- if not .Values.spotinst.clusterIdentifier -}}
+{{- fail "Standalone installation detected (either 'spotinst.token' or 'spotinst.account' specified), but 'spotinst.clusterIdentifier' was not specified" -}}
+{{- end -}}
+{{- if .Values.oceanController.namespace -}}
+{{- fail (printf "Value 'oceanController.namespace' is not allowed in standalone installation mode ('spotinst.*' values used). Use '--namespace=%s' instead" .Values.oceanController.namespace) -}}
+{{- end -}}
+{{- if .Values.oceanController.secretName -}}
+{{- fail (printf "Value 'oceanController.secretName' is not allowed in standalone installation mode ('spotinst.*' values used). Use '--set secretName=%s' instead" .Values.oceanController.secretName) -}}
+{{- end -}}
+{{- if .Values.oceanController.configMapName -}}
+{{- fail (printf "Value 'oceanController.configMapName' is not allowed in standalone installation mode ('spotinst.*' values used). Use '--set configMapName=%s' instead" .Values.oceanController.configMapName) -}}
+{{- end -}}
+{{- if .Values.oceanController.caBundleSecretName -}}
+{{- fail (printf "Value 'oceanController.caBundleSecretName' is not allowed in standalone installation mode ('spotinst.*' values used). Use '--set caBundleSecret.name=%s' instead" .Values.oceanController.caBundleSecretName) -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Common labels.
 */}}
 {{- define "ocean-metric-exporter.labels" -}}
@@ -58,28 +125,55 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Secret name.
 */}}
 {{- define "ocean-metric-exporter.secretName" -}}
-{{ default (include "ocean-metric-exporter.name" .) .Values.oceanController.secretName }}
+{{- if (include "ocean-metric-exporter.createSecret" .) -}}
+{{ default (include "ocean-metric-exporter.name" .) .Values.secretName  }}
+{{- else -}}
+{{ default "spotinst-kubernetes-cluster-controller" .Values.oceanController.secretName }}
+{{- end }}
 {{- end }}
 
 {{/*
 ConfigMap name.
 */}}
 {{- define "ocean-metric-exporter.configMapName" -}}
-{{ default (include "ocean-metric-exporter.name" .) .Values.oceanController.configMapName }}
+{{- if (include "ocean-metric-exporter.createConfigMap" .) -}}
+{{ default (include "ocean-metric-exporter.name" .) .Values.configMapName }}
+{{- else -}}
+{{ default "spotinst-kubernetes-cluster-controller-config" .Values.oceanController.configMapName }}
 {{- end }}
+{{- end }}
+
+{{/*
+Check CA bundle secret conflict
+*/}}
+{{- define "ocean-metric-exporter.checkCaBundleSecretConflict" -}}
+{{- if .Values.oceanController.caBundleSecretName -}}
+{{- fail "Value 'oceanController.caBundleSecretName' should not be used when 'caBundleSecret.create=true'" -}}
+{{- end -}}
+{{- end -}}
 
 {{/*
 CA bundle secret name.
 */}}
 {{- define "ocean-metric-exporter.caBundleSecretName" -}}
-{{ default (include "ocean-metric-exporter.name" .) .Values.oceanController.caBundleSecretName }}
+{{- if and .Values.caBundleSecret .Values.caBundleSecret.create -}}
+{{- include "ocean-metric-exporter.checkCaBundleSecretConflict" . -}}
+{{ default (printf "%s-ca-bundle" (include "ocean-metric-exporter.name" .)) .Values.caBundleSecret.name }}
+{{- else -}}
+{{ default "spotinst-kubernetes-cluster-controller-ca-bundle" .Values.oceanController.caBundleSecretName }}
+{{- end }}
 {{- end }}
 
 {{/*
-Namespace.
+CA bundle secret key.
 */}}
-{{- define "ocean-metric-exporter.namespace" -}}
-{{ default (include "ocean-metric-exporter.name" .) .Values.oceanController.namespace }}
+{{- define "ocean-metric-exporter.caBundleSecretKey" -}}
+{{- if and .Values.caBundleSecret .Values.caBundleSecret.create -}}
+{{- include "ocean-metric-exporter.checkCaBundleSecretConflict" . -}}
+{{ default "userEnvCertificates.pem" .Values.caBundleSecret.key }}
+{{- else -}}
+userEnvCertificates.pem
+{{- end }}
 {{- end }}
 
 {{/*
@@ -107,7 +201,7 @@ Container command.
 probes.
 */}}
 {{- define "ocean-metric-exporter.probes" -}}
-{{- if or .Values.probes.liveness.enabled .Values.probes.enabled }}
+{{- if or .Values.probes.liveness.enabled .Values.probes.enabled -}}
 livenessProbe:
   httpGet:
     path: /health/liveness
