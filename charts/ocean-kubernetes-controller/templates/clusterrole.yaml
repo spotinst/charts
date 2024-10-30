@@ -90,7 +90,7 @@ rules:
 # feature: ocean/apply
 # ---------------------------------------------------------------------------
 - apiGroups: ["apps"]
-  resources: ["deployments", "daemonsets"]
+  resources: ["deployments", "daemonsets", "statefulsets"]
   verbs: ["get", "list", "patch", "update", "create", "delete"]
 - apiGroups: [""]
   resources: ["pods"]

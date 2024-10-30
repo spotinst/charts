@@ -33,7 +33,7 @@ image:
   repository: us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "prod-8566-support-csr-approval-in-aws"
 
 initContainers: []
 
@@ -81,9 +81,9 @@ commonLabels: {}
 # Ref: https://kubernetes.io/docs/concepts/security/pod-security-standards/
 podSecurityContext:
   runAsNonRoot: true
-  runAsUser: 10001
-  runAsGroup: 10001
-  fsGroup: 10001
+  runAsUser: 1000690000
+  runAsGroup: 1000690000
+  fsGroup: 1000690000
 
 # -- Priority class name for the controller pod.
 priorityClassName: system-node-critical
@@ -244,9 +244,9 @@ autoUpdate:
   # Ref: https://kubernetes.io/docs/concepts/security/pod-security-standards/
   podSecurityContext:
     runAsNonRoot: true
-    runAsUser: 10001
-    runAsGroup: 10001
-    fsGroup: 10001
+    runAsUser: 1000690000
+    runAsGroup: 1000690000
+    fsGroup: 1000690000
 
   # -- Security Context for the auto-updater container. (Optional)
   securityContext:
