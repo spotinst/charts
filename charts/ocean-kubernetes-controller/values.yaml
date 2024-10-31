@@ -207,7 +207,7 @@ logShipping:
   # -- Specifies the log shipping container image. (Optional)
   image:
     repository: ghcr.io/fluent/fluent-bit
-    tag: "3.0.7"
+    tag: "3.1.9"
     pullPolicy: IfNotPresent
 
   # -- Log shipping destination configuration.
