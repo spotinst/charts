@@ -81,9 +81,9 @@ commonLabels: {}
 # Ref: https://kubernetes.io/docs/concepts/security/pod-security-standards/
 podSecurityContext:
   runAsNonRoot: true
-  runAsUser: 10001
-  runAsGroup: 10001
-  fsGroup: 10001
+  runAsUser: 1000690000
+  runAsGroup: 1000690000
+  fsGroup: 1000690000
 
 # -- Priority class name for the controller pod.
 priorityClassName: system-node-critical
@@ -207,7 +207,7 @@ logShipping:
   # -- Specifies the log shipping container image. (Optional)
   image:
     repository: ghcr.io/fluent/fluent-bit
-    tag: "3.0.7"
+    tag: "3.1.9"
     pullPolicy: IfNotPresent
 
   # -- Log shipping destination configuration.
@@ -244,9 +244,9 @@ autoUpdate:
   # Ref: https://kubernetes.io/docs/concepts/security/pod-security-standards/
   podSecurityContext:
     runAsNonRoot: true
-    runAsUser: 10001
-    runAsGroup: 10001
-    fsGroup: 10001
+    runAsUser: 1000690000
+    runAsGroup: 1000690000
+    fsGroup: 1000690000
 
   # -- Security Context for the auto-updater container. (Optional)
   securityContext:
