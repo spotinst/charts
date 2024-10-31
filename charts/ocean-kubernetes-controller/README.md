@@ -74,7 +74,7 @@ Kubernetes: `>=1.20.0-0`
 | autoUpdate.image.repository | string | `"us-docker.pkg.dev/spotit-today/container-labs/auto-updater"` | Image repository. (Optional) |
 | autoUpdate.image.tag | string | `"latest"` | Overrides the image tag. (Optional) |
 | autoUpdate.imagePullSecrets | list | `[]` | Image pull secrets. (Optional) |
-| autoUpdate.podSecurityContext | object | `{"fsGroup":10001,"runAsGroup":10001,"runAsNonRoot":true,"runAsUser":10001}` | Pod Security Context for the auto-updater job. (Optional) Ref: https://kubernetes.io/docs/concepts/security/pod-security-standards/ |
+| autoUpdate.podSecurityContext | object | `{"fsGroup":1000690000,"runAsGroup":1000690000,"runAsNonRoot":true,"runAsUser":1000690000}` | Pod Security Context for the auto-updater job. (Optional) Ref: https://kubernetes.io/docs/concepts/security/pod-security-standards/ |
 | autoUpdate.priorityClassName | string | `"system-cluster-critical"` | Priority class name for the auto-updater job. Defaults to the same priority class as the controller to prevent eviction. (Optional) |
 | autoUpdate.resources | object | `{"limits":{"cpu":"100m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}` | Resource requests and limits for the auto-updater job. Defaults to 100m CPU and 256Mi memory to make the job run with 'Guranteed' QoS. (Optional) |
 | autoUpdate.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsNonRoot":true}` | Security Context for the auto-updater container. (Optional) |
@@ -103,10 +103,10 @@ Kubernetes: `>=1.20.0-0`
 | livenessProbe.httpGet.port | string | `"readiness"` |  |
 | livenessProbe.initialDelaySeconds | int | `15` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
-| logShipping | object | `{"command":["/fluent-bit/bin/fluent-bit","-c","/tmp/fluent-bit.conf","-q"],"destination":{"host":"api.spotinst.io","port":443,"tls":true},"enabled":true,"extraEnv":[],"extraVolumeMounts":[],"image":{"pullPolicy":"IfNotPresent","repository":"ghcr.io/fluent/fluent-bit","tag":"3.0.7"}}` | Log Shipping configuration. |
+| logShipping | object | `{"command":["/fluent-bit/bin/fluent-bit","-c","/tmp/fluent-bit.conf","-q"],"destination":{"host":"api.spotinst.io","port":443,"tls":true},"enabled":true,"extraEnv":[],"extraVolumeMounts":[],"image":{"pullPolicy":"IfNotPresent","repository":"ghcr.io/fluent/fluent-bit","tag":"3.1.9"}}` | Log Shipping configuration. |
 | logShipping.destination | object | `{"host":"api.spotinst.io","port":443,"tls":true}` | Log shipping destination configuration. |
 | logShipping.enabled | bool | `true` | Specifies whether to send the controller logs to Spot for analysis. (Optional) |
-| logShipping.image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/fluent/fluent-bit","tag":"3.0.7"}` | Specifies the log shipping container image. (Optional) |
+| logShipping.image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/fluent/fluent-bit","tag":"3.1.9"}` | Specifies the log shipping container image. (Optional) |
 | metrics-server.args | list | `["--logtostderr"]` | Arguments to pass to metrics-server on start up. (Optional) |
 | metrics-server.deployChart | bool | `true` | Specifies whether the metrics-server chart should be deployed. (Optional) |
 | metrics-server.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -116,10 +116,10 @@ Kubernetes: `>=1.20.0-0`
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
-| podSecurityContext.fsGroup | int | `10001` |  |
-| podSecurityContext.runAsGroup | int | `10001` |  |
+| podSecurityContext.fsGroup | int | `1000690000` |  |
+| podSecurityContext.runAsGroup | int | `1000690000` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
-| podSecurityContext.runAsUser | int | `10001` |  |
+| podSecurityContext.runAsUser | int | `1000690000` |  |
 | priorityClassName | string | `"system-node-critical"` | Priority class name for the controller pod. |
 | readinessProbe.httpGet.path | string | `"/readyz"` |  |
 | readinessProbe.httpGet.port | string | `"readiness"` |  |
