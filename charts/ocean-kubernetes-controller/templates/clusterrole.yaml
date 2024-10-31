@@ -73,19 +73,6 @@ rules:
   resourceNames: ["kubernetes.io/kubelet-serving", "kubernetes.io/kube-apiserver-client-kubelet"]
   verbs: ["approve"]
 {{- end }}
-{{- if not .Values.spotinst.disableAutoUpdate }}
-# ---------------------------------------------------------------------------
-# feature: ocean/auto-update
-# ---------------------------------------------------------------------------
-- apiGroups: ["rbac.authorization.k8s.io"]
-  resources: ["clusterroles"]
-  resourceNames: ["spotinst-kubernetes-cluster-controller"]
-  verbs: ["patch", "update", "escalate"]
-- apiGroups: ["apps"]
-  resources: ["deployments"]
-  resourceNames: ["spotinst-kubernetes-cluster-controller"]
-  verbs: ["patch", "update"]
-{{- end }}
 # ---------------------------------------------------------------------------
 # feature: ocean/apply
 # ---------------------------------------------------------------------------
