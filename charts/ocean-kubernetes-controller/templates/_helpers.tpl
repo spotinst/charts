@@ -200,17 +200,6 @@ Controller affinity
 {{- end }}
 
 {{/*
-Controller tolerations
-*/}}
-{{- define "ocean-kubernetes-controller.tolerations" -}}
-{{- if kindIs "invalid" .Values.tolerations -}}
-{{- include "ocean-kubernetes-controller.defaultTolerations" . }}
-{{- else }}
-{{- .Values.tolerations | toYaml -}}
-{{- end }}
-{{- end }}
-
-{{/*
 Controller topology spread constraints
 */}}
 {{- define "ocean-kubernetes-controller.topologySpreadConstraints" -}}
