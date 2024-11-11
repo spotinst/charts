@@ -109,7 +109,7 @@ rules:
   verbs: ["patch", "update"]
 - apiGroups: ["apps"]
   resources: ["deployments", "daemonsets", "statefulsets", "replicasets"]
-  verbs: ["get", "list", "patch", "update", "create"]
+  verbs: ["get", "list", "patch", "update"]
 {{- end }}
 # ---------------------------------------------------------------------------
 # feature: controller/leader-election (high-availability)
