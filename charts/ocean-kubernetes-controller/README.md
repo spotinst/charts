@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.57](https://img.shields.io/badge/Version-0.1.57-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.67](https://img.shields.io/badge/AppVersion-2.0.67-informational?style=flat-square)
+![Version: 0.1.58-rc.1](https://img.shields.io/badge/Version-0.1.58--rc.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.67](https://img.shields.io/badge/AppVersion-2.0.67-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
@@ -96,7 +96,7 @@ Kubernetes: `>=1.20.0-0`
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"feature-con-30487-handlingstartuptaints@sha256:a305336f7f0a3ca02e53e3ceb96e912daa43ae788a9e25ae856f9a017c54f3a6"` |  |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | livenessProbe.httpGet.path | string | `"/healthz"` |  |
