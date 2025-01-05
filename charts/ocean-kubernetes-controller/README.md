@@ -96,7 +96,7 @@ Kubernetes: `>=1.20.0-0`
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller"` |  |
-| image.tag | string | `"feature-con-30487-handlingstartuptaints@sha256:a305336f7f0a3ca02e53e3ceb96e912daa43ae788a9e25ae856f9a017c54f3a6"` |  |
+| image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | livenessProbe.httpGet.path | string | `"/healthz"` |  |
