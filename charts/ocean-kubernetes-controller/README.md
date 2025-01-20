@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.58](https://img.shields.io/badge/Version-0.1.58-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.68](https://img.shields.io/badge/AppVersion-2.0.68-informational?style=flat-square)
+![Version: 0.1.59-beta.1](https://img.shields.io/badge/Version-0.1.59--beta.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.68](https://img.shields.io/badge/AppVersion-2.0.68-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
@@ -72,7 +72,7 @@ Kubernetes: `>=1.20.0-0`
 | autoUpdate.image | object | `{"pullPolicy":"Always","repository":"us-docker.pkg.dev/spotit-today/container-labs/auto-updater","tag":"latest"}` | Configures the image for the auto-updater job. (Optional) |
 | autoUpdate.image.pullPolicy | string | `"Always"` | Image pull policy. (Optional) |
 | autoUpdate.image.repository | string | `"us-docker.pkg.dev/spotit-today/container-labs/auto-updater"` | Image repository. (Optional) |
-| autoUpdate.image.tag | string | `"latest"` | Overrides the image tag. (Optional) |
+| autoUpdate.image.tag | string | `"feature-con-28708-drainv2@sha256:6370e517c4f683a7af2b44f328dd43926d9b57e9f15d9439e82268c913d67e2c"` | Overrides the image tag. (Optional) |
 | autoUpdate.imagePullSecrets | list | `[]` | Image pull secrets. (Optional) |
 | autoUpdate.podSecurityContext | object | `{"fsGroup":1000690000,"runAsGroup":1000690000,"runAsNonRoot":true,"runAsUser":1000690000}` | Pod Security Context for the auto-updater job. (Optional) Ref: https://kubernetes.io/docs/concepts/security/pod-security-standards/ |
 | autoUpdate.priorityClassName | string | `"system-cluster-critical"` | Priority class name for the auto-updater job. Defaults to the same priority class as the controller to prevent eviction. (Optional) |
