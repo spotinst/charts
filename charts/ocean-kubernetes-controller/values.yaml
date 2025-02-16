@@ -33,7 +33,7 @@ image:
   repository: us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "feature-con-28708-drainv2@sha256:6370e517c4f683a7af2b44f328dd43926d9b57e9f15d9439e82268c913d67e2c"
+  tag: ""
 
 initContainers: []
 
