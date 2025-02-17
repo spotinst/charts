@@ -10,7 +10,6 @@ spotinst:
   token: ""
   # -- Spot Account ID. (Required)
   # Example: `act-123abcd`
-  # Ref: https://docs.spot.io/administration/organizations/?id=get-your-account-id
   account: ""
   # -- Unique identifier used by the Ocean Controller to connect (Required)
   # between the Ocean backend and the Kubernetes cluster.

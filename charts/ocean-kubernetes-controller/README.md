@@ -138,7 +138,7 @@ Kubernetes: `>=1.20.0-0`
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| spotinst.account | string | `""` | Spot Account ID. (Required) Example: `act-123abcd` Ref: https://docs.spot.io/administration/organizations/?id=get-your-account-id |
+| spotinst.account | string | `""` | Spot Account ID. (Required) Example: `act-123abcd` |
 | spotinst.baseUrl | string | `""` | Base URL. (Optional) |
 | spotinst.clusterIdentifier | string | `""` | Unique identifier used by the Ocean Controller to connect (Required) between the Ocean backend and the Kubernetes cluster. Ref: https://docs.spot.io/ocean/tutorials/spot-kubernetes-controller/ |
 | spotinst.disableAutoUpdate | bool | `false` | Disable auto update. (Optional) |
