@@ -108,6 +108,10 @@ spec:
                 name: {{ include "ocean-kubernetes-controller.configMapName" . }}
                 key: disable-auto-update
                 optional: true
+          {{- if .Values.spotinst.readOnly}}
+          - name: READ_ONLY
+            value: "true"
+          {{- end }}
           {{- if not .Values.spotinst.disableAutoUpdate }}
           - name: AUTO_UPDATE_JOB_SPEC
             valueFrom:
