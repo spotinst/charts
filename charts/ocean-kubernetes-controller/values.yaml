@@ -26,7 +26,7 @@ spotinst:
   # -- Disable automatic RightSizing. (Optional)
   disableAutomaticRightSizing: false
   # -- Whether this controller needs to be readonly - overrides other permissions. (Optional)
-  readOnly: false
+  readonly: false
 
 # -- Configure the amount of replicas for the controller (Optional)
 replicas: 2
