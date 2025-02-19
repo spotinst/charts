@@ -20,6 +20,7 @@ spec:
         {{- end }}
       labels:
         app.kubernetes.io/component: updater
+        ocean-vpa-updater: spot.io-ocean-vpa
         {{- include "ocean-vpa.selectorLabels" . | nindent 8 }}
         {{- with .Values.updater.podLabels }}
           {{- toYaml . | nindent 8 }}
@@ -44,6 +45,9 @@ spec:
           args:
             - --eviction-tolerance={{ .Values.updater.evictionTolerance }}
             {{- range $key, $value := .Values.updater.extraArgs }}
+            - --{{ $key }}={{ $value }}
+            {{- end }}
+            {{- range $key, $value := .Values.updater.vpaLogArgs }}
             - --{{ $key }}={{ $value }}
             {{- end }}
           env:

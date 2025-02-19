@@ -20,6 +20,7 @@ spec:
         {{- end }}
       labels:
         app.kubernetes.io/component: admission-controller
+        ocean-vpa-admission-controller: spot.io-ocean-vpa
         {{- include "ocean-vpa.selectorLabels" . | nindent 8 }}
         {{- with .Values.admissionController.podLabels }}
             {{- toYaml . | nindent 8 }}
@@ -42,11 +43,14 @@ spec:
           image: {{ printf "%s:%s" .Values.admissionController.image.repository (.Values.admissionController.image.tag | default .Chart.AppVersion) }}
           imagePullPolicy: {{ .Values.admissionController.image.pullPolicy }}
           args:
-          - --register-webhook=false
-          - --webhook-service={{ include "ocean-vpa.fullname" . }}-webhook
-          - --client-ca-file=/etc/tls-certs/ca
-          - --tls-cert-file=/etc/tls-certs/cert
-          - --tls-private-key=/etc/tls-certs/key
+            - --register-webhook=false
+            - --webhook-service={{ include "ocean-vpa.fullname" . }}-webhook
+            - --client-ca-file=/etc/tls-certs/ca
+            - --tls-cert-file=/etc/tls-certs/cert
+            - --tls-private-key=/etc/tls-certs/key
+            {{- range $key, $value := .Values.updater.vpaLogArgs }}
+            - --{{ $key }}={{ $value }}
+            {{- end }}
           volumeMounts:
             - name: tls-certs
               mountPath: "/etc/tls-certs"

@@ -50,6 +50,9 @@ updater:
   affinity: {}
   extraArgs:
     min-replicas: 1
+  vpaLogArgs:
+    v: 4
+    stderrthreshold: info
 
 admissionController:
   # admissionController.generateCertificate -- If true and admissionController is enabled, a pre-install hook will run to create the certificate for the webhook
@@ -73,6 +76,9 @@ admissionController:
     nodeSelector: {}
     tolerations: []
     affinity: {}
+    vpaLogArgs:
+      v: 4
+      stderrthreshold: info
 
   mutatingWebhookConfiguration:
     # admissionController.mutatingWebhookConfiguration.annotations -- Additional annotations for the MutatingWebhookConfiguration. Can be used for integration with cert-manager
