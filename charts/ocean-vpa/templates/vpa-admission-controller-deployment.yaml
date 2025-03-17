@@ -20,7 +20,6 @@ spec:
         {{- end }}
       labels:
         app.kubernetes.io/component: admission-controller
-        ocean-vpa-admission-controller: spot.io-ocean-vpa
         {{- include "ocean-vpa.selectorLabels" . | nindent 8 }}
         {{- with .Values.admissionController.podLabels }}
             {{- toYaml . | nindent 8 }}

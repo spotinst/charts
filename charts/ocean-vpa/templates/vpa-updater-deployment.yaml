@@ -20,7 +20,6 @@ spec:
         {{- end }}
       labels:
         app.kubernetes.io/component: updater
-        ocean-vpa-updater: spot.io-ocean-vpa
         {{- include "ocean-vpa.selectorLabels" . | nindent 8 }}
         {{- with .Values.updater.podLabels }}
           {{- toYaml . | nindent 8 }}
