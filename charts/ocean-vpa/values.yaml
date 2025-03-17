@@ -50,7 +50,6 @@ updater:
   affinity: {}
   extraArgs:
     min-replicas: 1
-  vpaLogArgs:
     v: 4
     stderrthreshold: info
 
@@ -76,9 +75,6 @@ admissionController:
     nodeSelector: {}
     tolerations: []
     affinity: {}
-    vpaLogArgs:
-      v: 4
-      stderrthreshold: info
 
   mutatingWebhookConfiguration:
     # admissionController.mutatingWebhookConfiguration.annotations -- Additional annotations for the MutatingWebhookConfiguration. Can be used for integration with cert-manager
@@ -121,5 +117,8 @@ admissionController:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  extraArgs:
+    v: 4
+    stderrthreshold: info
   # admissionController.httpPort -- Port of the admission controller for the mutating webhooks
   httpPort: 8000

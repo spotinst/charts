@@ -48,7 +48,7 @@ spec:
             - --client-ca-file=/etc/tls-certs/ca
             - --tls-cert-file=/etc/tls-certs/cert
             - --tls-private-key=/etc/tls-certs/key
-            {{- range $key, $value := .Values.updater.vpaLogArgs }}
+            {{- range $key, $value := .Values.admissionController.extraArgs}}
             - --{{ $key }}={{ $value }}
             {{- end }}
           volumeMounts:

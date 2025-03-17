@@ -47,9 +47,6 @@ spec:
             {{- range $key, $value := .Values.updater.extraArgs }}
             - --{{ $key }}={{ $value }}
             {{- end }}
-            {{- range $key, $value := .Values.updater.vpaLogArgs }}
-            - --{{ $key }}={{ $value }}
-            {{- end }}
           env:
             - name: NAMESPACE
               valueFrom:
