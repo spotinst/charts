@@ -50,6 +50,8 @@ updater:
   affinity: {}
   extraArgs:
     min-replicas: 1
+    v: 4
+    stderrthreshold: info
 
 admissionController:
   # admissionController.generateCertificate -- If true and admissionController is enabled, a pre-install hook will run to create the certificate for the webhook
@@ -115,5 +117,8 @@ admissionController:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  extraArgs:
+    v: 4
+    stderrthreshold: info
   # admissionController.httpPort -- Port of the admission controller for the mutating webhooks
   httpPort: 8000
