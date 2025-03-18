@@ -2340,6 +2340,27 @@ entries:
     version: 1.0.1
   ocean-vpa:
   - apiVersion: v2
+    appVersion: 1.3.0
+    created: "2025-03-18T11:41:26.405970463Z"
+    description: A Helm chart for Kubernetes
+    digest: 324572e5986a8ec92105a7f24514bfc6d643b2105fc30ae918b16198b807079a
+    home: https://github.com/spotinst/charts/tree/main/charts/ocean-vpa
+    icon: https://docs.spot.io/_media/images/spot_mark.png
+    keywords:
+    - spot
+    - ocean
+    - rightsizing
+    maintainers:
+    - email: ng-spot-info@netapp.com
+      name: spotinst
+    name: ocean-vpa
+    sources:
+    - https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler
+    type: application
+    urls:
+    - https://github.com/spotinst/charts/releases/download/ocean-vpa-1.0.2/ocean-vpa-1.0.2.tgz
+    version: 1.0.2
+  - apiVersion: v2
     appVersion: 1.0.0
     created: "2024-08-05T14:32:40.237907682Z"
     description: A Helm chart for Kubernetes
