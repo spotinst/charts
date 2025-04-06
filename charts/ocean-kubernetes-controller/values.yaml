@@ -25,6 +25,8 @@ spotinst:
   enableCsrApproval: true
   # -- Disable automatic RightSizing. (Optional)
   disableAutomaticRightSizing: false
+  # -- Disable TLS certificate validation. (Optional)
+  insecureSkipTLSVerify: false
 
 # -- Configure the amount of replicas for the controller (Optional)
 replicas: 2
@@ -32,8 +34,12 @@ replicas: 2
 image:
   repository: us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
+  # -- Overrides the image tag whose default is the chart appVersion.
   tag: ""
+  # -- Set to `true` to use an FIPS-140 compliant image. This flag adds `-fips` suffix to the image tag,
+  # therefore it should not be used together with the `--image.tag` flag.
+  # Ref: https://go.dev/doc/security/fips140
+  fips: false
 
 initContainers: []
 
