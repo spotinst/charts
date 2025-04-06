@@ -171,7 +171,7 @@ nodeAffinity:
   - weight: 100
     preference:
       matchExpressions:
-      - key: node-role.kubernetes.io/master
+      - key: node-role.kubernetes.io/control-plane
         operator: Exists
 {{- end }}
 

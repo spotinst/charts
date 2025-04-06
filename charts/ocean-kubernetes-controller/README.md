@@ -94,7 +94,7 @@ Kubernetes: `>=1.20.0-0`
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
 | fullnameOverride | string | `""` |  |
-| image.fips | bool | `false` | Set to `true` to use an FIPS-140 compliant image. This flag adds `-fips` suffix to the image tag,  therefore it should not be used together with the `--image.tag` flag. Ref: https://go.dev/doc/security/fips140 |
+| image.fips | bool | `false` | Set to `true` to use an FIPS-140 compliant image. This flag adds `-fips` suffix to the image tag, therefore it should not be used together with the `--image.tag` flag. Ref: https://go.dev/doc/security/fips140 |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller"` |  |
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
