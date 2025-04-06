@@ -48,7 +48,7 @@ rules:
   resources: [ "leases" ]
   verbs: [ "get","list","patch","update","create","delete" ]
 
-{{- if not .Values.spotinst.readOnly }}
+{{- if not .Values.spotinst.readonly }}
 # ---------------------------------------------------------------------------
 # feature: ocean/draining
 # ---------------------------------------------------------------------------
