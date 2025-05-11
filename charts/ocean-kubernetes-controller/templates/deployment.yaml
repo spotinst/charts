@@ -68,6 +68,9 @@ spec:
           - --log_file=/var/log/controller.logs
           - --log_file_max_size=1
           {{- end }}
+          {{- if .Values.spotinst.insecureSkipTLSVerify }}
+          - --insecure
+          {{- end }}
           env:
           - name: SPOTINST_TOKEN
             valueFrom:

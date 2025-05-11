@@ -8,8 +8,8 @@ spotinst:
   # -- Spot Token. (Required)
   # Ref: https://docs.spot.io/administration/api/create-api-token
   token: ""
-  # -- Spot Account. (Required)
-  # Ref: https://docs.spot.io/administration/organizations?id=account
+  # -- Spot Account ID. (Required)
+  # Example: `act-123abcd`
   account: ""
   # -- Unique identifier used by the Ocean Controller to connect (Required)
   # between the Ocean backend and the Kubernetes cluster.
@@ -25,6 +25,8 @@ spotinst:
   enableCsrApproval: true
   # -- Disable automatic RightSizing. (Optional)
   disableAutomaticRightSizing: false
+  # -- Disable TLS certificate validation. (Optional)
+  insecureSkipTLSVerify: false
   # -- Whether this controller needs to be readonly - overrides other permissions. (Optional)
   readonly: false
 
@@ -34,8 +36,12 @@ replicas: 2
 image:
   repository: us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
+  # -- Overrides the image tag whose default is the chart appVersion.
   tag: ""
+  # -- Set to `true` to use an FIPS-140 compliant image. This flag adds `-fips` suffix to the image tag,
+  # therefore it should not be used together with the `--image.tag` flag.
+  # Ref: https://go.dev/doc/security/fips140
+  fips: false
 
 initContainers: []
 

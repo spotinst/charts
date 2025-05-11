@@ -48,7 +48,14 @@ Create chart name and version as used by the chart label.
 The image to use
 */}}
 {{- define "ocean-kubernetes-controller.image" -}}
-{{- printf "%s:%s" .Values.image.repository (default (printf "v%s" .Chart.AppVersion) .Values.image.tag) }}
+{{- $imageSuffix := "" }}
+{{- if and .Values.image.fips .Values.image.tag }}
+{{- fail "`image.fips` should not be used together with `image.tag`. Either set `--image.fips=false` or `--image.tag=\"\"`" }}
+{{- end }}
+{{- if .Values.image.fips }}
+{{- $imageSuffix = "-fips" }}
+{{- end }}
+{{- printf "%s:%s%s" .Values.image.repository (default (printf "v%s" .Chart.AppVersion) .Values.image.tag) $imageSuffix }}
 {{- end }}
 
 {{/*
@@ -164,7 +171,7 @@ nodeAffinity:
   - weight: 100
     preference:
       matchExpressions:
-      - key: node-role.kubernetes.io/master
+      - key: node-role.kubernetes.io/control-plane
         operator: Exists
 {{- end }}
 
