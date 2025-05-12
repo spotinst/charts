@@ -147,6 +147,7 @@ Kubernetes: `>=1.20.0-0`
 | spotinst.enableCsrApproval | bool | `true` | Enable CSR approval. (Optional) |
 | spotinst.insecureSkipTLSVerify | bool | `false` | Disable TLS certificate validation. (Optional) |
 | spotinst.proxyUrl | string | `""` | Proxy URL. (Optional) |
+| spotinst.readonly | bool | `false` | Whether this controller needs to be readonly - overrides other permissions. (Optional) |
 | spotinst.token | string | `""` | Spot Token. (Required) Ref: https://docs.spot.io/administration/api/create-api-token |
 | tolerations | string | `nil` | Tolerations for nodes that have taints on them. (Optional) Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
 | topologySpreadConstraints | string | `nil` |  |
