@@ -2,7 +2,7 @@ apiVersion: v2
 name: ocean-kubernetes-controller
 description: A Helm chart for Ocean Kubernetes Controller
 type: application
-version: 0.1.60
+version: 0.1.61
 appVersion: 2.0.70
 kubeVersion: ">=1.20.0-0"
 maintainers:
