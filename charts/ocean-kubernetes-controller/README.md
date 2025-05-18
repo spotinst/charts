@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.59-beta.1](https://img.shields.io/badge/Version-0.1.59--beta.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.68](https://img.shields.io/badge/AppVersion-2.0.68-informational?style=flat-square)
+![Version: 0.1.60](https://img.shields.io/badge/Version-0.1.60-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.70](https://img.shields.io/badge/AppVersion-2.0.70-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
@@ -94,9 +94,10 @@ Kubernetes: `>=1.20.0-0`
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
 | fullnameOverride | string | `""` |  |
+| image.fips | bool | `false` | Set to `true` to use an FIPS-140 compliant image. This flag adds `-fips` suffix to the image tag, therefore it should not be used together with the `--image.tag` flag. Ref: https://go.dev/doc/security/fips140 |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller"` |  |
-| image.tag | string | `"feature-con-28708-drainv2@sha256:6370e517c4f683a7af2b44f328dd43926d9b57e9f15d9439e82268c913d67e2c"` |  |
+| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | livenessProbe.httpGet.path | string | `"/healthz"` |  |
@@ -138,12 +139,13 @@ Kubernetes: `>=1.20.0-0`
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| spotinst.account | string | `""` | Spot Account. (Required) Ref: https://docs.spot.io/administration/organizations?id=account |
+| spotinst.account | string | `""` | Spot Account ID. (Required) Example: `act-123abcd` |
 | spotinst.baseUrl | string | `""` | Base URL. (Optional) |
 | spotinst.clusterIdentifier | string | `""` | Unique identifier used by the Ocean Controller to connect (Required) between the Ocean backend and the Kubernetes cluster. Ref: https://docs.spot.io/ocean/tutorials/spot-kubernetes-controller/ |
 | spotinst.disableAutoUpdate | bool | `false` | Disable auto update. (Optional) |
 | spotinst.disableAutomaticRightSizing | bool | `false` | Disable automatic RightSizing. (Optional) |
 | spotinst.enableCsrApproval | bool | `true` | Enable CSR approval. (Optional) |
+| spotinst.insecureSkipTLSVerify | bool | `false` | Disable TLS certificate validation. (Optional) |
 | spotinst.proxyUrl | string | `""` | Proxy URL. (Optional) |
 | spotinst.token | string | `""` | Spot Token. (Required) Ref: https://docs.spot.io/administration/api/create-api-token |
 | tolerations | string | `nil` | Tolerations for nodes that have taints on them. (Optional) Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
