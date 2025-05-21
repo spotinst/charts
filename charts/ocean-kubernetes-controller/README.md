@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.60](https://img.shields.io/badge/Version-0.1.60-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.70](https://img.shields.io/badge/AppVersion-2.0.70-informational?style=flat-square)
+![Version: 0.1.61](https://img.shields.io/badge/Version-0.1.61-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.70](https://img.shields.io/badge/AppVersion-2.0.70-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
@@ -104,10 +104,11 @@ Kubernetes: `>=1.20.0-0`
 | livenessProbe.httpGet.port | string | `"readiness"` |  |
 | livenessProbe.initialDelaySeconds | int | `15` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
-| logShipping | object | `{"command":["/fluent-bit/bin/fluent-bit","-c","/tmp/fluent-bit.conf","-q"],"destination":{"host":"api.spotinst.io","port":443,"tls":true},"enabled":true,"extraEnv":[],"extraVolumeMounts":[],"image":{"pullPolicy":"IfNotPresent","repository":"ghcr.io/fluent/fluent-bit","tag":"3.1.9"}}` | Log Shipping configuration. |
+| logShipping | object | `{"command":["/fluent-bit/bin/fluent-bit","-c","/tmp/fluent-bit.conf","-q"],"destination":{"host":"api.spotinst.io","port":443,"tls":true},"enabled":true,"extraEnv":[],"extraVolumeMounts":[],"image":{"pullPolicy":"IfNotPresent","repository":"ghcr.io/fluent/fluent-bit","tag":"3.1.9"},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsNonRoot":true}}` | Log Shipping configuration. |
 | logShipping.destination | object | `{"host":"api.spotinst.io","port":443,"tls":true}` | Log shipping destination configuration. |
 | logShipping.enabled | bool | `true` | Specifies whether to send the controller logs to Spot for analysis. (Optional) |
 | logShipping.image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/fluent/fluent-bit","tag":"3.1.9"}` | Specifies the log shipping container image. (Optional) |
+| logShipping.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsNonRoot":true}` | Log Shipping container security context |
 | metrics-server.args | list | `["--logtostderr"]` | Arguments to pass to metrics-server on start up. (Optional) |
 | metrics-server.deployChart | bool | `true` | Specifies whether the metrics-server chart should be deployed. (Optional) |
 | metrics-server.image.pullPolicy | string | `"IfNotPresent"` |  |

@@ -232,6 +232,15 @@ logShipping:
     - /tmp/fluent-bit.conf
     - -q
 
+  # -- Log Shipping container security context
+  securityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    capabilities:
+      drop:
+      - ALL
+
 # Auto Update process configuration.
 autoUpdate:
   # -- Configures the image for the auto-updater job. (Optional)
