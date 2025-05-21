@@ -61,7 +61,7 @@ Kubernetes: `>=1.20.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://kubernetes-sigs.github.io/metrics-server | metrics-server | 3.11.0 |
+| https://kubernetes-sigs.github.io/metrics-server | metrics-server | 3.12.2 |
 
 ## Values
 
@@ -105,9 +105,12 @@ Kubernetes: `>=1.20.0-0`
 | livenessProbe.initialDelaySeconds | int | `15` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | logShipping | object | `{"command":["/fluent-bit/bin/fluent-bit","-c","/tmp/fluent-bit.conf","-q"],"destination":{"host":"api.spotinst.io","port":443,"tls":true},"enabled":true,"extraEnv":[],"extraVolumeMounts":[],"image":{"pullPolicy":"IfNotPresent","repository":"ghcr.io/fluent/fluent-bit","tag":"3.1.9"},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsNonRoot":true}}` | Log Shipping configuration. |
+| logShipping.command | list | `["/fluent-bit/bin/fluent-bit","-c","/tmp/fluent-bit.conf","-q"]` | Log shipping container command. (Optional) |
 | logShipping.destination | object | `{"host":"api.spotinst.io","port":443,"tls":true}` | Log shipping destination configuration. |
 | logShipping.enabled | bool | `true` | Specifies whether to send the controller logs to Spot for analysis. (Optional) |
-| logShipping.image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/fluent/fluent-bit","tag":"3.1.9"}` | Specifies the log shipping container image. (Optional) |
+| logShipping.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy. (Optional) |
+| logShipping.image.repository | string | `"ghcr.io/fluent/fluent-bit"` | Image repository. (Optional) |
+| logShipping.image.tag | string | `"3.1.9"` | Overrides the image tag. (Optional) |
 | logShipping.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsNonRoot":true}` | Log Shipping container security context |
 | metrics-server.args | list | `["--logtostderr"]` | Arguments to pass to metrics-server on start up. (Optional) |
 | metrics-server.deployChart | bool | `true` | Specifies whether the metrics-server chart should be deployed. (Optional) |
