@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.61](https://img.shields.io/badge/Version-0.1.61-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.70](https://img.shields.io/badge/AppVersion-2.0.70-informational?style=flat-square)
+![Version: 0.1.62](https://img.shields.io/badge/Version-0.1.62-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.70](https://img.shields.io/badge/AppVersion-2.0.70-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
@@ -112,7 +112,6 @@ Kubernetes: `>=1.20.0-0`
 | logShipping.image.repository | string | `"ghcr.io/fluent/fluent-bit"` | Image repository. (Optional) |
 | logShipping.image.tag | string | `"3.1.9"` | Overrides the image tag. (Optional) |
 | logShipping.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsNonRoot":true}` | Log Shipping container security context |
-| metrics-server.args | list | `["--logtostderr"]` | Arguments to pass to metrics-server on start up. (Optional) |
 | metrics-server.deployChart | bool | `true` | Specifies whether the metrics-server chart should be deployed. (Optional) |
 | metrics-server.image.pullPolicy | string | `"IfNotPresent"` |  |
 | metrics-server.image.repository | string | `"registry.k8s.io/metrics-server/metrics-server"` |  |
