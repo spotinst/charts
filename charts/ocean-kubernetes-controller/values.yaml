@@ -200,8 +200,7 @@ metrics-server:
     pullPolicy: IfNotPresent
 
   # -- Arguments to pass to metrics-server on start up. (Optional)
-  args:
-  - --logtostderr
+  # args:
   # enable this if you have self-signed certificates, see: https://github.com/kubernetes-incubator/metrics-server
   #  - --kubelet-insecure-tls
 
@@ -210,10 +209,12 @@ logShipping:
   # -- Specifies whether to send the controller logs to Spot for analysis. (Optional)
   enabled: true
 
-  # -- Specifies the log shipping container image. (Optional)
   image:
+    # -- Image repository. (Optional)
     repository: ghcr.io/fluent/fluent-bit
+    # -- Overrides the image tag. (Optional)
     tag: "3.1.9"
+    # -- Image pull policy. (Optional)
     pullPolicy: IfNotPresent
 
   # -- Log shipping destination configuration.
@@ -226,11 +227,21 @@ logShipping:
 
   extraEnv: []
 
+  # -- Log shipping container command. (Optional)
   command:
     - /fluent-bit/bin/fluent-bit
     - -c
     - /tmp/fluent-bit.conf
     - -q
+
+  # -- Log Shipping container security context
+  securityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    capabilities:
+      drop:
+      - ALL
 
 # Auto Update process configuration.
 autoUpdate:

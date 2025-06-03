@@ -221,6 +221,8 @@ spec:
           {{- with .Values.logShipping.extraVolumeMounts }}
             {{- toYaml . | nindent 10 }}
           {{- end }}
+          securityContext:
+            {{- toYaml .Values.logShipping.securityContext | nindent 12 }}
         {{- end }}
       volumes:
       {{- with .Values.extraVolumes }}
