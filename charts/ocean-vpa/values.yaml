@@ -45,8 +45,7 @@ updater:
     requests:
       cpu: 50m
       memory: 500Mi
-  nodeSelector:
-    kubernetes.io/arch: amd64
+  nodeSelector: {}
   tolerations: []
   affinity: {}
   extraArgs:
