@@ -46,6 +46,7 @@ spec:
             {{- range $key, $value := .Values.updater.extraArgs }}
             - --{{ $key }}={{ $value }}
             {{- end }}
+            - --feature-gates=InPlaceOrRecreate=true
           env:
             - name: NAMESPACE
               valueFrom:

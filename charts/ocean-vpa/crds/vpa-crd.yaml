@@ -222,7 +222,6 @@ spec:
                         - Initial
                         - Recreate
                         - Auto
-                        - InPlaceOnly
                         - InPlaceOrRecreate
                       type: string
                   type: object
