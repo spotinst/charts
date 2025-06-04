@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name:  {{ include "ocean-admission-controller.fullname" . }}-admission-certgen
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    "helm.sh/hook-weight": "-110"
+  labels:
+    {{- include "ocean-admission-controller.certgenLabels" . | nindent 4 }}
+spec:
+  ttlSecondsAfterFinished: 300
+  template:
+    metadata:
+      name: {{ include "ocean-admission-controller.fullname" . }}-admission-certgen
+      labels:
+        {{- include "ocean-admission-controller.certgenLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: OnFailure
+      serviceAccountName: {{ include "ocean-admission-controller.fullname" . }}-admission-certgen
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: create
+          image: {{ printf "%s:%s" .Values.controller.certGen.image.repository .Values.controller.certGen.image.tag }}
+          args:
+            - create
+            - --cert-name={{ include "ocean-admission-controller.controller.secret.certName" . }}
+            - --key-name={{ include "ocean-admission-controller.controller.secret.keyName" . }}
+            - --host={{ include "ocean-admission-controller.fullname" . }}-webhook,{{ include "ocean-admission-controller.fullname" . }}-webhook.{{ .Release.Namespace }}.svc
+            - --namespace={{ .Release.Namespace }}
+            - --secret-name={{ include "ocean-admission-controller.controller.tlsSecretName" . }}
+          resources:
+            {{- toYaml .Values.controller.certGen.resources | nindent 12 }}
+      {{- with .Values.controller.certGen.securityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.controller.certGen.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.controller.certGen.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.controller.certGen.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
