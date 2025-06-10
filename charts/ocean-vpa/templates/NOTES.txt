@@ -1,4 +1,8 @@
+***********************************
 Thank you for installing {{ .Release.Name }}.
 
 Please make sure to execute the following command to update the VPA CRD as well:
-    $ kubectl apply -f https://raw.githubusercontent.com/spotinst/charts/refs/heads/main/charts/ocean-vpa/crds/vpa-crd.yaml
+
+    kubectl apply -f https://raw.githubusercontent.com/spotinst/charts/refs/tags/ocean-vpa-{{ .Chart.Version }}/charts/ocean-vpa/crds/vpa-crd.yaml
+
+***********************************
