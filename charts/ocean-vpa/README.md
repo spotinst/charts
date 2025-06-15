@@ -1,6 +1,6 @@
 # ocean-vpa
 
-![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.0](https://img.shields.io/badge/AppVersion-1.3.0-informational?style=flat-square)
+![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.1](https://img.shields.io/badge/AppVersion-1.3.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes.
 
@@ -39,9 +39,9 @@ helm install my-release spot/ocean-vpa
 | admissionController.certGen.securityContext | object | `{}` | The securityContext block for the certgen pod |
 | admissionController.certGen.tolerations | list | `[]` |  |
 | admissionController.extraArgs.stderrthreshold | string | `"info"` |  |
-| admissionController.extraArgs.v | int | `4` |  |
+| admissionController.extraArgs.v | int  | `4` |  |
 | admissionController.generateCertificate | bool | `true` | If true and admissionController is enabled, a pre-install hook will run to create the certificate for the webhook |
-| admissionController.httpPort | int | `8000` | Port of the admission controller for the mutating webhooks |
+| admissionController.httpPort | int  | `8000` | Port of the admission controller for the mutating webhooks |
 | admissionController.image.pullPolicy | string | `"Always"` | The pull policy for the admission controller image. Recommend not changing this |
 | admissionController.image.repository | string | `"registry.k8s.io/autoscaling/vpa-admission-controller"` | The location of the vpa admission controller image |
 | admissionController.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion |
@@ -50,11 +50,12 @@ helm install my-release spot/ocean-vpa
 | admissionController.podAnnotations | object | `{}` | Annotations to add to the admission controller pod |
 | admissionController.podLabels | object | `{}` | Labels to add to the admission controller pod |
 | admissionController.podSecurityContext | object | `{"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}` | The security context for the admission controller pod |
-| admissionController.replicaCount | int | `1` |  |
+| admissionController.replicaCount | int  | `1` |  |
 | admissionController.resources | object | `{"limits":{},"requests":{"cpu":"50m","memory":"200Mi"}}` | The resources block for the admission controller pod |
 | admissionController.secretName | string | `"{{ include \"ocean-vpa.fullname\" . }}-tls-secret"` | Name for the TLS secret created for the webhook. Default {{ .Release.Name }}-tls-secret |
 | admissionController.tlsSecretKeys | list | `[]` | The keys in the vpa-tls-certs secret to map in to the admission controller |
-| admissionController.tolerations | list | `[]` |  |
+| admissionController.tolerations | list | `[]` |
+| featureGates.inPlaceOrRecreate | bool | true | If true the inPlace capability is supported |
 | fullnameOverride | string | `""` | A template override for the fullname |
 | imagePullSecrets | list | `[]` | A list of image pull secrets to be used for all pods |
 | nameOverride | string | `""` | A template override for the name |
@@ -64,9 +65,9 @@ helm install my-release spot/ocean-vpa
 | serviceAccount.name | string | `""` | The base name of the service account to use (appended with the component). If not set and create is true, a name is generated using the fullname template and appended for each component |
 | updater.affinity | object | `{}` |  |
 | updater.evictionTolerance | float | `0.25` |  |
-| updater.extraArgs.min-replicas | int | `1` |  |
+| updater.extraArgs.min-replicas | int  | `1` |  |
 | updater.extraArgs.stderrthreshold | string | `"info"` |  |
-| updater.extraArgs.v | int | `4` |  |
+| updater.extraArgs.v | int  | `4` |  |
 | updater.image.pullPolicy | string | `"Always"` | The pull policy for the updater image. Recommend not changing this |
 | updater.image.repository | string | `"registry.k8s.io/autoscaling/vpa-updater"` | The location of the updater image |
 | updater.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion |
@@ -74,7 +75,7 @@ helm install my-release spot/ocean-vpa
 | updater.podAnnotations | object | `{}` | Annotations to add to the updater pod |
 | updater.podLabels | object | `{}` | Labels to add to the updater pod |
 | updater.podSecurityContext | object | `{"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}` | The security context for the updater pod |
-| updater.replicaCount | int | `1` |  |
+| updater.replicaCount | int  | `1` |  |
 | updater.resources | object | `{"limits":{},"requests":{"cpu":"50m","memory":"500Mi"}}` | The resources block for the updater pod |
 | updater.tolerations | list | `[]` |  |
 
