@@ -8,6 +8,10 @@ priorityClassName: ""
 nameOverride: ""
 # fullnameOverride -- A template override for the fullname
 fullnameOverride: ""
+# featureGates at the project level
+featureGates:
+  #inPlaceOrRecreate -- If True the inPlace capability is on
+  inPlaceOrRecreate: true
 
 serviceAccount:
   # serviceAccount.create -- Specifies whether a service account should be created for each component
