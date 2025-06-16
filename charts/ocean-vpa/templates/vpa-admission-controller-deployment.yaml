@@ -47,7 +47,6 @@ spec:
             - --client-ca-file=/etc/tls-certs/ca
             - --tls-cert-file=/etc/tls-certs/cert
             - --tls-private-key=/etc/tls-certs/key
-            - --feature-gates=InPlaceOrRecreate=true
             {{- range $key, $value := .Values.admissionController.extraArgs}}
             - --{{ $key }}={{ $value }}
             {{- end }}
