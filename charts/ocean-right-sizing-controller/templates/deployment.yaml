@@ -1,0 +1,263 @@
+{{ include "ocean-right-sizing-controller.deployMetricsServer" . }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ocean-right-sizing-controller.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "ocean-right-sizing-controller.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicas }}
+  {{- with .Values.updateStrategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "ocean-right-sizing-controller.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        # This will restart the deployment in case of configmap/secret/cluster-role changes
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        checksum/cluster-role: {{ include (print $.Template.BasePath "/clusterrole.yaml") . | sha256sum }}
+        kubectl.kubernetes.io/default-container: {{ .Chart.Name }}
+
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "ocean-right-sizing-controller.selectorLabels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "ocean-right-sizing-controller.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.priorityClassName }}
+      priorityClassName: {{ . | quote }}
+      {{- end }}
+      {{- with .Values.initContainers }}
+      initContainers:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ include "ocean-right-sizing-controller.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- with .Values.command }}
+          command:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          args:
+          {{- range .Values.args }}
+          - {{ . }}
+          {{- end }}
+          {{- if eq (include "ocean-right-sizing-controller.logShipping.enabled" .) "true" }}
+          - --log_to_file
+          - --log_file=/var/log/controller.logs
+          - --log_file_max_size=1
+          {{- end }}
+          {{- if .Values.spotinst.insecureSkipTLSVerify }}
+          - --insecure
+          {{- end }}
+          env:
+          - name: SPOTINST_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "ocean-right-sizing-controller.secretName" . }}
+                key: token
+          - name: SPOTINST_ACCOUNT
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "ocean-right-sizing-controller.secretName" . }}
+                key: account
+          - name: SPOTINST_LEADER_ELECTION_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "ocean-right-sizing-controller.configMapName" . }}
+                key: leader-election
+                optional: true
+          - name: CLUSTER_IDENTIFIER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "ocean-right-sizing-controller.configMapName" . }}
+                key: spotinst.cluster-identifier
+          - name: BASE_SPOTINST_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "ocean-right-sizing-controller.configMapName" . }}
+                key: base-url
+                optional: true
+          - name: HTTPS_PROXY
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "ocean-right-sizing-controller.configMapName" . }}
+                key: proxy-url
+                optional: true
+          - name: DISABLE_AUTO_UPDATE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "ocean-right-sizing-controller.configMapName" . }}
+                key: disable-auto-update
+                optional: true
+          {{- if .Values.spotinst.readonly}}
+          - name: SPOTINST_READONLY_MODE
+            value: "true"
+          {{- end }}
+          {{- if not .Values.spotinst.disableAutoUpdate }}
+          - name: AUTO_UPDATE_JOB_SPEC
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "ocean-right-sizing-controller.configMapName" . }}
+                key: auto-update.job
+                optional: true
+          {{- end }}
+          - name: ENABLE_CSR_APPROVAL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "ocean-right-sizing-controller.configMapName" . }}
+                key: enable-csr-approval
+                optional: true
+          - name: USER_ENV_CERTIFICATES
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "ocean-right-sizing-controller.caBundleSecretName" . }}
+                key: {{ .Values.caBundleSecret.key }}
+                optional: true
+          - name: POD_ID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.uid
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          {{- with .Values.extraEnv }}
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+          {{- include "ocean-right-sizing-controller.noProxyEnvVar" . | nindent 10 -}}
+          ports:
+          - name: metrics
+            containerPort: 9080
+          - name: readiness
+            containerPort: 9081
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+          {{- with .Values.extraVolumeMounts }}
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+          {{- if eq (include "ocean-right-sizing-controller.logShipping.enabled" .) "true" }}
+          - name: logs
+            mountPath: /var/log
+          {{- end }}
+          resources:
+          {{- with .Values.resources }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+        {{- if eq (include "ocean-right-sizing-controller.logShipping.enabled" .) "true" }}
+        - name: log-shipper
+          image: {{ .Values.logShipping.image.repository }}:{{ .Values.logShipping.image.tag }}
+          imagePullPolicy: {{ .Values.logShipping.image.pullPolicy }}
+          {{- with .Values.logShipping.command }}
+          command:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          env:
+          - name: SPOTINST_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "ocean-right-sizing-controller.secretName" . }}
+                key: token
+                optional: true
+          - name: SPOTINST_ACCOUNT
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "ocean-right-sizing-controller.secretName" . }}
+                key: account
+                optional: true
+          - name: CLUSTER_IDENTIFIER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "ocean-right-sizing-controller.configMapName" . }}
+                key: spotinst.cluster-identifier
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          {{- with .Values.logShipping.extraEnv }}
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+          volumeMounts:
+          - name: logs
+            mountPath: /var/log
+          - name: fluentbit-config
+            mountPath: /tmp/fluent-bit.conf
+            subPath: fluent-bit.conf
+          - name: fluentbit-config
+            mountPath: /tmp/parsers.conf
+            subPath: parsers.conf
+          {{- with .Values.logShipping.extraVolumeMounts }}
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+          securityContext:
+            {{- toYaml .Values.logShipping.securityContext | nindent 12 }}
+        {{- end }}
+      volumes:
+      {{- with .Values.extraVolumes }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      {{- if eq (include "ocean-right-sizing-controller.logShipping.enabled" .) "true" }}
+      - name: logs
+        emptyDir: {}
+      - name: fluentbit-config
+        configMap:
+          name: {{ include "ocean-right-sizing-controller.configMapName" . }}
+          items:
+          - key: fluent-bit.conf
+            path: fluent-bit.conf
+          - key: parsers.conf
+            path: parsers.conf
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      affinity:
+        {{- include "ocean-right-sizing-controller.affinity" . | nindent 8 }}
+      {{- if kindIs "invalid" .Values.tolerations }}
+      tolerations:
+        {{- include "ocean-right-sizing-controller.defaultTolerations" . | nindent 6 }}
+      {{- else }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- . | toYaml | nindent 6 }}
+      {{- end }}
+      {{- end }}
+      topologySpreadConstraints:
+        {{- include "ocean-right-sizing-controller.topologySpreadConstraints" . | nindent 6 }}
