@@ -1,0 +1,53 @@
+{{- if not .Values.spotinst.disableAutoUpdate }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "auto-updater.fullname" . }}
+  labels:
+  {{- include "auto-updater.labels" . | nindent 4 }}
+rules:
+# Auto Updater requires
+- apiGroups: [ "rbac.authorization.k8s.io" ]
+  resources: [ "clusterrolebindings" ]
+  resourceNames: [ {{ include "auto-updater.fullname" . }} ]
+  verbs: [ "get", "patch" ]
+- apiGroups: [ "rbac.authorization.k8s.io" ]
+  resources: [ "clusterroles" ]
+  resourceNames: [ {{ include "auto-updater.fullname" . }} ]
+  verbs: [ "get", "patch", "escalate", "bind" ]
+
+# Controller requires
+- apiGroups: [ "rbac.authorization.k8s.io" ]
+  resources: [ "clusterroles" ]
+  verbs: [ "get", "patch", "escalate", "bind" ]
+  resourceNames: [ {{ include "ocean-right-sizing-controller.fullname" . }} ]
+- apiGroups: [ "rbac.authorization.k8s.io" ]
+  resources: [ "clusterrolebindings" ]
+  verbs: [ "get", "patch" ]
+  resourceNames: [ {{ include "ocean-right-sizing-controller.fullname" . }} ]
+
+# Metrics Server requires
+{{- if (index .Values "metrics-server" "deployChart") }}
+- apiGroups: [ "apiregistration.k8s.io" ]
+  resources: [ "apiservices" ]
+  resourceNames: [ "v1beta1.metrics.k8s.io" ]
+  verbs: [ "get", "patch" ]
+- apiGroups: [ "rbac.authorization.k8s.io" ]
+  resources: [ "clusterroles" ]
+  verbs: [ "get", "patch", "escalate", "bind" ]
+  resourceNames:
+  - {{ printf "system:%s" (include "metrics-server.fullname" .) }}
+  - {{ printf "system:%s-aggregated-reader" (include "metrics-server.name" .) }}
+- apiGroups: [ "rbac.authorization.k8s.io" ]
+  resources: [ "clusterrolebindings" ]
+  verbs: [ "get", "patch" ]
+  resourceNames:
+  - {{ printf "system:%s" (include "metrics-server.fullname" .) }}
+  - {{ printf "%s:system:auth-delegator" (include "metrics-server.fullname" .) }}
+- apiGroups: [ "rbac.authorization.k8s.io" ]
+  resources: [ "rolebindings" ]
+  verbs: [ "get", "patch" ]
+  resourceNames:
+  - {{ printf "%s-auth-reader" (include "metrics-server.fullname" .)  }}
+{{- end }}
+{{- end }}
