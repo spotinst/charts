@@ -1,0 +1,125 @@
+# Default values for vertical-pod-autoscaler.
+
+# imagePullSecrets -- A list of image pull secrets to be used for all pods
+imagePullSecrets:
+  - name: regcred
+# priorityClassName -- To set the priorityclass for all pods
+priorityClassName: ""
+# nameOverride -- A template override for the name
+nameOverride: ""
+# fullnameOverride -- A template override for the fullname
+fullnameOverride: "admission-controller"
+
+serviceAccount:
+  # serviceAccount.create -- Specifies whether a service account should be created for each component
+  create: true
+  # serviceAccount.annotations -- Annotations to add to the service accounts for each component
+  annotations: {}
+  # serviceAccount.name -- The base name of the service account to use (appended with the component). If not set and create is true, a name is generated using the fullname template and appended for each component
+  name: ""
+
+controller:
+  # controller.generateCertificate -- If true and controller is enabled, a pre-install hook will run to create the certificate for the controller
+  generateCertificate: true
+  # controller.secretName -- Name for the TLS secret created for the controller. Default {{ .Release.Name }}-tls-secret
+  tlsSecretName: ""
+  certGen:
+    image:
+      # controller.certGen.image.repository -- An image that contains certgen for creating certificates. Only used if controller.generateCertificate is true
+      repository: registry.k8s.io/ingress-nginx/kube-controller-certgen
+      # controller.certGen.image.tag -- An image tag for the controller.certGen.image.repository image. Only used if controller.generateCertificate is true
+      tag: v1.4.4
+      # controller.certGen.image.pullPolicy -- The pull policy for the certgen image. Recommend not changing this
+      pullPolicy: Always
+    # controller.certGen.env -- Additional environment variables to be added to the certgen container. Format is KEY: Value format
+    env: {}
+    # controller.certGen.resources -- The resources block for the certgen pod
+    resources: {}
+    # controller.certGen.securityContext -- The securityContext block for the certgen pod
+    securityContext: {}
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
+  mutatingWebhookConfiguration:
+    # controller.mutatingWebhookConfiguration.annotations -- Additional annotations for the MutatingWebhookConfiguration. Can be used for integration with cert-manager
+    annotations: {}
+
+  replicaCount: 1
+  image:
+    # controller.image.repository -- The location of the vpa admission controller image
+    repository: gcr.io/spotit-today/spot-ocean-admission-controller
+    # controller.image.tag -- Overrides the image tag whose default is the chart appVersion
+    tag: "0.2.0"
+    # controller.image.pullPolicy -- The pull policy for the admission controller image. Recommend not changing this
+    pullPolicy: Always
+  # controller.podAnnotations -- Annotations to add to the admission controller pod
+  podAnnotations: {}
+  # controller.podLabels -- Labels to add to the admission controller pod
+  podLabels: {}
+  # controller.podSecurityContext -- The security context for the admission controller pod
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+    seccompProfile:
+      type: RuntimeDefault
+  # controller.securityContext -- The security context for the admission controller manager container
+  securityContext: {}
+  # controller.resources -- The resources block for the admission controller pod
+  resources:
+    limits: {}
+      # cpu: 200m
+      # memory: 500Mi
+    requests:
+      cpu: 50m
+      memory: 200Mi
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  # controller.httpPort -- Port of the admission controller for the mutating webhooks
+  httpPort: 9443
+  # Config Map.
+  # Ref: https://kubernetes.io/docs/concepts/configuration/configmap/
+  configMap:
+    create: true
+    # -- ConfigMap name. (Optional)
+    name: ""
+
+  secret:
+    # -- Controls whether a Secret should be created. (Optional)
+    create: true
+    # -- Secret name. (Optional)
+    name: ""
+  # Address the controller binds for Prometheus metrics.
+  metricsAddr: ":8080"
+  # Address the controller binds for Kubernetes liveness/readiness probes.
+  healthProbeAddr: ":8082"
+  # Directory where TLS certs are mounted (used by webhook server).
+  certDir: "/etc/certs"
+  # Enable Kubernetes leader election (true in HA setups)
+  leaderElection: false
+  # -- Pod Toleration Defaulter for AKS. (Optional)
+  podTolerationDefaulter:
+    # -- Enable.
+    enable: false
+  # -- Pod Node Affinity Defaulter for GKE. (Optional)
+  podVolumeNodeAffinityDefaulter:
+    # -- Enable.
+    enable: true
+
+# Spot Configuration
+spotinst:
+  # -- Base URL. (Optional).
+  baseUrl: ""
+  # -- Proxy URL. (Optional)
+  proxyUrl: ""
+  # -- Spot Token. (Required)
+  # Ref: https://docs.spot.io/administration/api/create-api-token
+  token: ""
+  # -- Spot Account. (Required)
+  # Ref: https://docs.spot.io/administration/organizations?id=account
+  account: ""
+  # -- Unique identifier used by the Ocean Controller to connect (Required)
+  # between the Ocean backend and the Kubernetes cluster.
+  # Ref: https://docs.spot.io/ocean/tutorials/spot-kubernetes-controller/
+  clusterIdentifier: ""
