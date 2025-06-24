@@ -38,8 +38,6 @@ spec:
           image: {{ printf "%s:%s" .Values.controller.image.repository (.Values.controller.image.tag | default .Chart.AppVersion) }}
           imagePullPolicy: {{ .Values.controller.image.pullPolicy }}
           envFrom:
-            - secretRef:
-                name: {{ include "ocean-admission-controller.secretName" . }}
             - configMapRef:
                 name: {{ include "ocean-admission-controller.configMapName" . }}
                 optional: true

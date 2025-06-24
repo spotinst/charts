@@ -73,32 +73,6 @@ app.kubernetes.io/component: ocean-admission-certgen
 {{- end }}
 
 {{/*
-DEPRECATED - Old selector labels. Use controllerSelectorLabels instead for controller.
-For certgen, the component label is 'admission-certgen'.
-*/}}
-{{- define "ocean-admission-controller.selectorLabels" -}}
-app.kubernetes.io/component: ocean-admission-controller
-app.kubernetes.io/name: {{ include "ocean-admission-controller.name" . | trunc 63 | trimSuffix "-"}}
-app.kubernetes.io/instance: {{ .Release.Name | trunc 63 | trimSuffix "-"}}
-{{- end }}
-
-
-{{/*
-DEPRECATED - Old common labels. Use controllerLabels or certgenLabels instead.
-*/}}
-{{- define "ocean-admission-controller.labels" -}}
-helm.sh/chart: {{ include "ocean-admission-controller.chart" . | trunc 63 | trimSuffix "-"}}
-{{ include "ocean-admission-controller.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote | trunc 63 | trimSuffix "-"}}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service | trunc 63 | trimSuffix "-"}}
-{{- if .Values.controller.podLabels }}
-{{ toYaml .Values.controller.podLabels }}
-{{- end }}
-{{- end }}
-
-{{/*
 Create the name of the service account to use
 */}}
 {{- define "ocean-admission-controller.serviceAccountName" -}}
@@ -145,9 +119,4 @@ ConfigMap name.
 {{ default (include "ocean-admission-controller.fullname" .) .Values.controller.configMap.name }}
 {{- end }}
 
-{{/*
-Secret name.
-*/}}
-{{- define "ocean-admission-controller.secretName" -}}
-{{ default (include "ocean-admission-controller.fullname" .) .Values.controller.secret.name }}
-{{- end }}
+

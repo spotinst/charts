@@ -85,11 +85,7 @@ controller:
     # -- ConfigMap name. (Optional)
     name: ""
 
-  secret:
-    # -- Controls whether a Secret should be created. (Optional)
-    create: true
-    # -- Secret name. (Optional)
-    name: ""
+
   # Address the controller binds for Prometheus metrics.
   metricsAddr: ":8080"
   # Address the controller binds for Kubernetes liveness/readiness probes.
@@ -103,23 +99,7 @@ controller:
     # -- Enable.
     enable: false
   # -- Pod Node Affinity Defaulter for GKE. (Optional)
-  podVolumeNodeAffinityDefaulter:
+  podDiskTypeNodeSelectorDefaulter:
     # -- Enable.
     enable: true
 
-# Spot Configuration
-spotinst:
-  # -- Base URL. (Optional).
-  baseUrl: ""
-  # -- Proxy URL. (Optional)
-  proxyUrl: ""
-  # -- Spot Token. (Required)
-  # Ref: https://docs.spot.io/administration/api/create-api-token
-  token: ""
-  # -- Spot Account. (Required)
-  # Ref: https://docs.spot.io/administration/organizations?id=account
-  account: ""
-  # -- Unique identifier used by the Ocean Controller to connect (Required)
-  # between the Ocean backend and the Kubernetes cluster.
-  # Ref: https://docs.spot.io/ocean/tutorials/spot-kubernetes-controller/
-  clusterIdentifier: ""

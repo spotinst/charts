@@ -1,6 +1,6 @@
 apiVersion: v2
 name: ocean-admission-controller
-description: A Helm chart for Kubernetes
+description: A Kubernetes admission controller for pod defaulting and validation
 type: application
 icon: https://docs.spot.io/_media/images/spot_mark.png
 kubeVersion: ">=1.22.0-0"
