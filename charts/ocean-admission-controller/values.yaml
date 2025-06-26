@@ -26,7 +26,7 @@ controller:
   certGen:
     image:
       # controller.certGen.image.repository -- An image that contains certgen for creating certificates. Only used if controller.generateCertificate is true
-      repository: registry.k8s.io/ingress-nginx/kube-controller-certgen
+      repository: registry.k8s.io/ingress-nginx/kube-webhook-certgen
       # controller.certGen.image.tag -- An image tag for the controller.certGen.image.repository image. Only used if controller.generateCertificate is true
       tag: v1.4.4
       # controller.certGen.image.pullPolicy -- The pull policy for the certgen image. Recommend not changing this
