@@ -1,8 +1,7 @@
 # Default values for vertical-pod-autoscaler.
 
 # imagePullSecrets -- A list of image pull secrets to be used for all pods
-imagePullSecrets:
-  - name: regcred
+imagePullSecrets: []
 # priorityClassName -- To set the priorityclass for all pods
 priorityClassName: ""
 # nameOverride -- A template override for the name
@@ -37,14 +36,26 @@ controller:
     resources: {}
     # controller.certGen.securityContext -- The securityContext block for the certgen pod
     securityContext: {}
+    # controller.certGen.nodeSelector -- Node selector for the certgen pod
     nodeSelector: {}
+    # controller.certGen.tolerations -- Tolerations for the certgen pod
     tolerations: []
+    # controller.certGen.affinity -- Affinity rules for the certgen pod
     affinity: {}
 
   mutatingWebhookConfiguration:
     # controller.mutatingWebhookConfiguration.annotations -- Additional annotations for the MutatingWebhookConfiguration. Can be used for integration with cert-manager
     annotations: {}
+    # controller.mutatingWebhookConfiguration.timeoutSeconds -- Timeout for webhook calls in seconds
+    timeoutSeconds: 30
+    # controller.mutatingWebhookConfiguration.sideEffects -- Side effects for webhook (None, NoneOnDryRun)
+    sideEffects: None
+    # controller.mutatingWebhookConfiguration.admissionReviewVersions -- List of admission review versions
+    admissionReviewVersions:
+      - v1
+      - v1beta1
 
+  # controller.replicaCount -- Number of replicas for the admission controller
   replicaCount: 1
   image:
     # controller.image.repository -- The location of the vpa admission controller image
@@ -64,42 +75,49 @@ controller:
     seccompProfile:
       type: RuntimeDefault
   # controller.securityContext -- The security context for the admission controller manager container
-  securityContext: {}
+  securityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    capabilities:
+      drop:
+      - ALL
+    seccompProfile:
+      type: RuntimeDefault
   # controller.resources -- The resources block for the admission controller pod
   resources:
-    limits: {}
-      # cpu: 200m
-      # memory: 500Mi
+    limits:
+      memory: 500Mi
     requests:
       cpu: 50m
       memory: 200Mi
+  # controller.nodeSelector -- Node selector for the admission controller pod
   nodeSelector: {}
+  # controller.tolerations -- Tolerations for the admission controller pod
   tolerations: []
+  # controller.affinity -- Affinity rules for the admission controller pod
   affinity: {}
   # controller.httpPort -- Port of the admission controller for the mutating webhooks
   httpPort: 9443
-  # Config Map.
-  # Ref: https://kubernetes.io/docs/concepts/configuration/configmap/
+  # controller.configMap -- ConfigMap configuration for the admission controller
   configMap:
+    # controller.configMap.create -- Whether to create a ConfigMap for the admission controller
     create: true
-    # -- ConfigMap name. (Optional)
+    # controller.configMap.name -- Name of the ConfigMap. If empty, uses the default name
     name: ""
-
-
-  # Address the controller binds for Prometheus metrics.
+  # controller.metricsAddr -- Address the controller binds to for Prometheus metrics
   metricsAddr: ":8080"
-  # Address the controller binds for Kubernetes liveness/readiness probes.
+  # controller.healthProbeAddr -- Address the controller binds to for Kubernetes liveness/readiness probes
   healthProbeAddr: ":8082"
-  # Directory where TLS certs are mounted (used by webhook server).
+  # controller.certDir -- Directory where TLS certificates are mounted for the webhook server
   certDir: "/etc/certs"
-  # Enable Kubernetes leader election (true in HA setups)
+  # controller.leaderElection -- Enable Kubernetes leader election for high availability setups
   leaderElection: false
-  # -- Pod Toleration Defaulter for AKS. (Optional)
+  # controller.podTolerationDefaulter -- Pod Toleration Defaulter configuration for AKS
   podTolerationDefaulter:
-    # -- Enable.
+    # controller.podTolerationDefaulter.enable -- Enable the Pod Toleration Defaulter for AKS
     enable: false
-  # -- Pod Node Affinity Defaulter for GKE. (Optional)
+  # controller.podDiskTypeNodeSelectorDefaulter -- Pod Node Affinity Defaulter configuration for GKE
   podDiskTypeNodeSelectorDefaulter:
-    # -- Enable.
+    # controller.podDiskTypeNodeSelectorDefaulter.enable -- Enable the Pod Disk Type Node Selector Defaulter for GKE
     enable: true
-

@@ -49,6 +49,18 @@ spec:
             - name: http
               containerPort: {{ .Values.controller.httpPort | default 9443 }}
               protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: {{ .Values.controller.healthProbeAddr | default ":8082" | trimPrefix ":" }}
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: {{ .Values.controller.healthProbeAddr | default ":8082" | trimPrefix ":" }}
+            initialDelaySeconds: 5
+            periodSeconds: 5
           resources:
             {{- toYaml .Values.controller.resources | nindent 12 }}
       volumes:

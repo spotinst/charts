@@ -11,7 +11,7 @@ metadata:
   {{- end }}
 webhooks:
 - admissionReviewVersions:
-  - v1
+  {{- toYaml .Values.controller.mutatingWebhookConfiguration.admissionReviewVersions | nindent 2 }}
   clientConfig:
     service:
       name: {{ include "ocean-admission-controller.fullname" . }}-webhook
@@ -44,6 +44,6 @@ webhooks:
     resources:
     - pods
     scope: '*'
-  sideEffects: None
-  timeoutSeconds: 30
+  sideEffects: {{ .Values.controller.mutatingWebhookConfiguration.sideEffects }}
+  timeoutSeconds: {{ .Values.controller.mutatingWebhookConfiguration.timeoutSeconds }}
 {{- end }}
