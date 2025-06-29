@@ -1,0 +1,82 @@
+# ocean-admission-controller
+
+![Version: 1.0.1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.2.0](https://img.shields.io/badge/AppVersion-0.2.0-informational?style=flat-square)
+
+A Kubernetes admission controller for pod defaulting and validation.
+
+## Installation
+
+1. Add the Spot Helm chart repository:
+
+```sh
+helm repo add spot https://charts.spot.io
+```
+
+2. Update your local Helm chart repository cache:
+
+```sh
+helm repo update
+```
+
+3. Install `ocean-admission-controller`:
+
+```sh
+helm install my-release spot/ocean-admission-controller
+```
+
+## Requirements
+
+| Component | Version | Notes |
+|-----------|---------|-------|
+| Kubernetes | `>=1.22.0-0` | Required for stable MutatingWebhookConfiguration v1 API |
+| Helm | `>=3.0.0` | Required for Chart API v2 |
+
+## Values
+
+| Key                                                          | Type | Default                                                                              | Description                                                                                                                                                                                     |
+|--------------------------------------------------------------|------|--------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| controller.affinity                                 | object | `{}`                                                                                 |                                                                                                                                                                                                 |
+| controller.certDir                                  | string | `"/etc/certs"`                                                                       | Directory where TLS certs are mounted (used by webhook server).                                                                                                                                |
+| controller.certGen.affinity                         | object | `{}`                                                                                 |                                                                                                                                                                                                 |
+| controller.certGen.env                              | object | `{}`                                                                                 | Additional environment variables to be added to the certgen container. Format is KEY: Value format                                                                                              |
+| controller.certGen.image.pullPolicy                 | string | `"Always"`                                                                           | The pull policy for the certgen image. Recommend not changing this                                                                                                                              |
+| controller.certGen.image.repository                 | string | `"registry.k8s.io/ingress-nginx/kube-controller-certgen"`                            | An image that contains certgen for creating certificates. Only used if controller.generateCertificate is true                                                                          |
+| controller.certGen.image.tag                        | string | `"v1.4.4"`                                                                           | An image tag for the controller.certGen.image.repository image. Only used if controller.generateCertificate is true                                                           |
+| controller.certGen.nodeSelector                     | object | `{}`                                                                                 |                                                                                                                                                                                                 |
+| controller.certGen.resources                        | object | `{}`                                                                                 | The resources block for the certgen pod                                                                                                                                                         |
+| controller.certGen.securityContext                  | object | `{}`                                                                                 | The securityContext block for the certgen pod                                                                                                                                                   |
+| controller.certGen.tolerations                      | list | `[]`                                                                                 |                                                                                                                                                                                                 |
+| controller.configMap.create                         | bool | `true`                                                                               | Controls whether a ConfigMap should be created.                                                                                                                                                 |
+| controller.configMap.name                           | string | `""`                                                                                 | ConfigMap name. (Optional)                                                                                                                                                                      |
+| controller.generateCertificate                      | bool | `true`                                                                               | If true and controller is enabled, a pre-install hook will run to create the certificate for the controller                                                                               |
+| controller.healthProbeAddr                          | string | `":8082"`                                                                            | Address the controller binds for Kubernetes liveness/readiness probes.                                                                                                                         |
+| controller.httpPort                                 | int | `9443`                                                                               | Port of the admission controller for the mutating webhooks                                                                                                                                     |
+| controller.image.pullPolicy                         | string | `"Always"`                                                                           | The pull policy for the admission controller image. Recommend not changing this                                                                                                                 |
+| controller.image.repository                         | string | `"gcr.io/spotit-today/spot-ocean-admission-controller"`                              | The location of the admission controller image                                                                                                                   |
+| controller.image.tag                                | string | `"0.2.0"`                                                                            | Overrides the image tag whose default is the chart appVersion                                                                                                                                   |
+| controller.leaderElection                           | bool | `false`                                                                              | Enable Kubernetes leader election (true in HA setups)                                                                                                                                          |
+| controller.metricsAddr                              | string | `":8080"`                                                                            | Address the controller binds for Prometheus metrics.                                                                                                                                           |
+| controller.mutatingWebhookConfiguration.annotations | object | `{}`                                                                                 | Additional annotations for the MutatingWebhookConfiguration. Can be used for integration with cert-manager                                                                                      |
+| controller.nodeSelector                             | object | `{}`                                                                                 |                                                                                                                                                                                                 |
+| controller.podAnnotations                           | object | `{}`                                                                                 | Annotations to add to the admission controller pod                                                                                                                                              |
+| controller.podLabels                                | object | `{}`                                                                                 | Labels to add to the admission controller pod                                                                                                                                                   |
+| controller.podDiskTypeNodeSelectorDefaulter         | object | `{"enable":true}`                                                                    | Pod Disk Type Node Selector Defaulter for GKE. (Optional)                                                                                                                                     |
+| controller.podDiskTypeNodeSelectorDefaulter.enable  | bool | `true`                                                                               | Enable.                                                                                                                                                                                         |
+| controller.podSecurityContext                       | object | `{"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}` | The security context for the admission controller pod                                                                                                                                           |
+| controller.podTolerationDefaulter                   | object | `{"enable":false}`                                                                   | Pod Toleration Defaulter for AKS. (Optional)                                                                                                                                                    |
+| controller.podTolerationDefaulter.enable            | bool | `false`                                                                              | Enable.                                                                                                                                                                                         |
+| controller.replicaCount                             | int | `1`                                                                                  |                                                                                                                                                                                                 |
+| controller.resources                                | object | `{"limits":{},"requests":{"cpu":"50m","memory":"200Mi"}}`                            | The resources block for the admission controller pod                                                                                                                                            |
+| controller.securityContext                          | object | `{}`                                                                                 | The security context for the admission controller manager container                                                                                                                             |
+| controller.tlsSecretName                            | string | `""`                                                                                 | Name for the TLS secret created for the controller. Default {{ .Release.Name }}-tls-secret                                                                                                     |
+| controller.tolerations                              | list | `[]`                                                                                 |                                                                                                                                                                                                 |
+| fullnameOverride                                             | string | `"admission-controller"`                                                             | A template override for the fullname                                                                                                                                                            |
+| imagePullSecrets                                             | list | `[{"name":"regcred"}]`                                                               | A list of image pull secrets to be used for all pods                                                                                                                                            |
+| nameOverride                                                 | string | `""`                                                                                 | A template override for the name                                                                                                                                                                |
+| priorityClassName                                            | string | `""`                                                                                 | To set the priorityclass for all pods                                                                                                                                                           |
+| serviceAccount.annotations                                   | object | `{}`                                                                                 | Annotations to add to the service accounts for each component                                                                                                                                   |
+| serviceAccount.create                                        | bool | `true`                                                                               | Specifies whether a service account should be created for each component                                                                                                                        |
+| serviceAccount.name                                          | string | `""`                                                                                 | The base name of the service account to use (appended with the component). If not set and create is true, a name is generated using the fullname template and appended for each component       |
+
+----------------------------------------------
+Autogenerated from chart metadata using [helm-docs v1.14.2](https://github.com/norwoodj/helm-docs/releases/v1.14.2)
