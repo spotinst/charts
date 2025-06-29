@@ -39,6 +39,7 @@ subjects:
     name: {{ include "ocean-admission-controller.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
 {{- end }}
+{{- if .Values.controller.leaderElection }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -93,6 +94,7 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "ocean-admission-controller.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
+{{- end }}
 ---
 apiVersion: v1
 kind: ServiceAccount

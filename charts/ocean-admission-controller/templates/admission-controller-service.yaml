@@ -7,8 +7,12 @@ metadata:
     {{- include "ocean-admission-controller.controllerLabels" . | nindent 4 }}
 spec:
   ports:
-    - port: 443
+    - name: webhook
+      port: 443
       targetPort: {{ .Values.controller.httpPort | default 9443 }}
+    - name: metrics
+      port: 8080
+      targetPort: {{ .Values.controller.metricsAddr | default ":8080" | trimPrefix ":" }}
   selector:
     {{- include "ocean-admission-controller.controllerSelectorLabels" . | nindent 4 }}
 

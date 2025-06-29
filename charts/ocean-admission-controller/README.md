@@ -26,7 +26,10 @@ helm install my-release spot/ocean-admission-controller
 
 ## Requirements
 
-Kubernetes: `>=1.22.0-0`
+| Component | Version | Notes |
+|-----------|---------|-------|
+| Kubernetes | `>=1.22.0-0` | Required for stable MutatingWebhookConfiguration v1 API |
+| Helm | `>=3.0.0` | Required for Chart API v2 |
 
 ## Values
 

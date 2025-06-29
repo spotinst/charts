@@ -1,8 +1,7 @@
 # Default values for vertical-pod-autoscaler.
 
 # imagePullSecrets -- A list of image pull secrets to be used for all pods
-imagePullSecrets:
-  - name: regcred
+imagePullSecrets: []
 # priorityClassName -- To set the priorityclass for all pods
 priorityClassName: ""
 # nameOverride -- A template override for the name
@@ -44,6 +43,14 @@ controller:
   mutatingWebhookConfiguration:
     # controller.mutatingWebhookConfiguration.annotations -- Additional annotations for the MutatingWebhookConfiguration. Can be used for integration with cert-manager
     annotations: {}
+    # controller.mutatingWebhookConfiguration.timeoutSeconds -- Timeout for webhook calls in seconds
+    timeoutSeconds: 30
+    # controller.mutatingWebhookConfiguration.sideEffects -- Side effects for webhook (None, NoneOnDryRun)
+    sideEffects: None
+    # controller.mutatingWebhookConfiguration.admissionReviewVersions -- List of admission review versions
+    admissionReviewVersions:
+      - v1
+      - v1beta1
 
   replicaCount: 1
   image:
@@ -64,12 +71,19 @@ controller:
     seccompProfile:
       type: RuntimeDefault
   # controller.securityContext -- The security context for the admission controller manager container
-  securityContext: {}
+  securityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    capabilities:
+      drop:
+      - ALL
+    seccompProfile:
+      type: RuntimeDefault
   # controller.resources -- The resources block for the admission controller pod
   resources:
-    limits: {}
-      # cpu: 200m
-      # memory: 500Mi
+    limits:
+      memory: 500Mi
     requests:
       cpu: 50m
       memory: 200Mi
