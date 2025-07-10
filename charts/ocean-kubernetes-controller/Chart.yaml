@@ -2,7 +2,7 @@ apiVersion: v2
 name: ocean-kubernetes-controller
 description: A Helm chart for Ocean Kubernetes Controller
 type: application
-version: 0.1.61
+version: 0.1.63
 appVersion: 2.0.70
 kubeVersion: ">=1.20.0-0"
 maintainers:
@@ -15,6 +15,6 @@ keywords:
   - controller
 dependencies:
   - name: metrics-server
-    version: 3.11.0
+    version: 3.12.2
     repository: https://kubernetes-sigs.github.io/metrics-server
     condition: metrics-server.deployChart
