@@ -40,6 +40,14 @@ rules:
   verbs: [ "get", "list", "watch" ]
 - nonResourceURLs: [ "/version/", "/version" ]
   verbs: [ "get" ]
+
+# ---------------------------------------------------------------------------
+# feature: controller/leader-election (high-availability)
+# ---------------------------------------------------------------------------
+- apiGroups: [ "coordination.k8s.io" ]
+  resources: [ "leases" ]
+  verbs: [ "get", "list", "patch", "update", "create", "delete" ]
+{{- if not .Values.spotinst.readonly }}
 # ---------------------------------------------------------------------------
 # feature: ocean/draining
 # ---------------------------------------------------------------------------
@@ -112,14 +120,10 @@ rules:
   verbs: [ "get", "list", "watch", "patch", "update" ]
 {{- end }}
 # ---------------------------------------------------------------------------
-# feature: controller/leader-election (high-availability)
-# ---------------------------------------------------------------------------
-- apiGroups: [ "coordination.k8s.io" ]
-  resources: [ "leases" ]
-  verbs: [ "get","list","patch","update","create","delete" ]
-# ---------------------------------------------------------------------------
 # feature: controller/report-events
 # ---------------------------------------------------------------------------
 - apiGroups: [ "" ]
   resources: [ "events" ]
   verbs: [ "create" ]
+
+{{- end }}

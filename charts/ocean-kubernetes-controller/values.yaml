@@ -27,6 +27,8 @@ spotinst:
   disableAutomaticRightSizing: false
   # -- Disable TLS certificate validation. (Optional)
   insecureSkipTLSVerify: false
+  # -- Sets the controller to read-only mode, removing write permissions and disabling autoscaling. (Optional)
+  readonly: false
 
 # -- Configure the amount of replicas for the controller (Optional)
 replicas: 2
