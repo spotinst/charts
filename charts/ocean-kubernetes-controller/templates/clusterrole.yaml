@@ -46,8 +46,7 @@ rules:
 # ---------------------------------------------------------------------------
 - apiGroups: [ "coordination.k8s.io" ]
   resources: [ "leases" ]
-  verbs: [ "get","list","patch","update","create","delete" ]
-
+  verbs: [ "get", "list", "patch", "update", "create", "delete" ]
 {{- if not .Values.spotinst.readonly }}
 # ---------------------------------------------------------------------------
 # feature: ocean/draining

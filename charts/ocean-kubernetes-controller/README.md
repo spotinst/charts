@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.62](https://img.shields.io/badge/Version-0.1.62-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.70](https://img.shields.io/badge/AppVersion-2.0.70-informational?style=flat-square)
+![Version: 0.1.63](https://img.shields.io/badge/Version-0.1.63-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.70](https://img.shields.io/badge/AppVersion-2.0.70-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
@@ -150,7 +150,7 @@ Kubernetes: `>=1.20.0-0`
 | spotinst.enableCsrApproval | bool | `true` | Enable CSR approval. (Optional) |
 | spotinst.insecureSkipTLSVerify | bool | `false` | Disable TLS certificate validation. (Optional) |
 | spotinst.proxyUrl | string | `""` | Proxy URL. (Optional) |
-| spotinst.readonly | bool | `false` | Whether this controller needs to be readonly - overrides other permissions. (Optional) |
+| spotinst.readonly | bool | `false` | Sets the controller to read-only mode, removing write permissions and disabling autoscaling. (Optional) |
 | spotinst.token | string | `""` | Spot Token. (Required) Ref: https://docs.spot.io/administration/api/create-api-token |
 | tolerations | string | `nil` | Tolerations for nodes that have taints on them. (Optional) Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
 | topologySpreadConstraints | string | `nil` |  |
