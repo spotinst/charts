@@ -1,6 +1,6 @@
 # ocean-vpa
 
-![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.0](https://img.shields.io/badge/AppVersion-1.3.0-informational?style=flat-square)
+![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.1](https://img.shields.io/badge/AppVersion-1.4.1-informational?style=flat-square)
 
 A Helm chart for Kubernetes.
 
@@ -38,6 +38,7 @@ helm install my-release spot/ocean-vpa
 | admissionController.certGen.resources | object | `{}` | The resources block for the certgen pod |
 | admissionController.certGen.securityContext | object | `{}` | The securityContext block for the certgen pod |
 | admissionController.certGen.tolerations | list | `[]` |  |
+| admissionController.extraArgs.feature-gates | string | `"InPlaceOrRecreate=true"` |  |
 | admissionController.extraArgs.stderrthreshold | string | `"info"` |  |
 | admissionController.extraArgs.v | int | `4` |  |
 | admissionController.generateCertificate | bool | `true` | If true and admissionController is enabled, a pre-install hook will run to create the certificate for the webhook |
@@ -64,6 +65,7 @@ helm install my-release spot/ocean-vpa
 | serviceAccount.name | string | `""` | The base name of the service account to use (appended with the component). If not set and create is true, a name is generated using the fullname template and appended for each component |
 | updater.affinity | object | `{}` |  |
 | updater.evictionTolerance | float | `0.25` |  |
+| updater.extraArgs.feature-gates | string | `"InPlaceOrRecreate=true"` |  |
 | updater.extraArgs.min-replicas | int | `1` |  |
 | updater.extraArgs.stderrthreshold | string | `"info"` |  |
 | updater.extraArgs.v | int | `4` |  |
