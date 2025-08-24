@@ -124,3 +124,6 @@ admissionController:
     feature-gates: InPlaceOrRecreate=true
   # admissionController.httpPort -- Port of the admission controller for the mutating webhooks
   httpPort: 8000
+  # admissionController.hostNetwork -- Whether to use the host network for the admission controller.
+  # This is required in some situations such as when using a custom CNI on EKS.
+  hostNetwork: false
