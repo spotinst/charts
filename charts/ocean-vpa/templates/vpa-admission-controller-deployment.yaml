@@ -35,6 +35,7 @@ spec:
       serviceAccountName: {{ include "ocean-vpa.serviceAccountName" . }}-admission-controller
       securityContext:
         {{- toYaml .Values.admissionController.podSecurityContext | nindent 8 }}
+      hostNetwork: {{ .Values.admissionController.hostNetwork | default false }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
