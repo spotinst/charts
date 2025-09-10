@@ -40,7 +40,9 @@ rules:
   verbs: [ "get", "list", "watch" ]
 - nonResourceURLs: [ "/version/", "/version" ]
   verbs: [ "get" ]
-
+- apiGroups: [ "argoproj.io" ]
+  resources: [ "rollouts" ]
+  verbs: [ "get", "list", "watch" ]
 # ---------------------------------------------------------------------------
 # feature: controller/leader-election (high-availability)
 # ---------------------------------------------------------------------------
@@ -92,6 +94,9 @@ rules:
   verbs: ["get", "list", "patch", "update", "create", "delete"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
+  verbs: ["get", "list", "patch", "update", "create", "delete"]
+- apiGroups: [ "argoproj.io" ]
+  resources: [ "rollouts" ]
   verbs: ["get", "list", "patch", "update", "create", "delete"]
 # ---------------------------------------------------------------------------
 # feature: wave
