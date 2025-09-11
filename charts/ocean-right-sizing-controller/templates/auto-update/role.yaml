@@ -79,4 +79,20 @@ rules:
   resourceNames: [ {{ include "metrics-server.fullname" . }} ]
   verbs: [ "get", "patch" ]
 {{- end }}
+
+# Ocean VPA requires
+{{- if (index .Values "ocean-vpa" "deployChart") }}
+- apiGroups: [ "" ]
+  resources: [ "serviceaccounts" ]
+  resourceNames: [ {{ include "ocean-vpa.serviceAccountName" . }}-admission-controller, {{ include "ocean-vpa.serviceAccountName" . }}-updater ]
+  verbs: [ "get", "patch" ]
+- apiGroups: [ "" ]
+  resources: [ "services" ]
+  resourceNames: [ {{ include "ocean-vpa.fullname" . }}-webhook ]
+  verbs: [ "get", "patch" ]
+- apiGroups: [ "apps" ]
+  resources: [ "deployments" ]
+  resourceNames: [ {{ include "ocean-vpa.fullname" . }}-updater, {{ include "ocean-vpa.fullname" . }}-admission-controller ]
+  verbs: [ "get", "patch" ]
+{{- end }}
 {{- end }}

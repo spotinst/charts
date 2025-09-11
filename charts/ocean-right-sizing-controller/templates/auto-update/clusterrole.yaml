@@ -50,4 +50,23 @@ rules:
   resourceNames:
   - {{ printf "%s-auth-reader" (include "metrics-server.fullname" .)  }}
 {{- end }}
+
+# Ocean VPA requires
+{{- if (index .Values "ocean-vpa" "deployChart") }}
+- apiGroups: [ "rbac.authorization.k8s.io" ]
+  resources: [ "clusterrolebindings" ]
+  verbs: [ "get", "patch" ]
+  resourceNames:
+  - system:vpa-updater-in-place-binding
+  - system:vpa-actor
+  - system:vpa-target-reader-binding
+  - system:vpa-evictioner-binding
+  - system:vpa-admission-controller
+  - vpa-status-reader-binding
+- apiGroups: [ "rbac.authorization.k8s.io" ]
+  resources: [ "rolebindings" ]
+  verbs: [ "get", "patch" ]
+  resourceNames:
+  - system:leader-locking-vpa-updater
+{{- end }}
 {{- end }}
