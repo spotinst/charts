@@ -28,8 +28,6 @@ spec:
           args:
             - patch
             - --webhook-name={{ include "ocean-admission-controller.fullname" . }}-webhook-config
-            - --cert-name={{ include "ocean-admission-controller.controller.secret.certName" . }}
-            - --key-name={{ include "ocean-admission-controller.controller.secret.keyName" . }}
             - --namespace={{ .Release.Namespace }}
             - --secret-name={{ include "ocean-admission-controller.controller.tlsSecretName" . }}
             - --patch-validating=false
