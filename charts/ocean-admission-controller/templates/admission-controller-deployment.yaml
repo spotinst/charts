@@ -31,6 +31,7 @@ spec:
       serviceAccountName: {{ include "ocean-admission-controller.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.controller.podSecurityContext | nindent 8 }}
+      hostNetwork: {{ .Values.controller.hostNetwork | default false }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -47,18 +48,21 @@ spec:
               readOnly: true
           ports:
             - name: http
-              containerPort: {{ .Values.controller.httpPort | default 9443 }}
+              containerPort: {{ .Values.controller.httpPort | default 8080 }}
+              protocol: TCP
+            - name: metrics
+              containerPort: {{ .Values.controller.metricsAddr | default ":8082" | trimPrefix ":" }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /healthz
-              port: {{ .Values.controller.healthProbeAddr | default ":8082" | trimPrefix ":" }}
+              port: {{ .Values.controller.metricsAddr | default ":8082" | trimPrefix ":" }}
             initialDelaySeconds: 30
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /readyz
-              port: {{ .Values.controller.healthProbeAddr | default ":8082" | trimPrefix ":" }}
+              port: {{ .Values.controller.metricsAddr | default ":8082" | trimPrefix ":" }}
             initialDelaySeconds: 5
             periodSeconds: 5
           resources:

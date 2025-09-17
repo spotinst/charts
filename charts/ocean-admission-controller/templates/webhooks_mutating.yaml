@@ -16,8 +16,8 @@ webhooks:
     service:
       name: {{ include "ocean-admission-controller.fullname" . }}-webhook
       namespace: {{ .Release.Namespace }}
-      path: /mutate--v1-pod
-      port: 443
+      path: /add-taints
+      port: {{ .Values.controller.httpPort | default 8080 }}
   failurePolicy: Ignore
   matchPolicy: Equivalent
   name: admission.spot.io
@@ -29,7 +29,7 @@ webhooks:
           - ocean-admission-controller
   namespaceSelector:
       matchExpressions:
-      - key: spot.io/admission-controller
+      - key: spot.io/inject-aks-spot-toleration
         operator: NotIn
         values:
           - "false"

@@ -8,8 +8,6 @@ metadata:
   {{- include "ocean-admission-controller.controllerLabels" . | nindent 4 }}
 data:
   LEADER_ELECTION: {{ gt (int .Values.controller.replicaCount) 1 | quote }}
-  METRICS_ADDR: "{{ .Values.controller.metricsAddr }}"
-  HEALTH_PROBE_ADDR: "{{ .Values.controller.healthProbeAddr }}"
   CERT_DIR: {{ .Values.controller.certDir | quote }}
   ENABLE_POD_DISK_TYPE_NODE_SELECTOR_DEFAULTER: {{ .Values.controller.podDiskTypeNodeSelectorDefaulter.enable | quote }}
   ENABLE_POD_TOLERATION_DEFAULTER: {{ .Values.controller.podTolerationDefaulter.enable | quote }}

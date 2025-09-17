@@ -77,6 +77,8 @@ controller:
     runAsUser: 65534
     seccompProfile:
       type: RuntimeDefault
+  # controller.hostNetwork -- Use the host network for the admission controller pod
+  hostNetwork: true
   # controller.securityContext -- The security context for the admission controller manager container
   securityContext:
     allowPrivilegeEscalation: false
@@ -101,7 +103,7 @@ controller:
   # controller.affinity -- Affinity rules for the admission controller pod
   affinity: {}
   # controller.httpPort -- Port of the admission controller for the mutating webhooks
-  httpPort: 9443
+  httpPort: 8080
   # controller.configMap -- ConfigMap configuration for the admission controller
   configMap:
     # controller.configMap.create -- Whether to create a ConfigMap for the admission controller
@@ -109,9 +111,7 @@ controller:
     # controller.configMap.name -- Name of the ConfigMap. If empty, uses the default name
     name: ""
   # controller.metricsAddr -- Address the controller binds to for Prometheus metrics
-  metricsAddr: ":8080"
-  # controller.healthProbeAddr -- Address the controller binds to for Kubernetes liveness/readiness probes
-  healthProbeAddr: ":8082"
+  metricsAddr: ":8082"
   # controller.certDir -- Directory where TLS certificates are mounted for the webhook server
   certDir: "/etc/certs"
   # controller.leaderElection -- Enable Kubernetes leader election for high availability setups
@@ -124,3 +124,4 @@ controller:
   podDiskTypeNodeSelectorDefaulter:
     # controller.podDiskTypeNodeSelectorDefaulter.enable -- Enable the Pod Disk Type Node Selector Defaulter for GKE
     enable: true
+

@@ -8,11 +8,11 @@ metadata:
 spec:
   ports:
     - name: webhook
-      port: 443
-      targetPort: {{ .Values.controller.httpPort | default 9443 }}
+      port: {{ .Values.controller.httpPort | default 8080 }}
+      targetPort: {{ .Values.controller.httpPort | default 8080 }}
     - name: metrics
-      port: 8080
-      targetPort: {{ .Values.controller.metricsAddr | default ":8080" | trimPrefix ":" }}
+      port: {{ .Values.controller.metricsAddr | default ":8082" | trimPrefix ":" }}
+      targetPort: {{ .Values.controller.metricsAddr | default ":8082" | trimPrefix ":" }}
   selector:
     {{- include "ocean-admission-controller.controllerSelectorLabels" . | nindent 4 }}
 
