@@ -95,14 +95,14 @@ Return the name for the controller tls secret or default generated
 Return the TLS certificate name
 */}}
 {{- define "ocean-admission-controller.controller.secret.certName" -}}
-tls.crt
+{{- default tls.crt .Values.controller.secret.certName -}}
 {{- end }}
 
 {{/*
 Return the TLS private name
 */}}
 {{- define "ocean-admission-controller.controller.secret.keyName" -}}
-tls.key
+{{- default tls.key .Values.controller.secret.keyName -}}
 {{- end }}
 
 {{/*
