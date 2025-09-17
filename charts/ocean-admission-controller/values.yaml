@@ -42,6 +42,9 @@ controller:
     tolerations: []
     # controller.certGen.affinity -- Affinity rules for the certgen pod
     affinity: {}
+  secret:
+    keyName: "key.pem"
+    certName: "cert.pem"
 
   mutatingWebhookConfiguration:
     # controller.mutatingWebhookConfiguration.annotations -- Additional annotations for the MutatingWebhookConfiguration. Can be used for integration with cert-manager
@@ -61,7 +64,7 @@ controller:
     # controller.image.repository -- The location of the vpa admission controller image
     repository: gcr.io/spotit-today/spot-ocean-admission-controller
     # controller.image.tag -- Overrides the image tag whose default is the chart appVersion
-    tag: "0.2.0"
+    tag: "0.1.4"
     # controller.image.pullPolicy -- The pull policy for the admission controller image. Recommend not changing this
     pullPolicy: Always
   # controller.podAnnotations -- Annotations to add to the admission controller pod
