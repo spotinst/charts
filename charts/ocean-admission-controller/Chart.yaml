@@ -2,7 +2,7 @@ apiVersion: v2
 name: ocean-admission-controller
 description: A Kubernetes admission controller for pod defaulting and validation
 type: application
-icon: https://docs.spot.io/_media/images/spot_mark.png
+icon: https://spot.io/wp-content/uploads/2020/03/logo-mark.png
 kubeVersion: ">=1.22.0-0"
 home: https://github.com/spotinst/charts/tree/main/charts/ocean-admission-controller
 sources:
@@ -13,7 +13,7 @@ keywords:
   - admission
 maintainers:
   - name: spotinst
-    email: ng-spot-info@netapp.com
+    email: 5ef41720.FLEXERA.onmicrosoft.com@amer.teams.ms
 
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
