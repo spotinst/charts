@@ -1,0 +1,49 @@
+{{- if or .Values.controller.podDiskTypeNodeSelectorDefaulter.enable .Values.controller.podTolerationDefaulter.enable }}
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: {{ include "ocean-admission-controller.fullname" . }}-webhook-config
+  labels:
+    {{- include "ocean-admission-controller.controllerLabels" . | nindent 4 }}
+  {{- with .Values.controller.mutatingWebhookConfiguration.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+webhooks:
+- admissionReviewVersions:
+  {{- toYaml .Values.controller.mutatingWebhookConfiguration.admissionReviewVersions | nindent 2 }}
+  clientConfig:
+    service:
+      name: {{ include "ocean-admission-controller.fullname" . }}-webhook
+      namespace: {{ .Release.Namespace }}
+      path: /add-taints
+      port: {{ .Values.controller.httpPort | default 8080 }}
+  failurePolicy: Ignore
+  matchPolicy: Equivalent
+  name: admission.spot.io
+  objectSelector:
+    matchExpressions:
+      - key: app.kubernetes.io/component
+        operator: NotIn
+        values:
+          - ocean-admission-controller
+  namespaceSelector:
+      matchExpressions:
+      - key: spot.io/inject-aks-spot-toleration
+        operator: NotIn
+        values:
+          - "false"
+  reinvocationPolicy: Never
+  rules:
+  - apiGroups:
+    - ""
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    resources:
+    - pods
+    scope: '*'
+  sideEffects: {{ .Values.controller.mutatingWebhookConfiguration.sideEffects }}
+  timeoutSeconds: {{ .Values.controller.mutatingWebhookConfiguration.timeoutSeconds }}
+{{- end }}

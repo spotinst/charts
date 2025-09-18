@@ -1,0 +1,14 @@
+{{- if .Values.controller.configMap.create }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ocean-admission-controller.configMapName" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+  {{- include "ocean-admission-controller.controllerLabels" . | nindent 4 }}
+data:
+  LEADER_ELECTION: {{ gt (int .Values.controller.replicaCount) 1 | quote }}
+  CERT_DIR: {{ .Values.controller.certDir | quote }}
+  ENABLE_POD_DISK_TYPE_NODE_SELECTOR_DEFAULTER: {{ .Values.controller.podDiskTypeNodeSelectorDefaulter.enable | quote }}
+  ENABLE_POD_TOLERATION_DEFAULTER: {{ .Values.controller.podTolerationDefaulter.enable | quote }}
+{{- end }}

@@ -1,0 +1,126 @@
+# Default values for vertical-pod-autoscaler.
+
+# imagePullSecrets -- A list of image pull secrets to be used for all pods
+imagePullSecrets: []
+# priorityClassName -- To set the priorityclass for all pods
+priorityClassName: ""
+# nameOverride -- A template override for the name
+nameOverride: ""
+# fullnameOverride -- A template override for the fullname
+fullnameOverride: "admission-controller"
+
+serviceAccount:
+  # serviceAccount.create -- Specifies whether a service account should be created for each component
+  create: true
+  # serviceAccount.annotations -- Annotations to add to the service accounts for each component
+  annotations: {}
+  # serviceAccount.name -- The base name of the service account to use (appended with the component). If not set and create is true, a name is generated using the fullname template and appended for each component
+  name: ""
+
+controller:
+  # controller.generateCertificate -- If true and controller is enabled, a pre-install hook will run to create the certificate for the controller
+  generateCertificate: true
+  # controller.secretName -- Name for the TLS secret created for the controller. Default {{ .Release.Name }}-tls-secret
+  tlsSecretName: ""
+  certGen:
+    image:
+      # controller.certGen.image.repository -- An image that contains certgen for creating certificates. Only used if controller.generateCertificate is true
+      repository: registry.k8s.io/ingress-nginx/kube-webhook-certgen
+      # controller.certGen.image.tag -- An image tag for the controller.certGen.image.repository image. Only used if controller.generateCertificate is true
+      tag: v1.4.4
+      # controller.certGen.image.pullPolicy -- The pull policy for the certgen image. Recommend not changing this
+      pullPolicy: Always
+    # controller.certGen.env -- Additional environment variables to be added to the certgen container. Format is KEY: Value format
+    env: {}
+    # controller.certGen.resources -- The resources block for the certgen pod
+    resources: {}
+    # controller.certGen.securityContext -- The securityContext block for the certgen pod
+    securityContext: {}
+    # controller.certGen.nodeSelector -- Node selector for the certgen pod
+    nodeSelector: {}
+    # controller.certGen.tolerations -- Tolerations for the certgen pod
+    tolerations: []
+    # controller.certGen.affinity -- Affinity rules for the certgen pod
+    affinity: {}
+  secret:
+    keyName: "key.pem"
+    certName: "cert.pem"
+
+  mutatingWebhookConfiguration:
+    # controller.mutatingWebhookConfiguration.annotations -- Additional annotations for the MutatingWebhookConfiguration. Can be used for integration with cert-manager
+    annotations: {}
+    # controller.mutatingWebhookConfiguration.timeoutSeconds -- Timeout for webhook calls in seconds
+    timeoutSeconds: 30
+    # controller.mutatingWebhookConfiguration.sideEffects -- Side effects for webhook (None, NoneOnDryRun)
+    sideEffects: None
+    # controller.mutatingWebhookConfiguration.admissionReviewVersions -- List of admission review versions
+    admissionReviewVersions:
+      - v1
+      - v1beta1
+
+  # controller.replicaCount -- Number of replicas for the admission controller
+  replicaCount: 1
+  image:
+    # controller.image.repository -- The location of the vpa admission controller image
+    repository: gcr.io/spotit-today/spot-ocean-admission-controller
+    # controller.image.tag -- Overrides the image tag whose default is the chart appVersion
+    tag: "0.1.5"
+    # controller.image.pullPolicy -- The pull policy for the admission controller image. Recommend not changing this
+    pullPolicy: Always
+  # controller.podAnnotations -- Annotations to add to the admission controller pod
+  podAnnotations: {}
+  # controller.podLabels -- Labels to add to the admission controller pod
+  podLabels: {}
+  # controller.podSecurityContext -- The security context for the admission controller pod
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+    seccompProfile:
+      type: RuntimeDefault
+  # controller.hostNetwork -- Use the host network for the admission controller pod
+  hostNetwork: true
+  # controller.securityContext -- The security context for the admission controller manager container
+  securityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    capabilities:
+      drop:
+      - ALL
+    seccompProfile:
+      type: RuntimeDefault
+  # controller.resources -- The resources block for the admission controller pod
+  resources:
+    limits:
+      memory: 500Mi
+    requests:
+      cpu: 50m
+      memory: 200Mi
+  # controller.nodeSelector -- Node selector for the admission controller pod
+  nodeSelector: {}
+  # controller.tolerations -- Tolerations for the admission controller pod
+  tolerations: []
+  # controller.affinity -- Affinity rules for the admission controller pod
+  affinity: {}
+  # controller.httpPort -- Port of the admission controller for the mutating webhooks
+  httpPort: 8080
+  # controller.configMap -- ConfigMap configuration for the admission controller
+  configMap:
+    # controller.configMap.create -- Whether to create a ConfigMap for the admission controller
+    create: true
+    # controller.configMap.name -- Name of the ConfigMap. If empty, uses the default name
+    name: ""
+  # controller.metricsAddr -- Address the controller binds to for Prometheus metrics
+  metricsAddr: ":8082"
+  # controller.certDir -- Directory where TLS certificates are mounted for the webhook server
+  certDir: "/etc/certs"
+  # controller.leaderElection -- Enable Kubernetes leader election for high availability setups
+  leaderElection: false
+  # controller.podTolerationDefaulter -- Pod Toleration Defaulter configuration for AKS
+  podTolerationDefaulter:
+    # controller.podTolerationDefaulter.enable -- Enable the Pod Toleration Defaulter for AKS
+    enable: false
+  # controller.podDiskTypeNodeSelectorDefaulter -- Pod Node Affinity Defaulter configuration for GKE
+  podDiskTypeNodeSelectorDefaulter:
+    # controller.podDiskTypeNodeSelectorDefaulter.enable -- Enable the Pod Disk Type Node Selector Defaulter for GKE
+    enable: true

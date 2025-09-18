@@ -1,0 +1,27 @@
+apiVersion: v2
+name: ocean-admission-controller
+description: A Kubernetes admission controller for pod defaulting and validation
+type: application
+icon: https://spot.io/wp-content/uploads/2020/03/logo-mark.png
+kubeVersion: ">=1.22.0-0"
+home: https://github.com/spotinst/charts/tree/main/charts/ocean-admission-controller
+sources:
+  - https://github.com/spotinst/charts/tree/main/charts/ocean-admission-controller
+keywords:
+  - spot
+  - ocean
+  - admission
+maintainers:
+  - name: spotinst
+    email: 5ef41720.FLEXERA.onmicrosoft.com@amer.teams.ms
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 1.0.1
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application. Versions are not expected to
+# follow Semantic Versioning. They should reflect the version the application is using.
+# It is recommended to use it with quotes.
+appVersion: "0.1.5"

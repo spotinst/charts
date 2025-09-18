@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "ocean-admission-controller.fullname" . }}-webhook
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "ocean-admission-controller.controllerLabels" . | nindent 4 }}
+spec:
+  ports:
+    - name: webhook
+      port: {{ .Values.controller.httpPort | default 8080 }}
+      targetPort: {{ .Values.controller.httpPort | default 8080 }}
+    - name: metrics
+      port: {{ .Values.controller.metricsAddr | default ":8082" | trimPrefix ":" }}
+      targetPort: {{ .Values.controller.metricsAddr | default ":8082" | trimPrefix ":" }}
+  selector:
+    {{- include "ocean-admission-controller.controllerSelectorLabels" . | nindent 4 }}
+
