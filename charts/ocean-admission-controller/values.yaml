@@ -124,4 +124,3 @@ controller:
   podDiskTypeNodeSelectorDefaulter:
     # controller.podDiskTypeNodeSelectorDefaulter.enable -- Enable the Pod Disk Type Node Selector Defaulter for GKE
     enable: true
-
