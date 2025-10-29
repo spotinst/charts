@@ -55,6 +55,33 @@ helm install spot spot/ocean-kubernetes-controller \
   --set caBundleSecret.key=bundle.pem
 ```
 
+## Installation With Existing Secret
+
+If you already have a Kubernetes secret containing your Spot token and account, you can reference it instead of providing the values explicitly:
+
+```sh
+helm install spot spot/ocean-kubernetes-controller \
+  --set spotinst.clusterIdentifier=$SPOTINST_CLUSTER_IDENTIFIER \
+  --set secret.existingSecret=my-spotinst-secret
+```
+
+Your existing secret must contain the following keys:
+- `token`: Your Spot API token
+- `account`: Your Spot account ID
+
+Example secret:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-spotinst-secret
+type: Opaque
+data:
+  token: <base64-encoded-token>
+  account: <base64-encoded-account>
+```
+
 ## Requirements
 
 Kubernetes: `>=1.20.0-0`
@@ -134,6 +161,7 @@ Kubernetes: `>=1.20.0-0`
 | resources | object | `{}` |  |
 | schedulerName | string | `""` |  |
 | secret.create | bool | `true` | Controls whether a Secret should be created. (Optional) |
+| secret.existingSecret | string | `""` | Name of an existing secret to use instead of creating one. When set, spotinst.token and spotinst.account are not required and the secret will not be created. The secret must contain 'token' and 'account' keys. (Optional) |
 | secret.name | string | `""` | Secret name. (Optional) |
 | securityContext.allowPrivilegeEscalation | bool | `false` |  |
 | securityContext.capabilities.drop[0] | string | `"ALL"` |  |

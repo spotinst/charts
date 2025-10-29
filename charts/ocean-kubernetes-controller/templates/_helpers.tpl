@@ -109,7 +109,11 @@ ConfigMap name.
 Secret name.
 */}}
 {{- define "ocean-kubernetes-controller.secretName" -}}
+{{- if .Values.secret.existingSecret -}}
+{{ .Values.secret.existingSecret }}
+{{- else -}}
 {{ default (include "ocean-kubernetes-controller.fullname" .) .Values.secret.name }}
+{{- end -}}
 {{- end }}
 
 {{/*
