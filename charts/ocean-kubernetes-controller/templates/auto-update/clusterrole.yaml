@@ -38,6 +38,12 @@ rules:
   resourceNames:
   - {{ printf "system:%s" (include "metrics-server.fullname" .) }}
   - {{ printf "system:%s-aggregated-reader" (include "metrics-server.name" .) }}
+  - system:auth-delegator
+- apiGroups: [ "rbac.authorization.k8s.io" ]
+  resources: [ "roles" ]
+  verbs: [ "get", "patch", "escalate", "bind" ]
+  resourceNames:
+  - extension-apiserver-authentication-reader
 - apiGroups: [ "rbac.authorization.k8s.io" ]
   resources: [ "clusterrolebindings" ]
   verbs: [ "get", "patch" ]
