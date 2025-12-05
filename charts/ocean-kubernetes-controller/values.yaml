@@ -60,6 +60,10 @@ secret:
   create: true
   # -- Secret name. (Optional)
   name: ""
+  # -- Name of an existing secret to use instead of creating one. When set,
+  # spotinst.token and spotinst.account are not required and the secret will not be created.
+  # The secret must contain 'token' and 'account' keys. (Optional)
+  existingSecret: ""
 
 # CA bundle.
 # Ref: https://kubernetes.io/docs/concepts/configuration/secret/
