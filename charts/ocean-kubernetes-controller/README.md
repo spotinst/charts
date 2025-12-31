@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.68](https://img.shields.io/badge/Version-0.1.68-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.74](https://img.shields.io/badge/AppVersion-2.0.74-informational?style=flat-square)
+![Version: 0.1.69-beta.1](https://img.shields.io/badge/Version-0.1.69--beta.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.74](https://img.shields.io/badge/AppVersion-2.0.74-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
@@ -97,7 +97,7 @@ Kubernetes: `>=1.20.0-0`
 | image.fips | bool | `false` | Set to `true` to use an FIPS-140 compliant image. This flag adds `-fips` suffix to the image tag, therefore it should not be used together with the `--image.tag` flag. Ref: https://go.dev/doc/security/fips140 |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller"` |  |
-| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| image.tag | string | `"feat-con-34525-pre-evection-warmup-period@sha256:dd433c6c70104d67b68eea6e8733a5e80aff8d8d94bfa63e9163c87dc7f98a9b"` | Overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | livenessProbe.httpGet.path | string | `"/healthz"` |  |
