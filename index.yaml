@@ -25,6 +25,30 @@ entries:
     version: 1.0.1
   ocean-kubernetes-controller:
   - apiVersion: v2
+    appVersion: 2.1.2
+    created: "2026-02-19T14:47:24.520065446Z"
+    dependencies:
+    - condition: metrics-server.deployChart
+      name: metrics-server
+      repository: https://kubernetes-sigs.github.io/metrics-server
+      version: 3.13.0
+    description: A Helm chart for Ocean Kubernetes Controller
+    digest: ffff6ea776b7ca2289b62dbd9d8fee7693b830fbacdaeb2acc77aca4fbbcc00e
+    icon: https://docs.spot.io/_media/images/spot_mark.png
+    keywords:
+    - spot
+    - ocean
+    - controller
+    kubeVersion: '>=1.20.0-0'
+    maintainers:
+    - email: ng-spot-info@netapp.com
+      name: spotinst
+    name: ocean-kubernetes-controller
+    type: application
+    urls:
+    - https://github.com/spotinst/charts/releases/download/ocean-kubernetes-controller-0.1.71/ocean-kubernetes-controller-0.1.71.tgz
+    version: 0.1.71
+  - apiVersion: v2
     appVersion: 2.1.1
     created: "2026-01-13T16:25:36.754897606Z"
     dependencies:
