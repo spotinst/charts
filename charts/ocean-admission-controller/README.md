@@ -1,6 +1,6 @@
 # ocean-admission-controller
 
-![Version: 1.0.1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.5](https://img.shields.io/badge/AppVersion-0.1.5-informational?style=flat-square)
+![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.6](https://img.shields.io/badge/AppVersion-0.1.6-informational?style=flat-square)
 
 A Kubernetes admission controller for pod defaulting and validation.
 
@@ -51,7 +51,7 @@ Kubernetes: `>=1.22.0-0`
 | controller.httpPort | int | `8080` | Port of the admission controller for the mutating webhooks |
 | controller.image.pullPolicy | string | `"Always"` | The pull policy for the admission controller image. Recommend not changing this |
 | controller.image.repository | string | `"gcr.io/spotit-today/spot-ocean-admission-controller"` | The location of the vpa admission controller image |
-| controller.image.tag | string | `"0.1.5"` | Overrides the image tag whose default is the chart appVersion |
+| controller.image.tag | string | `"0.1.6"` | Overrides the image tag whose default is the chart appVersion |
 | controller.leaderElection | bool | `false` | Enable Kubernetes leader election for high availability setups |
 | controller.metricsAddr | string | `":8082"` | Address the controller binds to for Prometheus metrics |
 | controller.mutatingWebhookConfiguration.admissionReviewVersions | list | `["v1","v1beta1"]` | List of admission review versions |
