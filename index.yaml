@@ -2,6 +2,28 @@ apiVersion: v1
 entries:
   ocean-admission-controller:
   - apiVersion: v2
+    appVersion: 0.1.6
+    created: "2026-03-11T09:30:00.906034475Z"
+    description: A Kubernetes admission controller for pod defaulting and validation
+    digest: cb90ceef5826993ffaf3e2ba25d4e2376c477016ee75db884a44256755381320
+    home: https://github.com/spotinst/charts/tree/main/charts/ocean-admission-controller
+    icon: https://spot.io/wp-content/uploads/2020/03/logo-mark.png
+    keywords:
+    - spot
+    - ocean
+    - admission
+    kubeVersion: '>=1.22.0-0'
+    maintainers:
+    - email: 5ef41720.FLEXERA.onmicrosoft.com@amer.teams.ms
+      name: spotinst
+    name: ocean-admission-controller
+    sources:
+    - https://github.com/spotinst/charts/tree/main/charts/ocean-admission-controller
+    type: application
+    urls:
+    - https://github.com/spotinst/charts/releases/download/ocean-admission-controller-1.0.2/ocean-admission-controller-1.0.2.tgz
+    version: 1.0.2
+  - apiVersion: v2
     appVersion: 0.1.5
     created: "2025-09-18T15:30:06.718131843Z"
     description: A Kubernetes admission controller for pod defaulting and validation
