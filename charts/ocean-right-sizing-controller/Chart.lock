@@ -1,0 +1,9 @@
+dependencies:
+- name: metrics-server
+  repository: https://kubernetes-sigs.github.io/metrics-server
+  version: 3.12.2
+- name: ocean-vpa
+  repository: https://charts.spot.io
+  version: 1.0.4
+digest: sha256:bc126e327103cb3506c42e0d91a4771cb1824160669c3579604e06f5c0760f6a
+generated: "2025-06-18T11:39:19.608047+03:00"
