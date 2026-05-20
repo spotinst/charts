@@ -62,6 +62,9 @@ The image to use
 Common labels
 */}}
 {{- define "ocean-kubernetes-controller.labels" -}}
+{{- range $k, $v := .Values.commonLabels }}
+{{ $k }}: {{ $v | quote }}
+{{- end }}
 helm.sh/chart: {{ include "ocean-kubernetes-controller.chart" . }}
 {{ include "ocean-kubernetes-controller.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
