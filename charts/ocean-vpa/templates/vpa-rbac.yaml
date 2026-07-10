@@ -3,6 +3,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: system:vpa-actor
+  labels:
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 rules:
   - apiGroups:
       - ""
@@ -47,6 +49,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: system:vpa-status-actor
+  labels:
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 rules:
   - apiGroups:
       - "autoscaling.k8s.io"
@@ -60,6 +64,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: system:vpa-checkpoint-actor
+  labels:
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 rules:
   - apiGroups:
       - "poc.autoscaling.k8s.io"
@@ -95,6 +101,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: system:evictioner
+  labels:
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 rules:
   - apiGroups:
       - "apps"
@@ -114,6 +122,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: system:vpa-updater-in-place
+  labels:
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 rules:
   - apiGroups:
       - ""
@@ -127,6 +137,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: system:vpa-updater-in-place-binding
+  labels:
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -140,6 +152,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: system:vpa-actor
+  labels:
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -153,6 +167,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: system:vpa-target-reader
+  labels:
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 rules:
   - apiGroups:
     - '*'
@@ -194,6 +210,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: system:vpa-target-reader-binding
+  labels:
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -210,6 +228,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: system:vpa-evictioner-binding
+  labels:
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -224,8 +244,8 @@ kind: ServiceAccount
 metadata:
   name: {{ include "ocean-vpa.serviceAccountName" . }}-admission-controller
   labels:
-    {{- include "ocean-vpa.labels" . | nindent 4 }}
     app.kubernetes.io/component: admission-controller
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
   {{- with .Values.serviceAccount.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -236,8 +256,8 @@ kind: ServiceAccount
 metadata:
   name: {{ include "ocean-vpa.serviceAccountName" . }}-updater
   labels:
-    {{- include "ocean-vpa.labels" . | nindent 4 }}
     app.kubernetes.io/component: updater
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
   {{- with .Values.serviceAccount.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -247,6 +267,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: system:vpa-admission-controller
+  labels:
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 rules:
   - apiGroups:
       - ""
@@ -300,6 +322,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: system:vpa-admission-controller
+  labels:
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -313,6 +337,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: system:vpa-status-reader
+  labels:
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 rules:
   - apiGroups:
       - "coordination.k8s.io"
@@ -327,6 +353,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: vpa-status-reader-binding
+  labels:
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -341,6 +369,8 @@ kind: Role
 metadata:
   name: system:leader-locking-vpa-updater
   namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 rules:
   - apiGroups:
       - "coordination.k8s.io"
@@ -364,6 +394,8 @@ kind: RoleBinding
 metadata:
   name: system:leader-locking-vpa-updater
   namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "ocean-vpa.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role

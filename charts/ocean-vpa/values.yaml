@@ -17,6 +17,9 @@ serviceAccount:
   # serviceAccount.name -- The base name of the service account to use (appended with the component). If not set and create is true, a name is generated using the fullname template and appended for each component
   name: ""
 
+# commonLabels -- Common labels to apply to all resources created by this chart
+commonLabels: {}
+
 updater:
   replicaCount: 1
   image:

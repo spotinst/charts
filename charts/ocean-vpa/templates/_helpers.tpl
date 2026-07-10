@@ -34,15 +34,15 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "ocean-vpa.labels" -}}
+{{- range $k, $v := .Values.commonLabels }}
+{{ $k }}: {{ $v | quote }}
+{{- end }}
 helm.sh/chart: {{ include "ocean-vpa.chart" . | trunc 63 | trimSuffix "-"}}
 {{ include "ocean-vpa.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote | trunc 63 | trimSuffix "-"}}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service | trunc 63 | trimSuffix "-"}}
-{{- if .Values.podLabels }}
-{{ toYaml .Values.podLabels }}
-{{- end }}
 {{- end }}
 
 {{/*

@@ -16,7 +16,7 @@ spec:
       name: {{ include "ocean-vpa.fullname" . }}-admission-certgen
       labels:
         app.kubernetes.io/component: admission-certgen
-        {{- include "ocean-vpa.labels" . | nindent 8 }}
+        {{- include "ocean-vpa.selectorLabels" . | nindent 8 }}
     spec:
       restartPolicy: OnFailure
       serviceAccountName: {{ include "ocean-vpa.fullname" . }}-admission-certgen
