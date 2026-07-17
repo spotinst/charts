@@ -42,6 +42,16 @@ controller:
     tolerations: []
     # controller.certGen.affinity -- Affinity rules for the certgen pod
     affinity: {}
+  secretDelete:
+    image:
+      # controller.secretDelete.image.repository -- kubectl image for the post-delete cleanup job.
+      # Override with a private registry mirror for air-gapped / network-isolated clusters.
+      repository: bitnami/kubectl
+      # controller.secretDelete.image.tag -- Image tag.
+      # Override with a specific version from your private registry for air-gapped clusters.
+      tag: "latest"
+      # controller.secretDelete.image.pullPolicy -- Pull policy for the secret-delete image.
+      pullPolicy: IfNotPresent
   secret:
     keyName: "key.pem"
     certName: "cert.pem"
