@@ -1,0 +1,132 @@
+suite: ocean-vpa pod template label behavior with commonLabels
+templates:
+  - templates/vpa-admission-controller-deployment.yaml
+  - templates/vpa-updater-deployment.yaml
+  - templates/vpa-webhooks_jobs_certgen-create.yaml
+  - templates/vpa-webhooks_jobs_certgen-patch.yaml
+  - templates/vpa-webhooks_jobs_secret-delete.yaml
+tests:
+  - it: does not apply commonLabels to admission controller pod template labels
+    template: templates/vpa-admission-controller-deployment.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - notExists:
+          path: spec.template.metadata.labels.environment
+      - notExists:
+          path: spec.template.metadata.labels.team
+      - exists:
+          path: spec.template.metadata.labels["app.kubernetes.io/name"]
+      - equal:
+          path: spec.template.metadata.labels["app.kubernetes.io/component"]
+          value: admission-controller
+
+  - it: keeps admission controller podLabels and does not mix commonLabels into pod template labels
+    template: templates/vpa-admission-controller-deployment.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+      admissionController:
+        podLabels:
+          custom-pod-label: admission
+    asserts:
+      - equal:
+          path: spec.template.metadata.labels.custom-pod-label
+          value: admission
+      - notExists:
+          path: spec.template.metadata.labels.environment
+      - notExists:
+          path: spec.template.metadata.labels.team
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+
+  - it: does not apply commonLabels to updater pod template labels
+    template: templates/vpa-updater-deployment.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - notExists:
+          path: spec.template.metadata.labels.environment
+      - notExists:
+          path: spec.template.metadata.labels.team
+      - exists:
+          path: spec.template.metadata.labels["app.kubernetes.io/name"]
+      - equal:
+          path: spec.template.metadata.labels["app.kubernetes.io/component"]
+          value: updater
+
+  - it: keeps updater podLabels and does not mix commonLabels into pod template labels
+    template: templates/vpa-updater-deployment.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+      updater:
+        podLabels:
+          custom-pod-label: updater
+    asserts:
+      - equal:
+          path: spec.template.metadata.labels.custom-pod-label
+          value: updater
+      - notExists:
+          path: spec.template.metadata.labels.environment
+      - notExists:
+          path: spec.template.metadata.labels.team
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+
+  - it: does not apply commonLabels to certgen create job pod template labels
+    template: templates/vpa-webhooks_jobs_certgen-create.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - notExists:
+          path: spec.template.metadata.labels.environment
+      - notExists:
+          path: spec.template.metadata.labels.team
+      - exists:
+          path: spec.template.metadata.labels["app.kubernetes.io/name"]
+
+  - it: does not apply commonLabels to certgen patch job pod template labels
+    template: templates/vpa-webhooks_jobs_certgen-patch.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - notExists:
+          path: spec.template.metadata.labels.environment
+      - notExists:
+          path: spec.template.metadata.labels.team
+      - exists:
+          path: spec.template.metadata.labels["app.kubernetes.io/name"]
+
+  - it: does not apply commonLabels to secret-delete job pod template labels
+    template: templates/vpa-webhooks_jobs_secret-delete.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - notExists:
+          path: spec.template.metadata.labels.environment
+      - notExists:
+          path: spec.template.metadata.labels.team
+      - exists:
+          path: spec.template.metadata.labels["app.kubernetes.io/name"]
+

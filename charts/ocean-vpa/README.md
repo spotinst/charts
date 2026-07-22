@@ -1,6 +1,6 @@
 # ocean-vpa
 
-![Version: 1.0.6](https://img.shields.io/badge/Version-1.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.0](https://img.shields.io/badge/AppVersion-1.6.0-informational?style=flat-square)
+![Version: 1.0.7](https://img.shields.io/badge/Version-1.0.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.0](https://img.shields.io/badge/AppVersion-1.6.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes.
 
@@ -57,6 +57,7 @@ helm install my-release spot/ocean-vpa
 | admissionController.secretName | string | `"{{ include \"ocean-vpa.fullname\" . }}-tls-secret"` | Name for the TLS secret created for the webhook. Default {{ .Release.Name }}-tls-secret |
 | admissionController.tlsSecretKeys | list | `[]` | The keys in the vpa-tls-certs secret to map in to the admission controller |
 | admissionController.tolerations | list | `[]` |  |
+| commonLabels | object | `{}` | Common labels to apply to all resources created by this chart |
 | fullnameOverride | string | `""` | A template override for the fullname |
 | imagePullSecrets | list | `[]` | A list of image pull secrets to be used for all pods |
 | nameOverride | string | `""` | A template override for the name |

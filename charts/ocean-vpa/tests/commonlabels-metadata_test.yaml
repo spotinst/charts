@@ -1,0 +1,247 @@
+suite: ocean-vpa commonLabels on resource metadata (non-rbac)
+templates:
+  - templates/vpa-admission-controller-deployment.yaml
+  - templates/vpa-updater-deployment.yaml
+  - templates/vpa-admission-controller-service.yaml
+  - templates/vpa-webhooks_mutating.yaml
+  - templates/vpa-webhooks_jobs_certgen-clusterrole.yaml
+  - templates/vpa-webhooks_jobs_certgen-clusterrolebinding.yaml
+  - templates/vpa-webhooks_jobs_certgen-role.yaml
+  - templates/vpa-webhooks_jobs_certgen-role_delete_secret.yaml
+  - templates/vpa-webhooks_jobs_certgen-rolebinding_delete_secret.yaml
+  - templates/vpa-webhooks_jobs_certgen-sa.yaml
+  - templates/vpa-webhooks_jobs_certgen-create.yaml
+  - templates/vpa-webhooks_jobs_certgen-patch.yaml
+  - templates/vpa-webhooks_jobs_secret-delete.yaml
+tests:
+  - it: applies commonLabels to admission controller deployment metadata and preserves existing labels
+    template: templates/vpa-admission-controller-deployment.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+      - exists:
+          path: metadata.labels["helm.sh/chart"]
+      - exists:
+          path: metadata.labels["app.kubernetes.io/name"]
+      - equal:
+          path: metadata.labels["app.kubernetes.io/component"]
+          value: admission-controller
+
+  - it: applies commonLabels to updater deployment metadata and preserves existing labels
+    template: templates/vpa-updater-deployment.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+      - exists:
+          path: metadata.labels["helm.sh/chart"]
+      - exists:
+          path: metadata.labels["app.kubernetes.io/name"]
+      - equal:
+          path: metadata.labels["app.kubernetes.io/component"]
+          value: updater
+
+  - it: applies commonLabels to webhook service metadata
+    template: templates/vpa-admission-controller-service.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+      - exists:
+          path: metadata.labels["helm.sh/chart"]
+      - exists:
+          path: metadata.labels["app.kubernetes.io/name"]
+
+  - it: applies commonLabels to mutating webhook configuration metadata and preserves component label
+    template: templates/vpa-webhooks_mutating.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+      - exists:
+          path: metadata.labels["helm.sh/chart"]
+      - equal:
+          path: metadata.labels["app.kubernetes.io/component"]
+          value: admission-controller
+
+  - it: applies commonLabels to webhook certgen clusterrole metadata
+    template: templates/vpa-webhooks_jobs_certgen-clusterrole.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+      - equal:
+          path: metadata.labels["app.kubernetes.io/component"]
+          value: admission-certgen
+
+  - it: applies commonLabels to webhook certgen clusterrolebinding metadata
+    template: templates/vpa-webhooks_jobs_certgen-clusterrolebinding.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+      - equal:
+          path: metadata.labels["app.kubernetes.io/component"]
+          value: admission-certgen
+
+  - it: applies commonLabels to webhook certgen role metadata
+    template: templates/vpa-webhooks_jobs_certgen-role.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+      - equal:
+          path: metadata.labels["app.kubernetes.io/component"]
+          value: admission-certgen
+
+  - it: applies commonLabels to webhook secret-delete role metadata
+    template: templates/vpa-webhooks_jobs_certgen-role_delete_secret.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+      - equal:
+          path: metadata.labels["app.kubernetes.io/component"]
+          value: admission-certgen
+
+  - it: applies commonLabels to webhook certgen serviceaccount metadata
+    template: templates/vpa-webhooks_jobs_certgen-sa.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+      - equal:
+          path: metadata.labels["app.kubernetes.io/component"]
+          value: admission-certgen
+
+  - it: applies commonLabels to webhook certgen create job metadata
+    template: templates/vpa-webhooks_jobs_certgen-create.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+      - equal:
+          path: metadata.labels["app.kubernetes.io/component"]
+          value: certgen
+
+  - it: applies commonLabels to webhook certgen patch job metadata
+    template: templates/vpa-webhooks_jobs_certgen-patch.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+      - equal:
+          path: metadata.labels["app.kubernetes.io/component"]
+          value: admission-certgen
+
+  - it: applies commonLabels to webhook secret-delete job metadata
+    template: templates/vpa-webhooks_jobs_secret-delete.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+      - exists:
+          path: metadata.labels["helm.sh/chart"]
+
+  - it: applies commonLabels to post-delete RoleBinding metadata and preserves component label
+    template: templates/vpa-webhooks_jobs_certgen-rolebinding_delete_secret.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+      - equal:
+          path: metadata.labels["app.kubernetes.io/component"]
+          value: admission-certgen
+

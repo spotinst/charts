@@ -1,0 +1,180 @@
+suite: ocean-vpa commonLabels on vpa-rbac resources
+templates:
+  - templates/vpa-rbac.yaml
+tests:
+  - it: applies commonLabels to each resource emitted by vpa-rbac.yaml
+    set:
+      commonLabels:
+        environment: dev
+        team: rightsizing
+    asserts:
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 0
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 0
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 1
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 1
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 2
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 2
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 3
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 3
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 4
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 4
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 5
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 5
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 6
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 6
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 7
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 7
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 8
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 8
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 9
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 9
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 10
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 10
+      - equal:
+          path: metadata.labels["app.kubernetes.io/component"]
+          value: admission-controller
+        documentIndex: 10
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 11
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 11
+      - equal:
+          path: metadata.labels["app.kubernetes.io/component"]
+          value: updater
+        documentIndex: 11
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 12
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 12
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 13
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 13
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 14
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 14
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 15
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 15
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 16
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 16
+
+      - equal:
+          path: metadata.labels.environment
+          value: dev
+        documentIndex: 17
+      - equal:
+          path: metadata.labels.team
+          value: rightsizing
+        documentIndex: 17
+
