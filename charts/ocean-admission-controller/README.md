@@ -1,6 +1,6 @@
 # ocean-admission-controller
 
-![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.6](https://img.shields.io/badge/AppVersion-0.1.6-informational?style=flat-square)
+![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.6](https://img.shields.io/badge/AppVersion-0.1.6-informational?style=flat-square)
 
 A Kubernetes admission controller for pod defaulting and validation.
 
@@ -70,6 +70,9 @@ Kubernetes: `>=1.22.0-0`
 | controller.resources | object | `{"limits":{"memory":"500Mi"},"requests":{"cpu":"50m","memory":"200Mi"}}` | The resources block for the admission controller pod |
 | controller.secret.certName | string | `"cert.pem"` |  |
 | controller.secret.keyName | string | `"key.pem"` |  |
+| controller.secretDelete.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the secret-delete image. |
+| controller.secretDelete.image.repository | string | `"bitnami/kubectl"` | kubectl image for the post-delete cleanup job. Override with a private registry mirror for air-gapped / network-isolated clusters. |
+| controller.secretDelete.image.tag | string | `"latest"` | Image tag. Override with a specific version from your private registry for air-gapped clusters. |
 | controller.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsNonRoot":true,"seccompProfile":{"type":"RuntimeDefault"}}` | The security context for the admission controller manager container |
 | controller.tlsSecretName | string | `""` |  |
 | controller.tolerations | list | `[]` | Tolerations for the admission controller pod |
