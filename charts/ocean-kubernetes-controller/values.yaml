@@ -37,7 +37,7 @@ image:
   repository: us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "ih-sod-8135-1-fix-controller-vulnerabilities@sha256:6e7485133271ff3a3c80b4265fdcbf857fcf4da0435c922a9c1bf657b1d57796"
   # -- Set to `true` to use an FIPS-140 compliant image. This flag adds `-fips` suffix to the image tag,
   # therefore it should not be used together with the `--image.tag` flag.
   # Ref: https://go.dev/doc/security/fips140
