@@ -26,6 +26,8 @@ helm install my-release spot/ocean-metric-exporter
 
 > NOTE: Please configure all required chart values using the `set` command line argument or a `values.yaml` file.
 
+> NOTE: Spot Ocean metric exporter fetches data from spotinst-kubernetes-cluster-controller-config ConfigMap (/secret) and therefore should be installed in the same namespace.
+
 ## Values
 
 | Key | Type | Default | Description |
