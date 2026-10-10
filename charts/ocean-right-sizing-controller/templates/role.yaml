@@ -1,0 +1,14 @@
+{{- if not .Values.spotinst.disableAutoUpdate }}
+# This role is required only to fetch the logs of the auto-updater job.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "ocean-right-sizing-controller.fullname" . }}
+  labels:
+  {{- include "ocean-right-sizing-controller.labels" . | nindent 4 }}
+rules:
+  # Get logs of the auto-updater job
+  - apiGroups: [ "" ]
+    resources: [ "pods/log" ]
+    verbs: [ "get" ]
+{{- end }}
