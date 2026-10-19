@@ -1,0 +1,3 @@
+{{- if not (regexMatch "^[a-zA-Z0-9._-]*$" .Values.spotinst.clusterIdentifier) -}}
+  {{ fail (printf "`spotinst.clusterIdentifier` %q contains unsupported characters. Only letters (a–z, A–Z), digits (0–9), dots (.), underscores (_), and hyphens (-) are allowed." .Values.spotinst.clusterIdentifier) }}
+{{- end -}}
