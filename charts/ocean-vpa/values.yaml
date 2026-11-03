@@ -82,12 +82,14 @@ admissionController:
 
   secretDelete:
     image:
-      # admissionController.secretDelete.image.repository -- The location of the kubectl image used by the webhook secret-delete job
+      # admissionController.secretDelete.image.repository -- kubectl image for the post-delete cleanup job.
+      # Override with a private registry mirror for air-gapped / network-isolated clusters.
       repository: bitnami/kubectl
-      # admissionController.secretDelete.image.tag -- The tag for the admissionController.secretDelete.image.repository image
-      tag: latest
-      # admissionController.secretDelete.image.pullPolicy -- The pull policy for the kubectl image used by the webhook secret-delete job
-      pullPolicy: Always
+      # admissionController.secretDelete.image.tag -- Image tag.
+      # Override with a specific version from your private registry for air-gapped clusters.
+      tag: "latest"
+      # admissionController.secretDelete.image.pullPolicy -- Pull policy for the secret-delete image.
+      pullPolicy: IfNotPresent
 
   mutatingWebhookConfiguration:
     # admissionController.mutatingWebhookConfiguration.annotations -- Additional annotations for the MutatingWebhookConfiguration. Can be used for integration with cert-manager

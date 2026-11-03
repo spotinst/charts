@@ -54,9 +54,9 @@ helm install my-release spot/ocean-vpa
 | admissionController.podSecurityContext | object | `{"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}` | The security context for the admission controller pod |
 | admissionController.replicaCount | int | `1` |  |
 | admissionController.resources | object | `{"limits":{},"requests":{"cpu":"50m","memory":"200Mi"}}` | The resources block for the admission controller pod |
-| admissionController.secretDelete.image.pullPolicy | string | `"Always"` | The pull policy for the kubectl image used by the webhook secret-delete job |
-| admissionController.secretDelete.image.repository | string | `"bitnami/kubectl"` | The location of the kubectl image used by the webhook secret-delete job |
-| admissionController.secretDelete.image.tag | string | `"latest"` | The tag for the admissionController.secretDelete.image.repository image |
+| admissionController.secretDelete.image.pullPolicy | string | `"IfNotPresent"` | The pull policy for the kubectl image used by the webhook secret-delete job |
+| admissionController.secretDelete.image.repository | string | `"bitnami/kubectl"` | kubectl image for the post-delete cleanup job. Override with a private registry mirror for air-gapped / network-isolated clusters. |
+| admissionController.secretDelete.image.tag | string | `"latest"` | Image tag. Override with a specific version from your private registry for air-gapped clusters. |
 | admissionController.secretName | string | `"{{ include \"ocean-vpa.fullname\" . }}-tls-secret"` | Name for the TLS secret created for the webhook. Default {{ .Release.Name }}-tls-secret |
 | admissionController.tlsSecretKeys | list | `[]` | The keys in the vpa-tls-certs secret to map in to the admission controller |
 | admissionController.tolerations | list | `[]` |  |
