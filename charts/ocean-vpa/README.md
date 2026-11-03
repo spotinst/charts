@@ -38,6 +38,9 @@ helm install my-release spot/ocean-vpa
 | admissionController.certGen.resources | object | `{}` | The resources block for the certgen pod |
 | admissionController.certGen.securityContext | object | `{}` | The securityContext block for the certgen pod |
 | admissionController.certGen.tolerations | list | `[]` |  |
+| admissionController.secretDelete.image.pullPolicy | string | `"Always"` | The pull policy for the kubectl image used by the webhook secret-delete job |
+| admissionController.secretDelete.image.repository | string | `"bitnami/kubectl"` | The location of the kubectl image used by the webhook secret-delete job |
+| admissionController.secretDelete.image.tag | string | `"latest"` | The tag for the admissionController.secretDelete.image.repository image |
 | admissionController.extraArgs.feature-gates | string | `"InPlaceOrRecreate=true"` |  |
 | admissionController.extraArgs.stderrthreshold | string | `"info"` |  |
 | admissionController.extraArgs.v | int | `4` |  |
