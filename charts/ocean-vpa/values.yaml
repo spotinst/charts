@@ -80,6 +80,15 @@ admissionController:
     tolerations: []
     affinity: {}
 
+  secretDelete:
+    image:
+      # admissionController.secretDelete.image.repository -- The location of the kubectl image used by the webhook secret-delete job
+      repository: bitnami/kubectl
+      # admissionController.secretDelete.image.tag -- The tag for the admissionController.secretDelete.image.repository image
+      tag: latest
+      # admissionController.secretDelete.image.pullPolicy -- The pull policy for the kubectl image used by the webhook secret-delete job
+      pullPolicy: Always
+
   mutatingWebhookConfiguration:
     # admissionController.mutatingWebhookConfiguration.annotations -- Additional annotations for the MutatingWebhookConfiguration. Can be used for integration with cert-manager
     annotations: {}
