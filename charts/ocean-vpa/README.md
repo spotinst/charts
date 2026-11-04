@@ -1,6 +1,6 @@
 # ocean-vpa
 
-![Version: 1.0.7](https://img.shields.io/badge/Version-1.0.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.0](https://img.shields.io/badge/AppVersion-1.6.0-informational?style=flat-square)
+![Version: 1.0.8](https://img.shields.io/badge/Version-1.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.0](https://img.shields.io/badge/AppVersion-1.6.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes.
 
@@ -54,6 +54,9 @@ helm install my-release spot/ocean-vpa
 | admissionController.podSecurityContext | object | `{"runAsNonRoot":true,"runAsUser":65534,"seccompProfile":{"type":"RuntimeDefault"}}` | The security context for the admission controller pod |
 | admissionController.replicaCount | int | `1` |  |
 | admissionController.resources | object | `{"limits":{},"requests":{"cpu":"50m","memory":"200Mi"}}` | The resources block for the admission controller pod |
+| admissionController.secretDelete.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the secret-delete image. |
+| admissionController.secretDelete.image.repository | string | `"bitnami/kubectl"` | kubectl image for the post-delete cleanup job. Override with a private registry mirror for air-gapped / network-isolated clusters. |
+| admissionController.secretDelete.image.tag | string | `"latest"` | Image tag. Override with a specific version from your private registry for air-gapped clusters. |
 | admissionController.secretName | string | `"{{ include \"ocean-vpa.fullname\" . }}-tls-secret"` | Name for the TLS secret created for the webhook. Default {{ .Release.Name }}-tls-secret |
 | admissionController.tlsSecretKeys | list | `[]` | The keys in the vpa-tls-certs secret to map in to the admission controller |
 | admissionController.tolerations | list | `[]` |  |
