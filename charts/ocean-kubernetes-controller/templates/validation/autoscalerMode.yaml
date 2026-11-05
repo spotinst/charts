@@ -1,0 +1,3 @@
+{{- if not (and (kindIs "string" .Values.spotinst.autoscalerMode) (has .Values.spotinst.autoscalerMode (list "STANDARD" "KARPENTER_MANAGED"))) -}}
+  {{ fail (printf "`spotinst.autoscalerMode` must be STANDARD or KARPENTER_MANAGED; got %v." .Values.spotinst.autoscalerMode) }}
+{{- end -}}
