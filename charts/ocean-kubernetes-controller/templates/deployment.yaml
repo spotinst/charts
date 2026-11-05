@@ -115,6 +115,10 @@ spec:
           - name: SPOTINST_READONLY_MODE
             value: "true"
           {{- end }}
+          {{- if .Values.spotinst.autoscalerMode }}
+          - name: SPOTINST_AUTOSCALER_MODE
+            value: "{{ .Values.spotinst.autoscalerMode }}"
+          {{- end }}
           {{- if not .Values.spotinst.disableAutoUpdate }}
           - name: AUTO_UPDATE_JOB_SPEC
             valueFrom:
