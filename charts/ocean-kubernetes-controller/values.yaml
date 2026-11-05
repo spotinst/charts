@@ -29,6 +29,8 @@ spotinst:
   insecureSkipTLSVerify: false
   # -- Sets the controller to read-only mode, removing write permissions and disabling autoscaling. (Optional)
   readonly: false
+  # -- Sets the engine responsible for autoscaling. STANDARD or KARPENTER_MANAGED. (Optional)
+  autoscalerMode: "STANDARD"
 
 # -- Configure the amount of replicas for the controller (Optional)
 replicas: 2
@@ -37,7 +39,7 @@ image:
   repository: us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "bb-sod-9644-adding-autoscalermode-to-heartbeat@sha256:1c5bbaf7cb9aea803661bb50c245cd5aa402a001a337f40dcba960eeee035498"
   # -- Set to `true` to use an FIPS-140 compliant image. This flag adds `-fips` suffix to the image tag,
   # therefore it should not be used together with the `--image.tag` flag.
   # Ref: https://go.dev/doc/security/fips140
