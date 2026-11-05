@@ -46,17 +46,6 @@ rules:
 - apiGroups: [ "argoproj.io" ]
   resources: [ "rollouts" ]
   verbs: [ "get", "list", "watch" ]
-{{- if eq .Values.spotinst.autoscalerMode "KARPENTER_MANAGED" }}
-# ---------------------------------------------------------------------------
-# feature: karpenter/readonly
-# ---------------------------------------------------------------------------
-- apiGroups: [ "karpenter.sh" ]
-  resources: [ "nodepools", "nodeclaims" ]
-  verbs: [ "get", "list", "watch" ]
-- apiGroups: [ "karpenter.k8s.aws" ]
-  resources: [ "ec2nodeclasses" ]
-  verbs: [ "get", "list", "watch" ]
-{{- end }}
 # ---------------------------------------------------------------------------
 # feature: controller/leader-election (high-availability)
 # ---------------------------------------------------------------------------
@@ -64,7 +53,6 @@ rules:
   resources: [ "leases" ]
   verbs: [ "get", "list", "patch", "update", "create", "delete" ]
 {{- if not .Values.spotinst.readonly }}
-{{- if ne .Values.spotinst.autoscalerMode "KARPENTER_MANAGED" }}
 # ---------------------------------------------------------------------------
 # feature: ocean/draining
 # ---------------------------------------------------------------------------
@@ -125,7 +113,6 @@ rules:
 - apiGroups: ["bigdata.spot.io"]
   resources: ["bigdataenvironments"]
   verbs: ["get", "list", "watch", "patch", "update", "create", "delete"]
-{{- end }}
 {{- if not .Values.spotinst.disableAutomaticRightSizing }}
 # ---------------------------------------------------------------------------
 # feature: automatic right-sizing
