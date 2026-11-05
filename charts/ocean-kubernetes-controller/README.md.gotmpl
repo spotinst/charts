@@ -57,24 +57,6 @@ helm install spot spot/{{ template "chart.name" . }} \
   --set caBundleSecret.key=bundle.pem
 ```
 
-## Karpenter-mode RBAC
-
-Set `spotinst.autoscalerMode=KARPENTER_MANAGED` to retain observation and
-leader-election permissions without Ocean draining, node cleanup, CSR approval,
-workload apply, or Wave permissions. Karpenter NodePools, NodeClaims, and AWS
-EC2NodeClasses receive only `get`, `list`, and `watch` permissions for inventory;
-they are not Ocean-managed resources.
-
-When `spotinst.disableAutomaticRightSizing=false` and `spotinst.readonly=false`,
-the controller retains its existing Rightsizing permissions: VPA and VPA status
-management, HPA patch/update, and Deployment, DaemonSet, StatefulSet, and ReplicaSet
-patch/update. Non-readonly controllers also retain event creation for reporting.
-Setting `spotinst.readonly=true` takes precedence and omits all these writes,
-while preserving leader-election permissions.
-
-This chart supplies RBAC only. CRD harvesting and contextual logging of missing
-permissions or synchronization failures must be implemented by the controller.
-
 {{ template "chart.requirementsSection" . }}
 
 {{ template "chart.valuesSection" . }}
