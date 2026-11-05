@@ -55,24 +55,6 @@ helm install spot spot/ocean-kubernetes-controller \
   --set caBundleSecret.key=bundle.pem
 ```
 
-## Karpenter-mode RBAC
-
-Set `spotinst.autoscalerMode=KARPENTER_MANAGED` to retain observation and
-leader-election permissions without Ocean draining, node cleanup, CSR approval,
-workload apply, or Wave permissions. Karpenter NodePools, NodeClaims, and AWS
-EC2NodeClasses receive only `get`, `list`, and `watch` permissions for inventory;
-they are not Ocean-managed resources.
-
-When `spotinst.disableAutomaticRightSizing=false` and `spotinst.readonly=false`,
-the controller retains its existing Rightsizing permissions: VPA and VPA status
-management, HPA patch/update, and Deployment, DaemonSet, StatefulSet, and ReplicaSet
-patch/update. Non-readonly controllers also retain event creation for reporting.
-Setting `spotinst.readonly=true` takes precedence and omits all these writes,
-while preserving leader-election permissions.
-
-This chart supplies RBAC only. CRD harvesting and contextual logging of missing
-permissions or synchronization failures must be implemented by the controller.
-
 ## Requirements
 
 Kubernetes: `>=1.20.0-0`
@@ -115,7 +97,7 @@ Kubernetes: `>=1.20.0-0`
 | image.fips | bool | `false` | Set to `true` to use an FIPS-140 compliant image. This flag adds `-fips` suffix to the image tag, therefore it should not be used together with the `--image.tag` flag. Ref: https://go.dev/doc/security/fips140 |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller"` |  |
-| image.tag | string | `"bb-sod-9644-adding-autoscalermode-to-heartbeat@sha256:dd1ebd127880216e2be5779f3119618a0a088d3aea13b9b7cdb4f724025a0ece"` | Overrides the image tag whose default is the chart appVersion. |
+| image.tag | string | `"bb-sod-9644-adding-autoscalermode-to-heartbeat@sha256:1c5bbaf7cb9aea803661bb50c245cd5aa402a001a337f40dcba960eeee035498"` | Overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | livenessProbe.httpGet.path | string | `"/healthz"` |  |
