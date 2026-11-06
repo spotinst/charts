@@ -1,6 +1,6 @@
 # ocean-kubernetes-controller
 
-![Version: 0.1.79-beta.1](https://img.shields.io/badge/Version-0.1.79--beta.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.3.2](https://img.shields.io/badge/AppVersion-2.3.2-informational?style=flat-square)
+![Version: 0.1.78](https://img.shields.io/badge/Version-0.1.78-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.3.2](https://img.shields.io/badge/AppVersion-2.3.2-informational?style=flat-square)
 
 A Helm chart for Ocean Kubernetes Controller.
 
@@ -97,7 +97,7 @@ Kubernetes: `>=1.20.0-0`
 | image.fips | bool | `false` | Set to `true` to use an FIPS-140 compliant image. This flag adds `-fips` suffix to the image tag, therefore it should not be used together with the `--image.tag` flag. Ref: https://go.dev/doc/security/fips140 |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller"` |  |
-| image.tag | string | `"bb-sod-9644-adding-autoscalermode-to-heartbeat@sha256:1c5bbaf7cb9aea803661bb50c245cd5aa402a001a337f40dcba960eeee035498"` | Overrides the image tag whose default is the chart appVersion. |
+| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | livenessProbe.httpGet.path | string | `"/healthz"` |  |
@@ -143,7 +143,6 @@ Kubernetes: `>=1.20.0-0`
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | spotinst.account | string | `""` | Spot Account ID. (Required) Example: `act-123abcd` |
-| spotinst.autoscalerMode | string | `"STANDARD"` | Sets the engine responsible for autoscaling. STANDARD or KARPENTER_MANAGED. (Optional) |
 | spotinst.baseUrl | string | `""` | Base URL. (Optional) |
 | spotinst.clusterIdentifier | string | `""` | Unique identifier used by the Ocean Controller to connect (Required) between the Ocean backend and the Kubernetes cluster. Ref: https://docs.spot.io/ocean/tutorials/spot-kubernetes-controller/ |
 | spotinst.disableAutoUpdate | bool | `false` | Disable auto update. (Optional) |
