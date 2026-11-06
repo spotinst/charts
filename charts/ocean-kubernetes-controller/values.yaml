@@ -39,7 +39,7 @@ image:
   repository: us-docker.pkg.dev/spotit-today/container-labs/spotinst-kubernetes-controller
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
-  tag: "bb-sod-9644-adding-autoscalermode-to-heartbeat@sha256:1c5bbaf7cb9aea803661bb50c245cd5aa402a001a337f40dcba960eeee035498"
+  tag: "bb-sod-9644-adding-autoscalermode-to-heartbeat@sha256:fded66e1ef57c0f9e1348f8fab7876ed6b7b5b9544cb98292453259299a6ef69"
   # -- Set to `true` to use an FIPS-140 compliant image. This flag adds `-fips` suffix to the image tag,
   # therefore it should not be used together with the `--image.tag` flag.
   # Ref: https://go.dev/doc/security/fips140
