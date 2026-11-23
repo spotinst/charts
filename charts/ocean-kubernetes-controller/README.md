@@ -148,6 +148,7 @@ Kubernetes: `>=1.20.0-0`
 | spotinst.disableAutoUpdate | bool | `false` | Disable auto update. (Optional) |
 | spotinst.disableAutomaticRightSizing | bool | `false` | Disable automatic RightSizing. (Optional) |
 | spotinst.enableCsrApproval | bool | `true` | Enable CSR approval. (Optional) |
+| spotinst.enableGpuMetrics | bool | `true` | Enable collection of GPU utilization metrics from the NVIDIA DCGM exporter. (Optional) |
 | spotinst.insecureSkipTLSVerify | bool | `false` | Disable TLS certificate validation. (Optional) |
 | spotinst.proxyUrl | string | `""` | Proxy URL. (Optional) |
 | spotinst.readonly | bool | `false` | Sets the controller to read-only mode, removing write permissions and disabling autoscaling. (Optional) |

@@ -12,6 +12,8 @@ data:
   leader-election: {{ gt (int .Values.replicas) 1 | quote }}
   disable-auto-update: {{ default "false" .Values.spotinst.disableAutoUpdate | quote }}
   enable-csr-approval: {{ default "false" .Values.spotinst.enableCsrApproval | quote }}
+  {{- /* `default` treats false as empty, so only an unset value falls back to "true". */}}
+  enable-gpu-metrics: {{ ternary "true" (toString .Values.spotinst.enableGpuMetrics) (kindIs "invalid" .Values.spotinst.enableGpuMetrics) | quote }}
   {{- if not .Values.spotinst.disableAutoUpdate }}
   auto-update.job: |
     {{- include "auto-updater.job" . | nindent 4 }}

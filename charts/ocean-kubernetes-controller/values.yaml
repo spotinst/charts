@@ -23,6 +23,8 @@ spotinst:
   disableAutoUpdate: false
   # -- Enable CSR approval. (Optional)
   enableCsrApproval: true
+  # -- Enable collection of GPU utilization metrics from the NVIDIA DCGM exporter. (Optional)
+  enableGpuMetrics: true
   # -- Disable automatic RightSizing. (Optional)
   disableAutomaticRightSizing: false
   # -- Disable TLS certificate validation. (Optional)

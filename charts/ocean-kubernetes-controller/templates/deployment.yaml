@@ -129,6 +129,12 @@ spec:
                 name: {{ include "ocean-kubernetes-controller.configMapName" . }}
                 key: enable-csr-approval
                 optional: true
+          - name: ENABLE_GPU_METRICS
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "ocean-kubernetes-controller.configMapName" . }}
+                key: enable-gpu-metrics
+                optional: true
           - name: USER_ENV_CERTIFICATES
             valueFrom:
               secretKeyRef:
